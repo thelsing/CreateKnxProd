@@ -7,6 +7,35 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ToolBarTray>
+            <ToolBar>
+                <Button Content="Neu" Command="{Binding CreateNewCommand}"/>
+                <Button Content="Öffnen" Command="{Binding OpenCommand}"/>
+                <Button Content="Schließen" Command="{Binding CloseCommand}"/>
+                <Button Content="Speichern" Command="{Binding SaveCommand}"/>
+                <Button Content="Exportieren" Command="{Binding ExportCommand}"/>
+            </ToolBar>
+        </ToolBarTray>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Allgemein">
+                
+            </TabItem>
+            <TabItem Header="Parametertypen">
+                
+            </TabItem>
+            <TabItem Header="Parameter">
+                
+            </TabItem>
+            <TabItem Header="Kommunikationsobject">
+                
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
