@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace CreateKnxProd
@@ -57,22 +58,28 @@ namespace CreateKnxProd
             if (_model == null)
                 return;
 
+            CorrectIds();
+
             var filepath = _dialogService.ChooseFile(".xml", "XML Datei|*.xml");
             if (filepath == null)
                 return;
 
             XmlSerializer serializer = new XmlSerializer(typeof(KNX));
-            TextWriter textWriter = new StreamWriter(filepath);
-            serializer.Serialize(textWriter, _model);
-            textWriter.Close();
+            var xmlWriter = new StreamWriter(filepath, false, Encoding.Default);
+            serializer.Serialize(xmlWriter, _model);
+            xmlWriter.Close();
 
             _dialogService.ShowMessage("Speichern erfolgreich!");
         }
 
-        private Hardware_t _hardware;
-        private Hardware_tProduct _product;
-        private CatalogSection_tCatalogItem _catalogItem;
-        private ApplicationProgram_t _applicationProgram;
+        private ManufacturerData_tManufacturer _manufacturerData = new ManufacturerData_tManufacturer();
+        private Hardware_t _hardware = new Hardware_t();
+        private Hardware_tProduct _product = new Hardware_tProduct();
+        private CatalogSection_tCatalogItem _catalogItem = new CatalogSection_tCatalogItem();
+        private CatalogSection_t _catalogSection = new CatalogSection_t();
+        private ApplicationProgram_t _applicationProgram = new ApplicationProgram_t();
+        private Hardware2Program_t _hardware2Program = new Hardware2Program_t();
+        private ApplicationProgramRef_t _appProgRef = new ApplicationProgramRef_t();
 
         private void CreateNew(object param)
         {
@@ -82,32 +89,30 @@ namespace CreateKnxProd
             _model = new KNX();
 
 
-            var manufacturerData = new ManufacturerData_tManufacturer();
+            _manufacturerData = new ManufacturerData_tManufacturer();
             _applicationProgram = new ApplicationProgram_t();
             _hardware = new Hardware_t();
-            var catalogSection = new CatalogSection_t();
+            _catalogSection = new CatalogSection_t();
             _product = new Hardware_tProduct();
-            var hardware2Program = new Hardware2Program_t();
-            var appProgRef = new ApplicationProgramRef_t();
+            _hardware2Program = new Hardware2Program_t();
+            _appProgRef = new ApplicationProgramRef_t();
             _catalogItem = new CatalogSection_tCatalogItem();
 
-            _model.ManufacturerData.Add(manufacturerData);
-            manufacturerData.Catalog.Add(catalogSection);
-            manufacturerData.ApplicationPrograms.Add(_applicationProgram);
-            manufacturerData.Hardware.Add(_hardware);
+            _model.ManufacturerData.Add(_manufacturerData);
+            _manufacturerData.Catalog.Add(_catalogSection);
+            _manufacturerData.ApplicationPrograms.Add(_applicationProgram);
+            _manufacturerData.Hardware.Add(_hardware);
             _hardware.Products.Add(_product);
-            _hardware.Hardware2Programs.Add(hardware2Program);
-            hardware2Program.ApplicationProgramRef.Add(appProgRef);
-            catalogSection.CatalogItem.Add(_catalogItem);
+            _hardware.Hardware2Programs.Add(_hardware2Program);
+            _hardware2Program.ApplicationProgramRef.Add(_appProgRef);
+            _catalogSection.CatalogItem.Add(_catalogItem);
 
 
             _model.CreatedBy = _toolName;
             _model.ToolVersion = _toolVersion;
 
-            _applicationProgram.ApplicationNumber = 0;
-            manufacturerData.RefId = "M-00FA";
-
-            _applicationProgram.ApplicationVersion = 0;
+            ApplicationNumber = 0;
+            ApplicationVersion = 0;
             _applicationProgram.ProgramType = ApplicationProgramType_t.ApplicationProgram;
             _applicationProgram.MaskVersion = "MV-57B0";
             _applicationProgram.LoadProcedureStyle = LoadProcedureStyle_t.MergedProcedure;
@@ -116,41 +121,53 @@ namespace CreateKnxProd
             _applicationProgram.DynamicTableManagement = true;
             _applicationProgram.Linkable = false;
             _applicationProgram.MinEtsVersion = "4.0";
-            _applicationProgram.Id = string.Format("{0}_A-{1:0000}-{2:00}-0000", manufacturerData.RefId,
-                    _applicationProgram.ApplicationNumber, _applicationProgram.ApplicationVersion);
 
-            appProgRef.RefId = _applicationProgram.Id;
+            var appStatic = new ApplicationProgramStatic_t();
+            _applicationProgram.Static = appStatic;
 
-            _hardware.SerialNumber = "0";
-            _hardware.VersionNumber = 0;
+            HardwareSerial = "0";
+            HardwareVersion = 0;
             _hardware.HasIndividualAddress = true;
             _hardware.HasApplicationProgram = true;
             _hardware.IsIPEnabled = true;
-            _hardware.Id = string.Format("{0}_H-{1}-{2}", manufacturerData.RefId, _hardware.SerialNumber,
-                _hardware.VersionNumber);
 
             _product.IsRailMounted = false;
             _product.DefaultLanguage = "de_DE";
-            _product.OrderNumber = "0";
-            _product.Id = string.Format("{0}_P-{1}", _hardware.Id, _product.OrderNumber);
+            OrderNumber = "0";
+            
+            _hardware2Program.MediumTypes.Add("MT-5");
 
-            hardware2Program.MediumTypes.Add("MT-5");
-            hardware2Program.Id = string.Format("{0}_HP-{1:0000}-{2:00}-0000", _hardware.Id,
-                _applicationProgram.ApplicationNumber, _applicationProgram.ApplicationVersion);
-
-            catalogSection.Name = "Geräte";
-            catalogSection.Number = "1";
-            catalogSection.DefaultLanguage = "de_DE";
-            catalogSection.Id = string.Format("{0}_CS-{1}", manufacturerData.RefId, catalogSection.Number);
-
+            _catalogSection.Name = "Geräte";
+            _catalogSection.Number = "1";
+            _catalogSection.DefaultLanguage = "de_DE";
+            
             _catalogItem.Name = _product.Text;
             _catalogItem.Number = 1;
             _catalogItem.ProductRefId = _product.Id;
-            _catalogItem.Hardware2ProgramRefId = hardware2Program.Id;
+            _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
             _catalogItem.DefaultLanguage = "de_DE";
-            _catalogItem.Id = string.Format("{0}_CI-{1}-{2}", hardware2Program.Id, _product.OrderNumber, _catalogItem.Number);
 
+            CorrectIds();
 
+        }
+
+        private void CorrectIds()
+        {
+            _manufacturerData.RefId = "M-00FA";
+            _applicationProgram.Id = string.Format("{0}_A-{1:0000}-{2:00}-0000", _manufacturerData.RefId,
+                    _applicationProgram.ApplicationNumber, _applicationProgram.ApplicationVersion);
+            _appProgRef.RefId = _applicationProgram.Id;
+            _hardware.Id = string.Format("{0}_H-{1}-{2}", _manufacturerData.RefId, _hardware.SerialNumber,
+                                        _hardware.VersionNumber);
+            _product.Id = string.Format("{0}_P-{1}", _hardware.Id, _product.OrderNumber);
+            _hardware2Program.Id = string.Format("{0}_HP-{1:0000}-{2:00}-0000", _hardware.Id,
+                        _applicationProgram.ApplicationNumber, _applicationProgram.ApplicationVersion);
+
+            _catalogSection.Id = string.Format("{0}_CS-{1}", _manufacturerData.RefId, _catalogSection.Number);
+
+            _catalogItem.Id = string.Format("{0}_CI-{1}-{2}", _hardware2Program.Id, _product.OrderNumber, _catalogItem.Number);
+            _catalogItem.ProductRefId = _product.Id;
+            _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
         }
 
         private void Export(object param)
@@ -194,6 +211,110 @@ namespace CreateKnxProd
                 _dialogService.ShowMessage(ex.ToString());
             }
         }
+
+        #region Properties
+        public string HardwareName
+        {
+            get
+            {
+                return _hardware.Name;
+            }
+            set
+            {
+                _hardware.Name = value;
+                RaisePropertyChanged(nameof(HardwareName));
+            }
+        }
+
+        public string HardwareSerial
+        {
+            get
+            {
+                return _hardware.SerialNumber;
+            }
+            set
+            {
+                _hardware.SerialNumber = value;
+                RaisePropertyChanged(nameof(HardwareSerial));
+            }
+        }
+
+        public ushort HardwareVersion
+        {
+            get => _hardware.VersionNumber;
+            set
+            {
+                _hardware.VersionNumber = value;
+                RaisePropertyChanged(nameof(HardwareVersion));
+            }
+        }
+
+        public string ProductName
+        {
+            get
+            {
+                return _product.Text;
+            }
+            set
+            {
+                _product.Text = value;
+                _catalogItem.Name = value;
+                RaisePropertyChanged(nameof(ProductName));
+            }
+        }
+
+        public string OrderNumber
+        {
+            get
+            {
+                return _product.OrderNumber;
+            }
+            set
+            {
+                _product.OrderNumber = value;
+                RaisePropertyChanged(nameof(OrderNumber));
+            }
+        }
+
+        public string ApplicationName
+        {
+            get
+            {
+                return _applicationProgram.Name;
+            }
+            set
+            {
+                _applicationProgram.Name = value;
+                RaisePropertyChanged(nameof(ApplicationName));
+            }
+        }
+
+        public ushort ApplicationNumber
+        {
+            get
+            {
+                return _applicationProgram.ApplicationNumber;
+            }
+            set
+            {
+                _applicationProgram.ApplicationNumber = value;
+                RaisePropertyChanged(nameof(ApplicationNumber));
+            }
+        }
+
+        public byte ApplicationVersion
+        {
+            get
+            {
+                return _applicationProgram.ApplicationVersion;
+            }
+            set
+            {
+                _applicationProgram.ApplicationVersion = value;
+                RaisePropertyChanged(nameof(ApplicationVersion));
+            }
+        }
+        #endregion
 
         #region Reflection
         private object InvokeMethod(Type type, string methodName, object[]  args)
@@ -294,5 +415,10 @@ namespace CreateKnxProd
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
         #endregion
+
+        class Utf8StringWriter : StringWriter
+        {
+            public override Encoding Encoding => Encoding.UTF8;
+        }
     }
 }

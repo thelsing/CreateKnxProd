@@ -31,7 +31,7 @@ namespace CreateKnxProd.Model
 
         private ObservableCollection<ManufacturerData_tManufacturer> manufacturerDataField = new ObservableCollection<ManufacturerData_tManufacturer>();
 
-        private Project_t[] projectField;
+        private ObservableCollection<Project_t> projectField = new ObservableCollection<Project_t>();
 
         private string createdByField;
 
@@ -68,7 +68,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Project")]
-        public Project_t[] Project
+        public ObservableCollection<Project_t> Project
         {
             get
             {
@@ -132,41 +132,41 @@ namespace CreateKnxProd.Model
     public partial class MasterData_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private DatapointType_t[] datapointTypesField;
+        private ObservableCollection<DatapointType_t> datapointTypesField = new ObservableCollection<DatapointType_t>();
 
-        private DatapointRole_t[] datapointRolesField;
+        private ObservableCollection<DatapointRole_t> datapointRolesField = new ObservableCollection<DatapointRole_t>();
 
-        private MasterData_tInterfaceObjectType[] interfaceObjectTypesField;
+        private ObservableCollection<MasterData_tInterfaceObjectType> interfaceObjectTypesField = new ObservableCollection<MasterData_tInterfaceObjectType>();
 
-        private MasterData_tInterfaceObjectProperty[] interfaceObjectPropertiesField;
+        private ObservableCollection<MasterData_tInterfaceObjectProperty> interfaceObjectPropertiesField = new ObservableCollection<MasterData_tInterfaceObjectProperty>();
 
-        private MasterData_tPropertyDataType[] propertyDataTypesField;
+        private ObservableCollection<MasterData_tPropertyDataType> propertyDataTypesField = new ObservableCollection<MasterData_tPropertyDataType>();
 
-        private MasterData_tMediumType[] mediumTypesField;
+        private ObservableCollection<MasterData_tMediumType> mediumTypesField = new ObservableCollection<MasterData_tMediumType>();
 
-        private MaskVersion_t[] maskVersionsField;
+        private ObservableCollection<MaskVersion_t> maskVersionsField = new ObservableCollection<MaskVersion_t>();
 
-        private MasterData_tFunctionalBlock[] functionalBlocksField;
+        private ObservableCollection<MasterData_tFunctionalBlock> functionalBlocksField = new ObservableCollection<MasterData_tFunctionalBlock>();
 
-        private MasterData_tLanguage[] productLanguagesField;
+        private ObservableCollection<MasterData_tLanguage> productLanguagesField = new ObservableCollection<MasterData_tLanguage>();
 
         private MasterData_tFunctionTypes functionTypesField;
 
-        private SpaceUsage_t[] spaceUsagesField;
+        private ObservableCollection<SpaceUsage_t> spaceUsagesField = new ObservableCollection<SpaceUsage_t>();
 
-        private MasterData_tManufacturer[] manufacturersField;
+        private ObservableCollection<MasterData_tManufacturer> manufacturersField = new ObservableCollection<MasterData_tManufacturer>();
 
-        private LanguageData_t[] languagesField;
+        private ObservableCollection<LanguageData_t> languagesField = new ObservableCollection<LanguageData_t>();
 
         private uint versionField;
 
-        private byte[] signatureField;
+        private ObservableCollection<byte> signatureField = new ObservableCollection<byte>();
 
         private string idField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DatapointType", IsNullable = false)]
-        public DatapointType_t[] DatapointTypes
+        public ObservableCollection<DatapointType_t> DatapointTypes
         {
             get
             {
@@ -181,7 +181,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DatapointRole", IsNullable = false)]
-        public DatapointRole_t[] DatapointRoles
+        public ObservableCollection<DatapointRole_t> DatapointRoles
         {
             get
             {
@@ -196,7 +196,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("InterfaceObjectType", IsNullable = false)]
-        public MasterData_tInterfaceObjectType[] InterfaceObjectTypes
+        public ObservableCollection<MasterData_tInterfaceObjectType> InterfaceObjectTypes
         {
             get
             {
@@ -211,7 +211,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("InterfaceObjectProperty", IsNullable = false)]
-        public MasterData_tInterfaceObjectProperty[] InterfaceObjectProperties
+        public ObservableCollection<MasterData_tInterfaceObjectProperty> InterfaceObjectProperties
         {
             get
             {
@@ -226,7 +226,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("PropertyDataType", IsNullable = false)]
-        public MasterData_tPropertyDataType[] PropertyDataTypes
+        public ObservableCollection<MasterData_tPropertyDataType> PropertyDataTypes
         {
             get
             {
@@ -241,7 +241,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MediumType", IsNullable = false)]
-        public MasterData_tMediumType[] MediumTypes
+        public ObservableCollection<MasterData_tMediumType> MediumTypes
         {
             get
             {
@@ -256,7 +256,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MaskVersion", IsNullable = false)]
-        public MaskVersion_t[] MaskVersions
+        public ObservableCollection<MaskVersion_t> MaskVersions
         {
             get
             {
@@ -271,7 +271,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("FunctionalBlock", IsNullable = false)]
-        public MasterData_tFunctionalBlock[] FunctionalBlocks
+        public ObservableCollection<MasterData_tFunctionalBlock> FunctionalBlocks
         {
             get
             {
@@ -286,7 +286,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Language", IsNullable = false)]
-        public MasterData_tLanguage[] ProductLanguages
+        public ObservableCollection<MasterData_tLanguage> ProductLanguages
         {
             get
             {
@@ -315,7 +315,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SpaceUsage", IsNullable = false)]
-        public SpaceUsage_t[] SpaceUsages
+        public ObservableCollection<SpaceUsage_t> SpaceUsages
         {
             get
             {
@@ -330,7 +330,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Manufacturer", IsNullable = false)]
-        public MasterData_tManufacturer[] Manufacturers
+        public ObservableCollection<MasterData_tManufacturer> Manufacturers
         {
             get
             {
@@ -345,7 +345,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Language", IsNullable = false)]
-        public LanguageData_t[] Languages
+        public ObservableCollection<LanguageData_t> Languages
         {
             get
             {
@@ -375,7 +375,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] Signature
+        public ObservableCollection<byte> Signature
         {
             get
             {
@@ -424,7 +424,7 @@ namespace CreateKnxProd.Model
     public partial class DatapointType_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private DatapointType_tDatapointSubtype[] datapointSubtypesField;
+        private ObservableCollection<DatapointType_tDatapointSubtype> datapointSubtypesField = new ObservableCollection<DatapointType_tDatapointSubtype>();
 
         private string idField;
 
@@ -444,7 +444,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DatapointSubtype", IsNullable = false)]
-        public DatapointType_tDatapointSubtype[] DatapointSubtypes
+        public ObservableCollection<DatapointType_tDatapointSubtype> DatapointSubtypes
         {
             get
             {
@@ -598,7 +598,7 @@ namespace CreateKnxProd.Model
     public partial class DatapointType_tDatapointSubtype : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private object[] formatField;
+        private ObservableCollection<object> formatField = new ObservableCollection<object>();
 
         private string idField;
 
@@ -626,7 +626,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlArrayItemAttribute("SignedInteger", typeof(DatapointType_tDatapointSubtypeSignedInteger), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("String", typeof(DatapointType_tDatapointSubtypeString), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("UnsignedInteger", typeof(DatapointType_tDatapointSubtypeUnsignedInteger), IsNullable = false)]
-        public object[] Format
+        public ObservableCollection<object> Format
         {
             get
             {
@@ -1005,9 +1005,9 @@ namespace CreateKnxProd.Model
     public partial class Trade_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Trade_t[] tradeField;
+        private ObservableCollection<Trade_t> tradeField = new ObservableCollection<Trade_t>();
 
-        private DeviceInstanceRef_t[] deviceInstanceRefField;
+        private ObservableCollection<DeviceInstanceRef_t> deviceInstanceRefField = new ObservableCollection<DeviceInstanceRef_t>();
 
         private string idField;
 
@@ -1030,7 +1030,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Trade")]
-        public Trade_t[] Trade
+        public ObservableCollection<Trade_t> Trade
         {
             get
             {
@@ -1045,7 +1045,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("DeviceInstanceRef")]
-        public DeviceInstanceRef_t[] DeviceInstanceRef
+        public ObservableCollection<DeviceInstanceRef_t> DeviceInstanceRef
         {
             get
             {
@@ -1506,9 +1506,9 @@ namespace CreateKnxProd.Model
     public partial class GroupRange_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private GroupRange_t[] groupRangeField;
+        private ObservableCollection<GroupRange_t> groupRangeField = new ObservableCollection<GroupRange_t>();
 
-        private GroupAddress_t[] groupAddressField;
+        private ObservableCollection<GroupAddress_t> groupAddressField = new ObservableCollection<GroupAddress_t>();
 
         private string idField;
 
@@ -1536,7 +1536,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("GroupRange")]
-        public GroupRange_t[] GroupRange
+        public ObservableCollection<GroupRange_t> GroupRange
         {
             get
             {
@@ -1551,7 +1551,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("GroupAddress")]
-        public GroupAddress_t[] GroupAddress
+        public ObservableCollection<GroupAddress_t> GroupAddress
         {
             get
             {
@@ -1722,11 +1722,11 @@ namespace CreateKnxProd.Model
     public partial class GroupAddresses_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private GroupRange_t[] groupRangesField;
+        private ObservableCollection<GroupRange_t> groupRangesField = new ObservableCollection<GroupRange_t>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("GroupRange", IsNullable = false)]
-        public GroupRange_t[] GroupRanges
+        public ObservableCollection<GroupRange_t> GroupRanges
         {
             get
             {
@@ -1866,7 +1866,7 @@ namespace CreateKnxProd.Model
     public partial class Function_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private GroupAddressRef_t[] groupAddressRefField;
+        private ObservableCollection<GroupAddressRef_t> groupAddressRefField = new ObservableCollection<GroupAddressRef_t>();
 
         private string idField;
 
@@ -1874,7 +1874,7 @@ namespace CreateKnxProd.Model
 
         private string typeField;
 
-        private string[] implementsField;
+        private ObservableCollection<string> implementsField = new ObservableCollection<string>();
 
         private string numberField;
 
@@ -1895,7 +1895,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("GroupAddressRef")]
-        public GroupAddressRef_t[] GroupAddressRef
+        public ObservableCollection<GroupAddressRef_t> GroupAddressRef
         {
             get
             {
@@ -1955,7 +1955,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "NCName")]
-        public string[] Implements
+        public ObservableCollection<string> Implements
         {
             get
             {
@@ -2080,11 +2080,11 @@ namespace CreateKnxProd.Model
     public partial class Space_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Space_t[] spaceField;
+        private ObservableCollection<Space_t> spaceField = new ObservableCollection<Space_t>();
 
-        private DeviceInstanceRef_t[] deviceInstanceRefField;
+        private ObservableCollection<DeviceInstanceRef_t> deviceInstanceRefField = new ObservableCollection<DeviceInstanceRef_t>();
 
-        private Function_t[] functionField;
+        private ObservableCollection<Function_t> functionField = new ObservableCollection<Function_t>();
 
         private string idField;
 
@@ -2113,7 +2113,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Space")]
-        public Space_t[] Space
+        public ObservableCollection<Space_t> Space
         {
             get
             {
@@ -2128,7 +2128,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("DeviceInstanceRef")]
-        public DeviceInstanceRef_t[] DeviceInstanceRef
+        public ObservableCollection<DeviceInstanceRef_t> DeviceInstanceRef
         {
             get
             {
@@ -2143,7 +2143,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Function")]
-        public Function_t[] Function
+        public ObservableCollection<Function_t> Function
         {
             get
             {
@@ -2438,7 +2438,7 @@ namespace CreateKnxProd.Model
     public partial class BusInterface_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private BusInterface_tConnector[] connectorsField;
+        private ObservableCollection<BusInterface_tConnector> connectorsField = new ObservableCollection<BusInterface_tConnector>();
 
         private string refIdField;
 
@@ -2450,11 +2450,11 @@ namespace CreateKnxProd.Model
 
         private string passwordField;
 
-        private byte[] passwordHashField;
+        private ObservableCollection<byte> passwordHashField = new ObservableCollection<byte>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Connector", IsNullable = false)]
-        public BusInterface_tConnector[] Connectors
+        public ObservableCollection<BusInterface_tConnector> Connectors
         {
             get
             {
@@ -2544,7 +2544,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] PasswordHash
+        public ObservableCollection<byte> PasswordHash
         {
             get
             {
@@ -2622,15 +2622,15 @@ namespace CreateKnxProd.Model
 
         private string deviceAuthenticationCodeField;
 
-        private byte[] deviceAuthenticationCodeHashField;
+        private ObservableCollection<byte> deviceAuthenticationCodeHashField = new ObservableCollection<byte>();
 
-        private byte[] loadedDeviceAuthenticationCodeHashField;
+        private ObservableCollection<byte> loadedDeviceAuthenticationCodeHashField = new ObservableCollection<byte>();
 
         private string deviceManagementPasswordField;
 
-        private byte[] deviceManagementPasswordHashField;
+        private ObservableCollection<byte> deviceManagementPasswordHashField = new ObservableCollection<byte>();
 
-        private byte[] loadedDeviceManagementPasswordHashField;
+        private ObservableCollection<byte> loadedDeviceManagementPasswordHashField = new ObservableCollection<byte>();
 
         private string toolKeyField;
 
@@ -2690,7 +2690,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] DeviceAuthenticationCodeHash
+        public ObservableCollection<byte> DeviceAuthenticationCodeHash
         {
             get
             {
@@ -2705,7 +2705,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] LoadedDeviceAuthenticationCodeHash
+        public ObservableCollection<byte> LoadedDeviceAuthenticationCodeHash
         {
             get
             {
@@ -2735,7 +2735,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] DeviceManagementPasswordHash
+        public ObservableCollection<byte> DeviceManagementPasswordHash
         {
             get
             {
@@ -2750,7 +2750,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] LoadedDeviceManagementPasswordHash
+        public ObservableCollection<byte> LoadedDeviceManagementPasswordHash
         {
             get
             {
@@ -3216,7 +3216,7 @@ namespace CreateKnxProd.Model
 
         private bool readOnInitFlagFieldSpecified;
 
-        private string[] datapointTypeField;
+        private ObservableCollection<string> datapointTypeField = new ObservableCollection<string>();
 
         private string descriptionField;
 
@@ -3512,7 +3512,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "NCName")]
-        public string[] DatapointType
+        public ObservableCollection<string> DatapointType
         {
             get
             {
@@ -3608,7 +3608,7 @@ namespace CreateKnxProd.Model
 
         private ComObjectInstanceRef_tConnectorsSend sendField;
 
-        private ComObjectInstanceRef_tConnectorsReceive[] receiveField;
+        private ObservableCollection<ComObjectInstanceRef_tConnectorsReceive> receiveField = new ObservableCollection<ComObjectInstanceRef_tConnectorsReceive>();
 
         /// <remarks/>
         public ComObjectInstanceRef_tConnectorsSend Send
@@ -3626,7 +3626,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Receive")]
-        public ComObjectInstanceRef_tConnectorsReceive[] Receive
+        public ObservableCollection<ComObjectInstanceRef_tConnectorsReceive> Receive
         {
             get
             {
@@ -3925,21 +3925,21 @@ namespace CreateKnxProd.Model
     public partial class DeviceInstance_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ParameterInstanceRef_t[] parameterInstanceRefsField;
+        private ObservableCollection<ParameterInstanceRef_t> parameterInstanceRefsField = new ObservableCollection<ParameterInstanceRef_t>();
 
-        private ComObjectInstanceRef_t[] comObjectInstanceRefsField;
+        private ObservableCollection<ComObjectInstanceRef_t> comObjectInstanceRefsField = new ObservableCollection<ComObjectInstanceRef_t>();
 
-        private ChannelInstance_t[] channelInstancesField;
+        private ObservableCollection<ChannelInstance_t> channelInstancesField = new ObservableCollection<ChannelInstance_t>();
 
-        private DeviceInstance_tAddress[] additionalAddressesField;
+        private ObservableCollection<DeviceInstance_tAddress> additionalAddressesField = new ObservableCollection<DeviceInstance_tAddress>();
 
-        private DeviceInstance_tBinaryData[] binaryDataField;
+        private ObservableCollection<DeviceInstance_tBinaryData> binaryDataField = new ObservableCollection<DeviceInstance_tBinaryData>();
 
         private IPConfig_t iPConfigField;
 
         private Security_t securityField;
 
-        private BusInterface_t[] busInterfacesField;
+        private ObservableCollection<BusInterface_t> busInterfacesField = new ObservableCollection<BusInterface_t>();
 
         private string nameField;
 
@@ -3989,11 +3989,11 @@ namespace CreateKnxProd.Model
 
         private bool mediumConfigLoadedField;
 
-        private byte[] loadedImageField;
+        private ObservableCollection<byte> loadedImageField = new ObservableCollection<byte>();
 
         private string descriptionField;
 
-        private byte[] checkSumsField;
+        private ObservableCollection<byte> checkSumsField = new ObservableCollection<byte>();
 
         private uint downloadCounterField;
 
@@ -4005,7 +4005,7 @@ namespace CreateKnxProd.Model
 
         private bool brokenField;
 
-        private byte[] serialNumberField;
+        private ObservableCollection<byte> serialNumberField = new ObservableCollection<byte>();
 
         private string uniqueIdField;
 
@@ -4027,7 +4027,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterInstanceRef", IsNullable = false)]
-        public ParameterInstanceRef_t[] ParameterInstanceRefs
+        public ObservableCollection<ParameterInstanceRef_t> ParameterInstanceRefs
         {
             get
             {
@@ -4042,7 +4042,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ComObjectInstanceRef", IsNullable = false)]
-        public ComObjectInstanceRef_t[] ComObjectInstanceRefs
+        public ObservableCollection<ComObjectInstanceRef_t> ComObjectInstanceRefs
         {
             get
             {
@@ -4057,7 +4057,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ChannelInstance", IsNullable = false)]
-        public ChannelInstance_t[] ChannelInstances
+        public ObservableCollection<ChannelInstance_t> ChannelInstances
         {
             get
             {
@@ -4072,7 +4072,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Address", IsNullable = false)]
-        public DeviceInstance_tAddress[] AdditionalAddresses
+        public ObservableCollection<DeviceInstance_tAddress> AdditionalAddresses
         {
             get
             {
@@ -4087,7 +4087,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("BinaryData", IsNullable = false)]
-        public DeviceInstance_tBinaryData[] BinaryData
+        public ObservableCollection<DeviceInstance_tBinaryData> BinaryData
         {
             get
             {
@@ -4130,7 +4130,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("BusInterface", IsNullable = false)]
-        public BusInterface_t[] BusInterfaces
+        public ObservableCollection<BusInterface_t> BusInterfaces
         {
             get
             {
@@ -4511,7 +4511,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] LoadedImage
+        public ObservableCollection<byte> LoadedImage
         {
             get
             {
@@ -4541,7 +4541,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] CheckSums
+        public ObservableCollection<byte> CheckSums
         {
             get
             {
@@ -4632,7 +4632,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] SerialNumber
+        public ObservableCollection<byte> SerialNumber
         {
             get
             {
@@ -4801,7 +4801,7 @@ namespace CreateKnxProd.Model
     public partial class DeviceInstance_tBinaryData : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] dataField;
+        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
 
         private string idField;
 
@@ -4811,7 +4811,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Data
+        public ObservableCollection<byte> Data
         {
             get
             {
@@ -4890,13 +4890,13 @@ namespace CreateKnxProd.Model
     public partial class Topology_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Topology_tArea[] areaField;
+        private ObservableCollection<Topology_tArea> areaField = new ObservableCollection<Topology_tArea>();
 
-        private DeviceInstance_t[] unassignedDevicesField;
+        private ObservableCollection<DeviceInstance_t> unassignedDevicesField = new ObservableCollection<DeviceInstance_t>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Area")]
-        public Topology_tArea[] Area
+        public ObservableCollection<Topology_tArea> Area
         {
             get
             {
@@ -4911,7 +4911,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DeviceInstance", IsNullable = false)]
-        public DeviceInstance_t[] UnassignedDevices
+        public ObservableCollection<DeviceInstance_t> UnassignedDevices
         {
             get
             {
@@ -4945,7 +4945,7 @@ namespace CreateKnxProd.Model
     public partial class Topology_tArea : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Topology_tAreaLine[] lineField;
+        private ObservableCollection<Topology_tAreaLine> lineField = new ObservableCollection<Topology_tAreaLine>();
 
         private string idField;
 
@@ -4965,7 +4965,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Line")]
-        public Topology_tAreaLine[] Line
+        public ObservableCollection<Topology_tAreaLine> Line
         {
             get
             {
@@ -5119,7 +5119,7 @@ namespace CreateKnxProd.Model
     public partial class Topology_tAreaLine : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private DeviceInstance_t[] deviceInstanceField;
+        private ObservableCollection<DeviceInstance_t> deviceInstanceField = new ObservableCollection<DeviceInstance_t>();
 
         private BusAccess_t busAccessField;
 
@@ -5149,7 +5149,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("DeviceInstance")]
-        public DeviceInstance_t[] DeviceInstance
+        public ObservableCollection<DeviceInstance_t> DeviceInstance
         {
             get
             {
@@ -5376,11 +5376,11 @@ namespace CreateKnxProd.Model
     public partial class Topology_tAreaLineAdditionalGroupAddresses : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Topology_tAreaLineAdditionalGroupAddressesGroupAddress[] groupAddressField;
+        private ObservableCollection<Topology_tAreaLineAdditionalGroupAddressesGroupAddress> groupAddressField = new ObservableCollection<Topology_tAreaLineAdditionalGroupAddressesGroupAddress>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("GroupAddress")]
-        public Topology_tAreaLineAdditionalGroupAddressesGroupAddress[] GroupAddress
+        public ObservableCollection<Topology_tAreaLineAdditionalGroupAddressesGroupAddress> GroupAddress
         {
             get
             {
@@ -5452,13 +5452,13 @@ namespace CreateKnxProd.Model
     public partial class DeviceCertificate_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] serialNumberField;
+        private ObservableCollection<byte> serialNumberField = new ObservableCollection<byte>();
 
         private string fDSKField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] SerialNumber
+        public ObservableCollection<byte> SerialNumber
         {
             get
             {
@@ -5667,11 +5667,11 @@ namespace CreateKnxProd.Model
 
         private Project_tProjectInformation projectInformationField;
 
-        private Project_tInstallation[] installationsField;
+        private ObservableCollection<Project_tInstallation> installationsField = new ObservableCollection<Project_tInstallation>();
 
-        private UserFile_t[] userFilesField;
+        private ObservableCollection<UserFile_t> userFilesField = new ObservableCollection<UserFile_t>();
 
-        private AddinData_t[] addinDataField;
+        private ObservableCollection<AddinData_t> addinDataField = new ObservableCollection<AddinData_t>();
 
         private string idField;
 
@@ -5691,7 +5691,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Installation", IsNullable = false)]
-        public Project_tInstallation[] Installations
+        public ObservableCollection<Project_tInstallation> Installations
         {
             get
             {
@@ -5706,7 +5706,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("UserFile", IsNullable = false)]
-        public UserFile_t[] UserFiles
+        public ObservableCollection<UserFile_t> UserFiles
         {
             get
             {
@@ -5721,7 +5721,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("AddinData", IsNullable = false)]
-        public AddinData_t[] AddinData
+        public ObservableCollection<AddinData_t> AddinData
         {
             get
             {
@@ -5770,13 +5770,13 @@ namespace CreateKnxProd.Model
     public partial class Project_tProjectInformation : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Project_tProjectInformationHistoryEntry[] historyEntriesField;
+        private ObservableCollection<Project_tProjectInformationHistoryEntry> historyEntriesField = new ObservableCollection<Project_tProjectInformationHistoryEntry>();
 
-        private ToDoItem_t[] toDoItemsField;
+        private ObservableCollection<ToDoItem_t> toDoItemsField = new ObservableCollection<ToDoItem_t>();
 
-        private ProjectTrace_t[] projectTracesField;
+        private ObservableCollection<ProjectTrace_t> projectTracesField = new ObservableCollection<ProjectTrace_t>();
 
-        private DeviceCertificate_t[] deviceCertificatesField;
+        private ObservableCollection<DeviceCertificate_t> deviceCertificatesField = new ObservableCollection<DeviceCertificate_t>();
 
         private string nameField;
 
@@ -5834,7 +5834,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("HistoryEntry", IsNullable = false)]
-        public Project_tProjectInformationHistoryEntry[] HistoryEntries
+        public ObservableCollection<Project_tProjectInformationHistoryEntry> HistoryEntries
         {
             get
             {
@@ -5849,7 +5849,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ToDoItem", IsNullable = false)]
-        public ToDoItem_t[] ToDoItems
+        public ObservableCollection<ToDoItem_t> ToDoItems
         {
             get
             {
@@ -5864,7 +5864,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ProjectTrace", IsNullable = false)]
-        public ProjectTrace_t[] ProjectTraces
+        public ObservableCollection<ProjectTrace_t> ProjectTraces
         {
             get
             {
@@ -5879,7 +5879,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DeviceCertificate", IsNullable = false)]
-        public DeviceCertificate_t[] DeviceCertificates
+        public ObservableCollection<DeviceCertificate_t> DeviceCertificates
         {
             get
             {
@@ -6451,15 +6451,15 @@ namespace CreateKnxProd.Model
 
         private Topology_t topologyField;
 
-        private Space_t[] locationsField;
+        private ObservableCollection<Space_t> locationsField = new ObservableCollection<Space_t>();
 
         private GroupAddresses_t groupAddressesField;
 
-        private Trade_t[] tradesField;
+        private ObservableCollection<Trade_t> tradesField = new ObservableCollection<Trade_t>();
 
         private BusAccess_t busAccessField;
 
-        private SplitInfo_t[] splitInfosField;
+        private ObservableCollection<SplitInfo_t> splitInfosField = new ObservableCollection<SplitInfo_t>();
 
         private string nameField;
 
@@ -6517,7 +6517,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Space", IsNullable = false)]
-        public Space_t[] Locations
+        public ObservableCollection<Space_t> Locations
         {
             get
             {
@@ -6546,7 +6546,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Trade", IsNullable = false)]
-        public Trade_t[] Trades
+        public ObservableCollection<Trade_t> Trades
         {
             get
             {
@@ -6575,7 +6575,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SplitInfo", IsNullable = false)]
-        public SplitInfo_t[] SplitInfos
+        public ObservableCollection<SplitInfo_t> SplitInfos
         {
             get
             {
@@ -6903,11 +6903,11 @@ namespace CreateKnxProd.Model
 
         private ObservableCollection<string> mediumTypesField = new ObservableCollection<string>();
 
-        private byte[] hashField;
+        private ObservableCollection<byte> hashField = new ObservableCollection<byte>();
 
-        private byte[] checkSumsField;
+        private ObservableCollection<byte> checkSumsField = new ObservableCollection<byte>();
 
-        private byte[] loadedImageField;
+        private ObservableCollection<byte> loadedImageField = new ObservableCollection<byte>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ApplicationProgramRef")]
@@ -6970,7 +6970,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] Hash
+        public ObservableCollection<byte> Hash
         {
             get
             {
@@ -6985,7 +6985,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] CheckSums
+        public ObservableCollection<byte> CheckSums
         {
             get
             {
@@ -7000,7 +7000,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] LoadedImage
+        public ObservableCollection<byte> LoadedImage
         {
             get
             {
@@ -7044,7 +7044,7 @@ namespace CreateKnxProd.Model
 
         private bool registrationDateFieldSpecified;
 
-        private byte[] registrationSignatureField;
+        private ObservableCollection<byte> registrationSignatureField = new ObservableCollection<byte>();
 
         private RegistrationInfo_tRegistrationKey registrationKeyField;
 
@@ -7130,7 +7130,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] RegistrationSignature
+        public ObservableCollection<byte> RegistrationSignature
         {
             get
             {
@@ -7712,9 +7712,9 @@ namespace CreateKnxProd.Model
     public partial class Hardware_tProduct : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private Hardware_tProductBaggage[] baggagesField;
+        private ObservableCollection<Hardware_tProductBaggage> baggagesField = new ObservableCollection<Hardware_tProductBaggage>();
 
-        private Hardware_tProductAttribute[] attributesField;
+        private ObservableCollection<Hardware_tProductAttribute> attributesField = new ObservableCollection<Hardware_tProductAttribute>();
 
         private RegistrationInfo_t registrationInfoField;
 
@@ -7736,7 +7736,7 @@ namespace CreateKnxProd.Model
 
         private ushort nonRegRelevantDataVersionField;
 
-        private byte[] hashField;
+        private ObservableCollection<byte> hashField = new ObservableCollection<byte>();
 
         private string internalDescriptionField;
 
@@ -7747,7 +7747,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Baggage", IsNullable = false)]
-        public Hardware_tProductBaggage[] Baggages
+        public ObservableCollection<Hardware_tProductBaggage> Baggages
         {
             get
             {
@@ -7762,7 +7762,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Attribute", IsNullable = false)]
-        public Hardware_tProductAttribute[] Attributes
+        public ObservableCollection<Hardware_tProductAttribute> Attributes
         {
             get
             {
@@ -7927,7 +7927,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] Hash
+        public ObservableCollection<byte> Hash
         {
             get
             {
@@ -8161,13 +8161,13 @@ namespace CreateKnxProd.Model
 
         private bool readOnInitFlagFieldSpecified;
 
-        private string[] datapointTypeField;
+        private ObservableCollection<string> datapointTypeField = new ObservableCollection<string>();
 
         private string textParameterRefIdField;
 
         private string internalDescriptionField;
 
-        private string[] rolesField;
+        private ObservableCollection<string> rolesField = new ObservableCollection<string>();
 
         private ComObjectSecurityRequirements_t securityRequiredField;
 
@@ -8505,7 +8505,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "NCName")]
-        public string[] DatapointType
+        public ObservableCollection<string> DatapointType
         {
             get
             {
@@ -8550,7 +8550,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string[] Roles
+        public ObservableCollection<string> Roles
         {
             get
             {
@@ -8896,7 +8896,7 @@ namespace CreateKnxProd.Model
 
         private Enable_t readOnInitFlagField;
 
-        private string[] datapointTypeField;
+        private ObservableCollection<string> datapointTypeField = new ObservableCollection<string>();
 
         private string internalDescriptionField;
 
@@ -9106,7 +9106,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "NCName")]
-        public string[] DatapointType
+        public ObservableCollection<string> DatapointType
         {
             get
             {
@@ -9171,7 +9171,7 @@ namespace CreateKnxProd.Model
     public partial class ParameterValidation_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ParameterValidation_tParameterRefRef[] parametersField;
+        private ObservableCollection<ParameterValidation_tParameterRefRef> parametersField = new ObservableCollection<ParameterValidation_tParameterRefRef>();
 
         private string idField;
 
@@ -9185,7 +9185,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterRefRef", IsNullable = false)]
-        public ParameterValidation_tParameterRefRef[] Parameters
+        public ObservableCollection<ParameterValidation_tParameterRefRef> Parameters
         {
             get
             {
@@ -9454,9 +9454,9 @@ namespace CreateKnxProd.Model
 
         private string lRTransformationField;
 
-        private ParameterCalculation_tParameterRefRef[] lParametersField;
+        private ObservableCollection<ParameterCalculation_tParameterRefRef> lParametersField = new ObservableCollection<ParameterCalculation_tParameterRefRef>();
 
-        private ParameterCalculation_tParameterRefRef1[] rParametersField;
+        private ObservableCollection<ParameterCalculation_tParameterRefRef1> rParametersField = new ObservableCollection<ParameterCalculation_tParameterRefRef1>();
 
         private string idField;
 
@@ -9504,7 +9504,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterRefRef", IsNullable = false)]
-        public ParameterCalculation_tParameterRefRef[] LParameters
+        public ObservableCollection<ParameterCalculation_tParameterRefRef> LParameters
         {
             get
             {
@@ -9519,7 +9519,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterRefRef", IsNullable = false)]
-        public ParameterCalculation_tParameterRefRef1[] RParameters
+        public ObservableCollection<ParameterCalculation_tParameterRefRef1> RParameters
         {
             get
             {
@@ -10797,7 +10797,7 @@ namespace CreateKnxProd.Model
     public partial class BinaryData_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] dataField;
+        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
 
         private string nameField;
 
@@ -10807,7 +10807,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Data
+        public ObservableCollection<byte> Data
         {
             get
             {
@@ -10886,7 +10886,7 @@ namespace CreateKnxProd.Model
     public partial class Fixup_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private uint[] offsetField;
+        private ObservableCollection<uint> offsetField = new ObservableCollection<uint>();
 
         private string functionRefField;
 
@@ -10894,7 +10894,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Offset")]
-        public uint[] Offset
+        public ObservableCollection<uint> Offset
         {
             get
             {
@@ -10958,7 +10958,7 @@ namespace CreateKnxProd.Model
     public partial class DependentChannelChoose_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private DependentChannelChoose_tWhen[] whenField;
+        private ObservableCollection<DependentChannelChoose_tWhen> whenField = new ObservableCollection<DependentChannelChoose_tWhen>();
 
         private string paramRefIdField;
 
@@ -10966,7 +10966,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("when")]
-        public DependentChannelChoose_tWhen[] when
+        public ObservableCollection<DependentChannelChoose_tWhen> when
         {
             get
             {
@@ -11030,13 +11030,13 @@ namespace CreateKnxProd.Model
     public partial class DependentChannelChoose_tWhen : When_t
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Channel", typeof(ApplicationProgramChannel_t))]
         [System.Xml.Serialization.XmlElementAttribute("Rename", typeof(Rename_t))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(DependentChannelChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -11059,7 +11059,7 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramChannel_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         private string nameField;
 
@@ -11082,7 +11082,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlElementAttribute("ComObjectRefRef", typeof(ComObjectRefRef_t))]
         [System.Xml.Serialization.XmlElementAttribute("ParameterBlock", typeof(ComObjectParameterBlock_t))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(ChannelChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -11236,7 +11236,7 @@ namespace CreateKnxProd.Model
     public partial class BinaryDataRef_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] dataField;
+        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
 
         private string refIdField;
 
@@ -11244,7 +11244,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Data
+        public ObservableCollection<byte> Data
         {
             get
             {
@@ -11367,7 +11367,7 @@ namespace CreateKnxProd.Model
 
         private ComObjectParameterBlock_tColumns columnsField;
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         private string idField;
 
@@ -11445,7 +11445,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlElementAttribute("ParameterRefRef", typeof(ParameterRefRef_t))]
         [System.Xml.Serialization.XmlElementAttribute("ParameterSeparator", typeof(ParameterSeparator_t))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(ComObjectParameterChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -11708,11 +11708,11 @@ namespace CreateKnxProd.Model
     public partial class ComObjectParameterBlock_tRows : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ComObjectParameterBlock_tRowsRow[] rowField;
+        private ObservableCollection<ComObjectParameterBlock_tRowsRow> rowField = new ObservableCollection<ComObjectParameterBlock_tRowsRow>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Row")]
-        public ComObjectParameterBlock_tRowsRow[] Row
+        public ObservableCollection<ComObjectParameterBlock_tRowsRow> Row
         {
             get
             {
@@ -11875,11 +11875,11 @@ namespace CreateKnxProd.Model
     public partial class ComObjectParameterBlock_tColumns : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ComObjectParameterBlock_tColumnsColumn[] columnField;
+        private ObservableCollection<ComObjectParameterBlock_tColumnsColumn> columnField = new ObservableCollection<ComObjectParameterBlock_tColumnsColumn>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Column")]
-        public ComObjectParameterBlock_tColumnsColumn[] Column
+        public ObservableCollection<ComObjectParameterBlock_tColumnsColumn> Column
         {
             get
             {
@@ -12553,7 +12553,7 @@ namespace CreateKnxProd.Model
     public partial class ComObjectParameterChoose_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ComObjectParameterChoose_tWhen[] whenField;
+        private ObservableCollection<ComObjectParameterChoose_tWhen> whenField = new ObservableCollection<ComObjectParameterChoose_tWhen>();
 
         private string paramRefIdField;
 
@@ -12561,7 +12561,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("when")]
-        public ComObjectParameterChoose_tWhen[] when
+        public ObservableCollection<ComObjectParameterChoose_tWhen> when
         {
             get
             {
@@ -12625,7 +12625,7 @@ namespace CreateKnxProd.Model
     public partial class ComObjectParameterChoose_tWhen : When_t
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Assign", typeof(Assign_t))]
@@ -12637,7 +12637,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlElementAttribute("ParameterSeparator", typeof(ParameterSeparator_t))]
         [System.Xml.Serialization.XmlElementAttribute("Rename", typeof(Rename_t))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(ComObjectParameterChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -12861,7 +12861,7 @@ namespace CreateKnxProd.Model
     public partial class ChannelChoose_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ChannelChoose_tWhen[] whenField;
+        private ObservableCollection<ChannelChoose_tWhen> whenField = new ObservableCollection<ChannelChoose_tWhen>();
 
         private string paramRefIdField;
 
@@ -12869,7 +12869,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("when")]
-        public ChannelChoose_tWhen[] when
+        public ObservableCollection<ChannelChoose_tWhen> when
         {
             get
             {
@@ -12933,7 +12933,7 @@ namespace CreateKnxProd.Model
     public partial class ChannelChoose_tWhen : When_t
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BinaryDataRef", typeof(BinaryDataRef_t))]
@@ -12941,7 +12941,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlElementAttribute("ParameterBlock", typeof(ComObjectParameterBlock_t))]
         [System.Xml.Serialization.XmlElementAttribute("Rename", typeof(Rename_t))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(ChannelChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -13807,7 +13807,7 @@ namespace CreateKnxProd.Model
     public partial class ParameterType_tTypeRestriction : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ParameterType_tTypeRestrictionEnumeration[] enumerationField;
+        private ObservableCollection<ParameterType_tTypeRestrictionEnumeration> enumerationField = new ObservableCollection<ParameterType_tTypeRestrictionEnumeration>();
 
         private ParameterType_tTypeRestrictionBase baseField;
 
@@ -13815,7 +13815,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Enumeration")]
-        public ParameterType_tTypeRestrictionEnumeration[] Enumeration
+        public ObservableCollection<ParameterType_tTypeRestrictionEnumeration> Enumeration
         {
             get
             {
@@ -13893,7 +13893,7 @@ namespace CreateKnxProd.Model
 
         private bool displayOrderFieldSpecified;
 
-        private byte[] binaryValueField;
+        private ObservableCollection<byte> binaryValueField = new ObservableCollection<byte>();
 
         public ParameterType_tTypeRestrictionEnumeration()
         {
@@ -14008,7 +14008,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] BinaryValue
+        public ObservableCollection<byte> BinaryValue
         {
             get
             {
@@ -14354,41 +14354,41 @@ namespace CreateKnxProd.Model
 
         private ApplicationProgramStatic_tCode codeField;
 
-        private ParameterType_t[] parameterTypesField;
+        private ObservableCollection<ParameterType_t> parameterTypesField;
 
-        private object[] parametersField;
+        private ObservableCollection<object> parametersField;
 
-        private ParameterRef_t[] parameterRefsField;
+        private ObservableCollection<ParameterRef_t> parameterRefsField;
 
-        private ParameterCalculation_t[] parameterCalculationsField;
+        private ObservableCollection<ParameterCalculation_t> parameterCalculationsField;
 
-        private ParameterValidation_t[] parameterValidationsField;
+        private ObservableCollection<ParameterValidation_t> parameterValidationsField;
 
         private ApplicationProgramStatic_tComObjectTable comObjectTableField;
 
-        private ComObjectRef_t[] comObjectRefsField;
+        private ObservableCollection<ComObjectRef_t> comObjectRefsField;
 
         private ApplicationProgramStatic_tAddressTable addressTableField;
 
         private ApplicationProgramStatic_tAssociationTable associationTableField;
 
-        private Fixup_t[] fixupListField;
+        private ObservableCollection<Fixup_t> fixupListField;
 
-        private LoadProcedures_tLoadProcedure[] loadProceduresField;
+        private ObservableCollection<LoadProcedures_tLoadProcedure> loadProceduresField;
 
         private ApplicationProgramStatic_tExtension extensionField;
 
-        private BinaryData_t[] binaryDataField;
+        private ObservableCollection<BinaryData_t> binaryDataField;
 
         private ApplicationProgramStatic_tDeviceCompare deviceCompareField;
 
-        private ApplicationProgramStatic_tMessage[] messagesField;
+        private ObservableCollection<ApplicationProgramStatic_tMessage> messagesField;
 
         private ApplicationProgramStatic_tScript scriptField;
 
-        private ApplicationProgramStatic_tSecurityRole[] securityRolesField;
+        private ObservableCollection<ApplicationProgramStatic_tSecurityRole> securityRolesField;
 
-        private ApplicationProgramStatic_tBusInterface[] busInterfacesField;
+        private ObservableCollection<ApplicationProgramStatic_tBusInterface> busInterfacesField;
 
         private ApplicationProgramStatic_tOptions optionsField;
 
@@ -14408,7 +14408,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterType", IsNullable = false)]
-        public ParameterType_t[] ParameterTypes
+        public ObservableCollection<ParameterType_t> ParameterTypes
         {
             get
             {
@@ -14424,7 +14424,7 @@ namespace CreateKnxProd.Model
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Parameter", typeof(Parameter_t), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("Union", typeof(ApplicationProgramStatic_tUnion), IsNullable = false)]
-        public object[] Parameters
+        public ObservableCollection<object> Parameters
         {
             get
             {
@@ -14439,7 +14439,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterRef", IsNullable = false)]
-        public ParameterRef_t[] ParameterRefs
+        public ObservableCollection<ParameterRef_t> ParameterRefs
         {
             get
             {
@@ -14454,7 +14454,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterCalculation", IsNullable = false)]
-        public ParameterCalculation_t[] ParameterCalculations
+        public ObservableCollection<ParameterCalculation_t> ParameterCalculations
         {
             get
             {
@@ -14469,7 +14469,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ParameterValidation", IsNullable = false)]
-        public ParameterValidation_t[] ParameterValidations
+        public ObservableCollection<ParameterValidation_t> ParameterValidations
         {
             get
             {
@@ -14498,7 +14498,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ComObjectRef", IsNullable = false)]
-        public ComObjectRef_t[] ComObjectRefs
+        public ObservableCollection<ComObjectRef_t> ComObjectRefs
         {
             get
             {
@@ -14541,7 +14541,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Fixup", IsNullable = false)]
-        public Fixup_t[] FixupList
+        public ObservableCollection<Fixup_t> FixupList
         {
             get
             {
@@ -14556,7 +14556,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("LoadProcedure", IsNullable = false)]
-        public LoadProcedures_tLoadProcedure[] LoadProcedures
+        public ObservableCollection<LoadProcedures_tLoadProcedure> LoadProcedures
         {
             get
             {
@@ -14585,7 +14585,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("BinaryData", IsNullable = false)]
-        public BinaryData_t[] BinaryData
+        public ObservableCollection<BinaryData_t> BinaryData
         {
             get
             {
@@ -14614,7 +14614,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Message", IsNullable = false)]
-        public ApplicationProgramStatic_tMessage[] Messages
+        public ObservableCollection<ApplicationProgramStatic_tMessage> Messages
         {
             get
             {
@@ -14643,7 +14643,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SecurityRole", IsNullable = false)]
-        public ApplicationProgramStatic_tSecurityRole[] SecurityRoles
+        public ObservableCollection<ApplicationProgramStatic_tSecurityRole> SecurityRoles
         {
             get
             {
@@ -14658,7 +14658,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("BusInterface", IsNullable = false)]
-        public ApplicationProgramStatic_tBusInterface[] BusInterfaces
+        public ObservableCollection<ApplicationProgramStatic_tBusInterface> BusInterfaces
         {
             get
             {
@@ -14706,13 +14706,13 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tCode : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ApplicationProgramStatic_tCodeAbsoluteSegment[] absoluteSegmentField;
+        private ObservableCollection<ApplicationProgramStatic_tCodeAbsoluteSegment> absoluteSegmentField = new ObservableCollection<ApplicationProgramStatic_tCodeAbsoluteSegment>();
 
-        private ApplicationProgramStatic_tCodeRelativeSegment[] relativeSegmentField;
+        private ObservableCollection<ApplicationProgramStatic_tCodeRelativeSegment> relativeSegmentField = new ObservableCollection<ApplicationProgramStatic_tCodeRelativeSegment>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AbsoluteSegment")]
-        public ApplicationProgramStatic_tCodeAbsoluteSegment[] AbsoluteSegment
+        public ObservableCollection<ApplicationProgramStatic_tCodeAbsoluteSegment> AbsoluteSegment
         {
             get
             {
@@ -14727,7 +14727,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RelativeSegment")]
-        public ApplicationProgramStatic_tCodeRelativeSegment[] RelativeSegment
+        public ObservableCollection<ApplicationProgramStatic_tCodeRelativeSegment> RelativeSegment
         {
             get
             {
@@ -14761,9 +14761,9 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tCodeAbsoluteSegment : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] dataField;
+        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
 
-        private byte[] maskField;
+        private ObservableCollection<byte> maskField = new ObservableCollection<byte>();
 
         private string idField;
 
@@ -14788,7 +14788,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Data
+        public ObservableCollection<byte> Data
         {
             get
             {
@@ -14803,7 +14803,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Mask
+        public ObservableCollection<byte> Mask
         {
             get
             {
@@ -14975,9 +14975,9 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tCodeRelativeSegment : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] dataField;
+        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
 
-        private byte[] maskField;
+        private ObservableCollection<byte> maskField = new ObservableCollection<byte>();
 
         private string idField;
 
@@ -14993,7 +14993,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Data
+        public ObservableCollection<byte> Data
         {
             get
             {
@@ -15008,7 +15008,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Mask
+        public ObservableCollection<byte> Mask
         {
             get
             {
@@ -15134,7 +15134,7 @@ namespace CreateKnxProd.Model
 
         private object itemField;
 
-        private UnionParameter_t[] parameterField;
+        private ObservableCollection<UnionParameter_t> parameterField = new ObservableCollection<UnionParameter_t>();
 
         private uint sizeInBitField;
 
@@ -15156,7 +15156,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Parameter")]
-        public UnionParameter_t[] Parameter
+        public ObservableCollection<UnionParameter_t> Parameter
         {
             get
             {
@@ -15440,7 +15440,7 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tComObjectTable : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ComObject_t[] comObjectField;
+        private ObservableCollection<ComObject_t> comObjectField = new ObservableCollection<ComObject_t>();
 
         private string codeSegmentField;
 
@@ -15450,7 +15450,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ComObject")]
-        public ComObject_t[] ComObject
+        public ObservableCollection<ComObject_t> ComObject
         {
             get
             {
@@ -15751,7 +15751,7 @@ namespace CreateKnxProd.Model
     public partial class LoadProcedure_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("LdCtrlAbsSegment", typeof(LoadProcedure_tLdCtrlAbsSegment))]
@@ -15789,7 +15789,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlElementAttribute("LdCtrlWriteProp", typeof(LoadProcedure_tLdCtrlWriteProp))]
         [System.Xml.Serialization.XmlElementAttribute("LdCtrlWriteRelMem", typeof(LoadProcedure_tLdCtrlWriteRelMem))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(LdCtrlBaseChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -16029,7 +16029,7 @@ namespace CreateKnxProd.Model
     public abstract partial class LdCtrlBase_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private LdCtrlBase_tOnError[] onErrorField;
+        private ObservableCollection<LdCtrlBase_tOnError> onErrorField = new ObservableCollection<LdCtrlBase_tOnError>();
 
         private LdCtrlProcType_t appliesToField;
 
@@ -16042,7 +16042,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OnError")]
-        public LdCtrlBase_tOnError[] OnError
+        public ObservableCollection<LdCtrlBase_tOnError> OnError
         {
             get
             {
@@ -16236,9 +16236,9 @@ namespace CreateKnxProd.Model
 
         private bool allowCachedValueField;
 
-        private byte[] inlineDataField;
+        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
 
-        private byte[] maskField;
+        private ObservableCollection<byte> maskField = new ObservableCollection<byte>();
 
         private string rangeField;
 
@@ -16274,7 +16274,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] InlineData
+        public ObservableCollection<byte> InlineData
         {
             get
             {
@@ -16289,7 +16289,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] Mask
+        public ObservableCollection<byte> Mask
         {
             get
             {
@@ -17221,7 +17221,7 @@ namespace CreateKnxProd.Model
 
         private byte propIdField;
 
-        private byte[] inlineDataField;
+        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
 
         public LoadProcedure_tLdCtrlInvokeFunctionProp()
         {
@@ -17321,7 +17321,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] InlineData
+        public ObservableCollection<byte> InlineData
         {
             get
             {
@@ -19268,7 +19268,7 @@ namespace CreateKnxProd.Model
 
         private bool verifyField;
 
-        private byte[] inlineDataField;
+        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
 
         public LoadProcedure_tLdCtrlWriteMem()
         {
@@ -19338,7 +19338,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] InlineData
+        public ObservableCollection<byte> InlineData
         {
             get
             {
@@ -19380,7 +19380,7 @@ namespace CreateKnxProd.Model
 
         private bool verifyField;
 
-        private byte[] inlineDataField;
+        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
 
         public LoadProcedure_tLdCtrlWriteProp()
         {
@@ -19529,7 +19529,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] InlineData
+        public ObservableCollection<byte> InlineData
         {
             get
             {
@@ -19569,7 +19569,7 @@ namespace CreateKnxProd.Model
 
         private bool verifyField;
 
-        private byte[] inlineDataField;
+        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
 
         public LoadProcedure_tLdCtrlWriteRelMem()
         {
@@ -19699,7 +19699,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] InlineData
+        public ObservableCollection<byte> InlineData
         {
             get
             {
@@ -19722,7 +19722,7 @@ namespace CreateKnxProd.Model
     public partial class LdCtrlBaseChoose_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private LdCtrlBaseChoose_tWhen[] whenField;
+        private ObservableCollection<LdCtrlBaseChoose_tWhen> whenField = new ObservableCollection<LdCtrlBaseChoose_tWhen>();
 
         private string paramRefIdField;
 
@@ -19730,7 +19730,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("when")]
-        public LdCtrlBaseChoose_tWhen[] when
+        public ObservableCollection<LdCtrlBaseChoose_tWhen> when
         {
             get
             {
@@ -19794,7 +19794,7 @@ namespace CreateKnxProd.Model
     public partial class LdCtrlBaseChoose_tWhen : When_t
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("LdCtrlAbsSegment", typeof(LoadProcedure_tLdCtrlAbsSegment))]
@@ -19832,7 +19832,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlElementAttribute("LdCtrlWriteProp", typeof(LoadProcedure_tLdCtrlWriteProp))]
         [System.Xml.Serialization.XmlElementAttribute("LdCtrlWriteRelMem", typeof(LoadProcedure_tLdCtrlWriteRelMem))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(LdCtrlBaseChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -19855,7 +19855,7 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tExtension : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ApplicationProgramStatic_tExtensionBaggage[] baggageField;
+        private ObservableCollection<ApplicationProgramStatic_tExtensionBaggage> baggageField = new ObservableCollection<ApplicationProgramStatic_tExtensionBaggage>();
 
         private string etsDownloadPluginField;
 
@@ -19863,7 +19863,7 @@ namespace CreateKnxProd.Model
 
         private string etsDataHandlerField;
 
-        private Capability_t[] etsDataHandlerCapabilitiesField;
+        private ObservableCollection<Capability_t> etsDataHandlerCapabilitiesField = new ObservableCollection<Capability_t>();
 
         private bool requiresExternalSoftwareField;
 
@@ -19874,7 +19874,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Baggage")]
-        public ApplicationProgramStatic_tExtensionBaggage[] Baggage
+        public ObservableCollection<ApplicationProgramStatic_tExtensionBaggage> Baggage
         {
             get
             {
@@ -19934,7 +19934,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public Capability_t[] EtsDataHandlerCapabilities
+        public ObservableCollection<Capability_t> EtsDataHandlerCapabilities
         {
             get
             {
@@ -20048,9 +20048,9 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tDeviceCompare : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ApplicationProgramStatic_tDeviceCompareExcludeMemory[] excludeMemoryField;
+        private ObservableCollection<ApplicationProgramStatic_tDeviceCompareExcludeMemory> excludeMemoryField = new ObservableCollection<ApplicationProgramStatic_tDeviceCompareExcludeMemory>();
 
-        private ApplicationProgramStatic_tDeviceCompareExcludeProperty[] excludePropertyField;
+        private ObservableCollection<ApplicationProgramStatic_tDeviceCompareExcludeProperty> excludePropertyField = new ObservableCollection<ApplicationProgramStatic_tDeviceCompareExcludeProperty>();
 
         private ComTableExpectation_t standardComTablesExpectableField;
 
@@ -20061,7 +20061,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ExcludeMemory")]
-        public ApplicationProgramStatic_tDeviceCompareExcludeMemory[] ExcludeMemory
+        public ObservableCollection<ApplicationProgramStatic_tDeviceCompareExcludeMemory> ExcludeMemory
         {
             get
             {
@@ -20076,7 +20076,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ExcludeProperty")]
-        public ApplicationProgramStatic_tDeviceCompareExcludeProperty[] ExcludeProperty
+        public ObservableCollection<ApplicationProgramStatic_tDeviceCompareExcludeProperty> ExcludeProperty
         {
             get
             {
@@ -21611,7 +21611,7 @@ namespace CreateKnxProd.Model
 
         private ApplicationProgramStatic_t staticField;
 
-        private object[] dynamicField;
+        private ObservableCollection<object> dynamicField = new ObservableCollection<object>();
 
         private string idField;
 
@@ -21679,9 +21679,9 @@ namespace CreateKnxProd.Model
 
         private bool downloadInfoIncompleteField;
 
-        private byte[] replacesVersionsField;
+        private ObservableCollection<byte> replacesVersionsField = new ObservableCollection<byte>();
 
-        private byte[] hashField;
+        private ObservableCollection<byte> hashField = new ObservableCollection<byte>();
 
         private string internalDescriptionField;
 
@@ -21721,7 +21721,7 @@ namespace CreateKnxProd.Model
         [System.Xml.Serialization.XmlArrayItemAttribute("Channel", typeof(ApplicationProgramChannel_t), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("ChannelIndependentBlock", typeof(ApplicationProgramDynamic_tChannelIndependentBlock), IsNullable = false)]
         [System.Xml.Serialization.XmlArrayItemAttribute("choose", typeof(DependentChannelChoose_t), IsNullable = false)]
-        public object[] Dynamic
+        public ObservableCollection<object> Dynamic
         {
             get
             {
@@ -22245,7 +22245,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte[] ReplacesVersions
+        public ObservableCollection<byte> ReplacesVersions
         {
             get
             {
@@ -22260,7 +22260,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public byte[] Hash
+        public ObservableCollection<byte> Hash
         {
             get
             {
@@ -22309,14 +22309,14 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramDynamic_tChannelIndependentBlock : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private object[] itemsField;
+        private ObservableCollection<object> itemsField = new ObservableCollection<object>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BinaryDataRef", typeof(BinaryDataRef_t))]
         [System.Xml.Serialization.XmlElementAttribute("ComObjectRefRef", typeof(ComObjectRefRef_t))]
         [System.Xml.Serialization.XmlElementAttribute("ParameterBlock", typeof(ComObjectParameterBlock_t))]
         [System.Xml.Serialization.XmlElementAttribute("choose", typeof(ChannelChoose_t))]
-        public object[] Items
+        public ObservableCollection<object> Items
         {
             get
             {
@@ -22755,13 +22755,13 @@ namespace CreateKnxProd.Model
     public partial class LanguageData_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private LanguageData_tTranslationUnit[] translationUnitField;
+        private ObservableCollection<LanguageData_tTranslationUnit> translationUnitField = new ObservableCollection<LanguageData_tTranslationUnit>();
 
         private string identifierField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TranslationUnit")]
-        public LanguageData_tTranslationUnit[] TranslationUnit
+        public ObservableCollection<LanguageData_tTranslationUnit> TranslationUnit
         {
             get
             {
@@ -22810,7 +22810,7 @@ namespace CreateKnxProd.Model
     public partial class LanguageData_tTranslationUnit : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private LanguageData_tTranslationUnitTranslationElement[] translationElementField;
+        private ObservableCollection<LanguageData_tTranslationUnitTranslationElement> translationElementField = new ObservableCollection<LanguageData_tTranslationUnitTranslationElement>();
 
         private string refIdField;
 
@@ -22823,7 +22823,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TranslationElement")]
-        public LanguageData_tTranslationUnitTranslationElement[] TranslationElement
+        public ObservableCollection<LanguageData_tTranslationUnitTranslationElement> TranslationElement
         {
             get
             {
@@ -22888,13 +22888,13 @@ namespace CreateKnxProd.Model
     public partial class LanguageData_tTranslationUnitTranslationElement : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private LanguageData_tTranslationUnitTranslationElementTranslation[] translationField;
+        private ObservableCollection<LanguageData_tTranslationUnitTranslationElementTranslation> translationField = new ObservableCollection<LanguageData_tTranslationUnitTranslationElementTranslation>();
 
         private string refIdField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Translation")]
-        public LanguageData_tTranslationUnitTranslationElementTranslation[] Translation
+        public ObservableCollection<LanguageData_tTranslationUnitTranslationElementTranslation> Translation
         {
             get
             {
@@ -22998,7 +22998,7 @@ namespace CreateKnxProd.Model
     public partial class SpaceUsage_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private SpaceUsage_t[] spaceUsageField;
+        private ObservableCollection<SpaceUsage_t> spaceUsageField = new ObservableCollection<SpaceUsage_t>();
 
         private string idField;
 
@@ -23008,7 +23008,7 @@ namespace CreateKnxProd.Model
 
         private string descriptionField;
 
-        private string[] relationsField;
+        private ObservableCollection<string> relationsField = new ObservableCollection<string>();
 
         private DeprecationStatus_t statusField;
 
@@ -23019,7 +23019,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SpaceUsage")]
-        public SpaceUsage_t[] SpaceUsage
+        public ObservableCollection<SpaceUsage_t> SpaceUsage
         {
             get
             {
@@ -23094,7 +23094,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "NCName")]
-        public string[] Relations
+        public ObservableCollection<string> Relations
         {
             get
             {
@@ -23161,7 +23161,7 @@ namespace CreateKnxProd.Model
     public partial class FunctionType_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private FunctionType_tFunctionPoint[] functionPointField;
+        private ObservableCollection<FunctionType_tFunctionPoint> functionPointField = new ObservableCollection<FunctionType_tFunctionPoint>();
 
         private string idField;
 
@@ -23180,7 +23180,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionPoint")]
-        public FunctionType_tFunctionPoint[] FunctionPoint
+        public ObservableCollection<FunctionType_tFunctionPoint> FunctionPoint
         {
             get
             {
@@ -23296,7 +23296,7 @@ namespace CreateKnxProd.Model
 
         private string datapointTypeField;
 
-        private string[] characteristicsField;
+        private ObservableCollection<string> characteristicsField = new ObservableCollection<string>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -23345,7 +23345,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string[] Characteristics
+        public ObservableCollection<string> Characteristics
         {
             get
             {
@@ -23379,9 +23379,9 @@ namespace CreateKnxProd.Model
     public partial class FunctionsGroup_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private FunctionsGroup_t[] functionsGroupField;
+        private ObservableCollection<FunctionsGroup_t> functionsGroupField = new ObservableCollection<FunctionsGroup_t>();
 
-        private FunctionType_t[] functionTypeField;
+        private ObservableCollection<FunctionType_t> functionTypeField = new ObservableCollection<FunctionType_t>();
 
         private string idField;
 
@@ -23400,7 +23400,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionsGroup")]
-        public FunctionsGroup_t[] FunctionsGroup
+        public ObservableCollection<FunctionsGroup_t> FunctionsGroup
         {
             get
             {
@@ -23415,7 +23415,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionType")]
-        public FunctionType_t[] FunctionType
+        public ObservableCollection<FunctionType_t> FunctionType
         {
             get
             {
@@ -23990,15 +23990,15 @@ namespace CreateKnxProd.Model
     public partial class HawkConfigurationData_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private HawkConfigurationData_tFeature[] featuresField;
+        private ObservableCollection<HawkConfigurationData_tFeature> featuresField = new ObservableCollection<HawkConfigurationData_tFeature>();
 
-        private HawkConfigurationData_tResource[] resourcesField;
+        private ObservableCollection<HawkConfigurationData_tResource> resourcesField = new ObservableCollection<HawkConfigurationData_tResource>();
 
-        private HawkConfigurationData_tProcedure[] proceduresField;
+        private ObservableCollection<HawkConfigurationData_tProcedure> proceduresField = new ObservableCollection<HawkConfigurationData_tProcedure>();
 
-        private HawkConfigurationData_tMemorySegment[] memorySegmentsField;
+        private ObservableCollection<HawkConfigurationData_tMemorySegment> memorySegmentsField = new ObservableCollection<HawkConfigurationData_tMemorySegment>();
 
-        private HawkConfigurationData_tInterfaceObject[] interfaceObjectsField;
+        private ObservableCollection<HawkConfigurationData_tInterfaceObject> interfaceObjectsField = new ObservableCollection<HawkConfigurationData_tInterfaceObject>();
 
         private string ets3SystemPluginField;
 
@@ -24008,7 +24008,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Feature", IsNullable = false)]
-        public HawkConfigurationData_tFeature[] Features
+        public ObservableCollection<HawkConfigurationData_tFeature> Features
         {
             get
             {
@@ -24023,7 +24023,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Resource", IsNullable = false)]
-        public HawkConfigurationData_tResource[] Resources
+        public ObservableCollection<HawkConfigurationData_tResource> Resources
         {
             get
             {
@@ -24038,7 +24038,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Procedure", IsNullable = false)]
-        public HawkConfigurationData_tProcedure[] Procedures
+        public ObservableCollection<HawkConfigurationData_tProcedure> Procedures
         {
             get
             {
@@ -24053,7 +24053,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MemorySegment", IsNullable = false)]
-        public HawkConfigurationData_tMemorySegment[] MemorySegments
+        public ObservableCollection<HawkConfigurationData_tMemorySegment> MemorySegments
         {
             get
             {
@@ -24068,7 +24068,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("InterfaceObject", IsNullable = false)]
-        public HawkConfigurationData_tInterfaceObject[] InterfaceObjects
+        public ObservableCollection<HawkConfigurationData_tInterfaceObject> InterfaceObjects
         {
             get
             {
@@ -24283,9 +24283,9 @@ namespace CreateKnxProd.Model
 
         private ResourceName_t nameField;
 
-        private ResourceAccess_t[] accessField;
+        private ObservableCollection<ResourceAccess_t> accessField = new ObservableCollection<ResourceAccess_t>();
 
-        private ResourceMgmtStyle_t[] mgmtStyleField;
+        private ObservableCollection<ResourceMgmtStyle_t> mgmtStyleField = new ObservableCollection<ResourceMgmtStyle_t>();
 
         /// <remarks/>
         public ResourceLocation_t Location
@@ -24360,7 +24360,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ResourceAccess_t[] Access
+        public ObservableCollection<ResourceAccess_t> Access
         {
             get
             {
@@ -24375,7 +24375,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ResourceMgmtStyle_t[] MgmtStyle
+        public ObservableCollection<ResourceMgmtStyle_t> MgmtStyle
         {
             get
             {
@@ -24731,7 +24731,7 @@ namespace CreateKnxProd.Model
 
         private string procedureSubTypeField;
 
-        private ResourceAccess_t[] accessField;
+        private ObservableCollection<ResourceAccess_t> accessField = new ObservableCollection<ResourceAccess_t>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -24765,7 +24765,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ResourceAccess_t[] Access
+        public ObservableCollection<ResourceAccess_t> Access
         {
             get
             {
@@ -24984,7 +24984,7 @@ namespace CreateKnxProd.Model
     public partial class HawkConfigurationData_tInterfaceObject : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private HawkConfigurationData_tInterfaceObjectProperty[] propertyField;
+        private ObservableCollection<HawkConfigurationData_tInterfaceObjectProperty> propertyField = new ObservableCollection<HawkConfigurationData_tInterfaceObjectProperty>();
 
         private byte indexField;
 
@@ -24994,7 +24994,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Property")]
-        public HawkConfigurationData_tInterfaceObjectProperty[] Property
+        public ObservableCollection<HawkConfigurationData_tInterfaceObjectProperty> Property
         {
             get
             {
@@ -25145,11 +25145,11 @@ namespace CreateKnxProd.Model
     public partial class MaskVersion_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private MaskVersion_tDownwardCompatibleMask[] downwardCompatibleMasksField;
+        private ObservableCollection<MaskVersion_tDownwardCompatibleMask> downwardCompatibleMasksField = new ObservableCollection<MaskVersion_tDownwardCompatibleMask>();
 
-        private MaskVersion_tMaskEntry[] maskEntriesField;
+        private ObservableCollection<MaskVersion_tMaskEntry> maskEntriesField = new ObservableCollection<MaskVersion_tMaskEntry>();
 
-        private HawkConfigurationData_t[] hawkConfigurationDataField;
+        private ObservableCollection<HawkConfigurationData_t> hawkConfigurationDataField = new ObservableCollection<HawkConfigurationData_t>();
 
         private string idField;
 
@@ -25157,7 +25157,7 @@ namespace CreateKnxProd.Model
 
         private ushort maskVersionField;
 
-        private byte[] mgmtDescriptor01Field;
+        private ObservableCollection<byte> mgmtDescriptor01Field = new ObservableCollection<byte>();
 
         private MaskVersion_tManagementModel managementModelField;
 
@@ -25167,7 +25167,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DownwardCompatibleMask", IsNullable = false)]
-        public MaskVersion_tDownwardCompatibleMask[] DownwardCompatibleMasks
+        public ObservableCollection<MaskVersion_tDownwardCompatibleMask> DownwardCompatibleMasks
         {
             get
             {
@@ -25182,7 +25182,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("MaskEntry", IsNullable = false)]
-        public MaskVersion_tMaskEntry[] MaskEntries
+        public ObservableCollection<MaskVersion_tMaskEntry> MaskEntries
         {
             get
             {
@@ -25197,7 +25197,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HawkConfigurationData")]
-        public HawkConfigurationData_t[] HawkConfigurationData
+        public ObservableCollection<HawkConfigurationData_t> HawkConfigurationData
         {
             get
             {
@@ -25257,7 +25257,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public byte[] MgmtDescriptor01
+        public ObservableCollection<byte> MgmtDescriptor01
         {
             get
             {
@@ -25584,7 +25584,7 @@ namespace CreateKnxProd.Model
     public partial class DatapointType_tDatapointSubtypeEnumeration : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private DatapointType_tDatapointSubtypeEnumerationEnumValue[] enumValueField;
+        private ObservableCollection<DatapointType_tDatapointSubtypeEnumerationEnumValue> enumValueField = new ObservableCollection<DatapointType_tDatapointSubtypeEnumerationEnumValue>();
 
         private string idField;
 
@@ -25594,7 +25594,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("EnumValue")]
-        public DatapointType_tDatapointSubtypeEnumerationEnumValue[] EnumValue
+        public ObservableCollection<DatapointType_tDatapointSubtypeEnumerationEnumValue> EnumValue
         {
             get
             {
@@ -26616,7 +26616,7 @@ namespace CreateKnxProd.Model
 
         private string textField;
 
-        private string[] pDTField;
+        private ObservableCollection<string> pDTField = new ObservableCollection<string>();
 
         private string dPTField;
 
@@ -26704,7 +26704,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "NCName")]
-        public string[] PDT
+        public ObservableCollection<string> PDT
         {
             get
             {
@@ -27015,7 +27015,7 @@ namespace CreateKnxProd.Model
     public partial class MasterData_tFunctionalBlock : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private MasterData_tFunctionalBlockParameters[] parametersField;
+        private ObservableCollection<MasterData_tFunctionalBlockParameters> parametersField = new ObservableCollection<MasterData_tFunctionalBlockParameters>();
 
         private string nameField;
 
@@ -27023,7 +27023,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Parameters")]
-        public MasterData_tFunctionalBlockParameters[] Parameters
+        public ObservableCollection<MasterData_tFunctionalBlockParameters> Parameters
         {
             get
             {
@@ -27087,13 +27087,13 @@ namespace CreateKnxProd.Model
     public partial class MasterData_tFunctionalBlockParameters : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private MasterData_tFunctionalBlockParametersParameter[] parameterField;
+        private ObservableCollection<MasterData_tFunctionalBlockParametersParameter> parameterField = new ObservableCollection<MasterData_tFunctionalBlockParametersParameter>();
 
         private string objectTypeField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Parameter")]
-        public MasterData_tFunctionalBlockParametersParameter[] Parameter
+        public ObservableCollection<MasterData_tFunctionalBlockParametersParameter> Parameter
         {
             get
             {
@@ -27235,13 +27235,13 @@ namespace CreateKnxProd.Model
     public partial class MasterData_tFunctionTypes : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private FunctionsGroup_t[] functionsGroupField;
+        private ObservableCollection<FunctionsGroup_t> functionsGroupField = new ObservableCollection<FunctionsGroup_t>();
 
-        private FunctionType_t[] functionTypeField;
+        private ObservableCollection<FunctionType_t> functionTypeField = new ObservableCollection<FunctionType_t>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionsGroup")]
-        public FunctionsGroup_t[] FunctionsGroup
+        public ObservableCollection<FunctionsGroup_t> FunctionsGroup
         {
             get
             {
@@ -27256,7 +27256,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionType")]
-        public FunctionType_t[] FunctionType
+        public ObservableCollection<FunctionType_t> FunctionType
         {
             get
             {
@@ -27292,15 +27292,15 @@ namespace CreateKnxProd.Model
 
         private string orderNumberFormattingScriptField;
 
-        private MasterData_tManufacturerPublicKey[] publicKeysField;
+        private ObservableCollection<MasterData_tManufacturerPublicKey> publicKeysField = new ObservableCollection<MasterData_tManufacturerPublicKey>();
 
-        private DatapointType_t[] datapointTypesField;
+        private ObservableCollection<DatapointType_t> datapointTypesField = new ObservableCollection<DatapointType_t>();
 
-        private DatapointRole_t[] datapointRolesField;
+        private ObservableCollection<DatapointRole_t> datapointRolesField = new ObservableCollection<DatapointRole_t>();
 
         private MasterData_tManufacturerFunctionTypes functionTypesField;
 
-        private SpaceUsage_t[] spaceUsagesField;
+        private ObservableCollection<SpaceUsage_t> spaceUsagesField = new ObservableCollection<SpaceUsage_t>();
 
         private string idField;
 
@@ -27316,7 +27316,7 @@ namespace CreateKnxProd.Model
 
         private MasterData_tManufacturerImportRestriction importRestrictionField;
 
-        private string[] importGroupField;
+        private ObservableCollection<string> importGroupField = new ObservableCollection<string>();
 
         public MasterData_tManufacturer()
         {
@@ -27339,7 +27339,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("PublicKey", IsNullable = false)]
-        public MasterData_tManufacturerPublicKey[] PublicKeys
+        public ObservableCollection<MasterData_tManufacturerPublicKey> PublicKeys
         {
             get
             {
@@ -27354,7 +27354,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DatapointType", IsNullable = false)]
-        public DatapointType_t[] DatapointTypes
+        public ObservableCollection<DatapointType_t> DatapointTypes
         {
             get
             {
@@ -27369,7 +27369,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("DatapointRole", IsNullable = false)]
-        public DatapointRole_t[] DatapointRoles
+        public ObservableCollection<DatapointRole_t> DatapointRoles
         {
             get
             {
@@ -27398,7 +27398,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("SpaceUsage", IsNullable = false)]
-        public SpaceUsage_t[] SpaceUsages
+        public ObservableCollection<SpaceUsage_t> SpaceUsages
         {
             get
             {
@@ -27519,7 +27519,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string[] ImportGroup
+        public ObservableCollection<string> ImportGroup
         {
             get
             {
@@ -27647,13 +27647,13 @@ namespace CreateKnxProd.Model
     public partial class MasterData_tManufacturerPublicKeyRSAKeyValue : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private byte[] modulusField;
+        private ObservableCollection<byte> modulusField = new ObservableCollection<byte>();
 
-        private byte[] exponentField;
+        private ObservableCollection<byte> exponentField = new ObservableCollection<byte>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Modulus
+        public ObservableCollection<byte> Modulus
         {
             get
             {
@@ -27668,7 +27668,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Exponent
+        public ObservableCollection<byte> Exponent
         {
             get
             {
@@ -27702,13 +27702,13 @@ namespace CreateKnxProd.Model
     public partial class MasterData_tManufacturerFunctionTypes : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private FunctionsGroup_t[] functionsGroupField;
+        private ObservableCollection<FunctionsGroup_t> functionsGroupField = new ObservableCollection<FunctionsGroup_t>();
 
-        private FunctionType_t[] functionTypeField;
+        private ObservableCollection<FunctionType_t> functionTypeField = new ObservableCollection<FunctionType_t>();
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionsGroup")]
-        public FunctionsGroup_t[] FunctionsGroup
+        public ObservableCollection<FunctionsGroup_t> FunctionsGroup
         {
             get
             {
@@ -27723,7 +27723,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FunctionType")]
-        public FunctionType_t[] FunctionType
+        public ObservableCollection<FunctionType_t> FunctionType
         {
             get
             {
@@ -27778,11 +27778,11 @@ namespace CreateKnxProd.Model
 
         private ObservableCollection<ApplicationProgram_t> applicationProgramsField = new ObservableCollection<ApplicationProgram_t>();
 
-        private ManufacturerData_tManufacturerBaggage[] baggagesField;
+        private ObservableCollection<ManufacturerData_tManufacturerBaggage> baggagesField = new ObservableCollection<ManufacturerData_tManufacturerBaggage>();
 
         private ObservableCollection<Hardware_t> hardwareField = new ObservableCollection<Hardware_t>();
 
-        private LanguageData_t[] languagesField;
+        private ObservableCollection<LanguageData_t> languagesField = new ObservableCollection<LanguageData_t>();
 
         private string refIdField;
 
@@ -27818,7 +27818,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Baggage", IsNullable = false)]
-        public ManufacturerData_tManufacturerBaggage[] Baggages
+        public ObservableCollection<ManufacturerData_tManufacturerBaggage> Baggages
         {
             get
             {
@@ -27848,7 +27848,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Language", IsNullable = false)]
-        public LanguageData_t[] Languages
+        public ObservableCollection<LanguageData_t> Languages
         {
             get
             {
