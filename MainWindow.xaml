@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreateKnxProd"
+        xmlns:model="clr-namespace:CreateKnxProd.Model"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -62,7 +64,55 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Parametertypen">
-                
+                <DataGrid ItemsSource="{Binding ParameterTypes }" AutoGenerateColumns="False" RowDetailsVisibilityMode="Visible"
+                          CanUserDeleteRows="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:ParameterTypeTypeExtension.GetEnumTypes}" />
+                        <DataGridTextColumn Header="Bytes" Binding="{Binding SizeInByte}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <DataTemplate DataType="{x:Type model:ParameterType_tTypeText}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Anzahl der Zeichen" Margin="5"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding SizeInByte}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:ParameterType_tTypeFloat}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Minimum" Margin="5"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive}"/>
+                                            <TextBlock Text="Maximum" Margin="5"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:ParameterType_tTypeNumber}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Minimum" Margin="5"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive}"/>
+                                            <TextBlock Text="Maximum" Margin="5"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:ParameterType_tTypeRestriction}">
+                                        <DataGrid ItemsSource="{Binding Enumeration}" Margin="5" AutoGenerateColumns="False" 
+                                                  dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Wert" Binding="{Binding Value}" />
+                                                <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="200"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </StackPanel.Resources>
+                                <ContentPresenter Content="{Binding Item}"/>
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
             </TabItem>
             <TabItem Header="Parameter">
                 

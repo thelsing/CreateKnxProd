@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 // 
@@ -160,7 +161,7 @@ namespace CreateKnxProd.Model
 
         private uint versionField;
 
-        private ObservableCollection<byte> signatureField = new ObservableCollection<byte>();
+        private byte[] signatureField;
 
         private string idField;
 
@@ -375,7 +376,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Signature
+        public byte[] Signature
         {
             get
             {
@@ -2450,7 +2451,7 @@ namespace CreateKnxProd.Model
 
         private string passwordField;
 
-        private ObservableCollection<byte> passwordHashField = new ObservableCollection<byte>();
+        private byte[] passwordHashField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("Connector", IsNullable = false)]
@@ -2544,7 +2545,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> PasswordHash
+        public byte[] PasswordHash
         {
             get
             {
@@ -2622,15 +2623,15 @@ namespace CreateKnxProd.Model
 
         private string deviceAuthenticationCodeField;
 
-        private ObservableCollection<byte> deviceAuthenticationCodeHashField = new ObservableCollection<byte>();
+        private byte[] deviceAuthenticationCodeHashField;
 
-        private ObservableCollection<byte> loadedDeviceAuthenticationCodeHashField = new ObservableCollection<byte>();
+        private byte[] loadedDeviceAuthenticationCodeHashField;
 
         private string deviceManagementPasswordField;
 
-        private ObservableCollection<byte> deviceManagementPasswordHashField = new ObservableCollection<byte>();
+        private byte[] deviceManagementPasswordHashField;
 
-        private ObservableCollection<byte> loadedDeviceManagementPasswordHashField = new ObservableCollection<byte>();
+        private byte[] loadedDeviceManagementPasswordHashField;
 
         private string toolKeyField;
 
@@ -2690,7 +2691,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> DeviceAuthenticationCodeHash
+        public byte[] DeviceAuthenticationCodeHash
         {
             get
             {
@@ -2705,7 +2706,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> LoadedDeviceAuthenticationCodeHash
+        public byte[] LoadedDeviceAuthenticationCodeHash
         {
             get
             {
@@ -2735,7 +2736,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> DeviceManagementPasswordHash
+        public byte[] DeviceManagementPasswordHash
         {
             get
             {
@@ -2750,7 +2751,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> LoadedDeviceManagementPasswordHash
+        public byte[] LoadedDeviceManagementPasswordHash
         {
             get
             {
@@ -3989,11 +3990,11 @@ namespace CreateKnxProd.Model
 
         private bool mediumConfigLoadedField;
 
-        private ObservableCollection<byte> loadedImageField = new ObservableCollection<byte>();
+        private byte[] loadedImageField;
 
         private string descriptionField;
 
-        private ObservableCollection<byte> checkSumsField = new ObservableCollection<byte>();
+        private byte[] checkSumsField;
 
         private uint downloadCounterField;
 
@@ -4005,7 +4006,7 @@ namespace CreateKnxProd.Model
 
         private bool brokenField;
 
-        private ObservableCollection<byte> serialNumberField = new ObservableCollection<byte>();
+        private byte[] serialNumberField;
 
         private string uniqueIdField;
 
@@ -4511,7 +4512,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> LoadedImage
+        public byte[] LoadedImage
         {
             get
             {
@@ -4541,7 +4542,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> CheckSums
+        public byte[] CheckSums
         {
             get
             {
@@ -4632,7 +4633,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> SerialNumber
+        public byte[] SerialNumber
         {
             get
             {
@@ -4801,7 +4802,7 @@ namespace CreateKnxProd.Model
     public partial class DeviceInstance_tBinaryData : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
+        private byte[] dataField;
 
         private string idField;
 
@@ -4811,7 +4812,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Data
+        public byte[] Data
         {
             get
             {
@@ -5452,13 +5453,13 @@ namespace CreateKnxProd.Model
     public partial class DeviceCertificate_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> serialNumberField = new ObservableCollection<byte>();
+        private byte[] serialNumberField;
 
         private string fDSKField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> SerialNumber
+        public byte[] SerialNumber
         {
             get
             {
@@ -6903,11 +6904,11 @@ namespace CreateKnxProd.Model
 
         private ObservableCollection<string> mediumTypesField = new ObservableCollection<string>();
 
-        private ObservableCollection<byte> hashField = new ObservableCollection<byte>();
+        private byte[] hashField;
 
-        private ObservableCollection<byte> checkSumsField = new ObservableCollection<byte>();
+        private byte[] checkSumsField;
 
-        private ObservableCollection<byte> loadedImageField = new ObservableCollection<byte>();
+        private byte[] loadedImageField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ApplicationProgramRef")]
@@ -6970,7 +6971,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Hash
+        public byte[] Hash
         {
             get
             {
@@ -6985,7 +6986,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> CheckSums
+        public byte[] CheckSums
         {
             get
             {
@@ -7000,7 +7001,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> LoadedImage
+        public byte[] LoadedImage
         {
             get
             {
@@ -7044,7 +7045,7 @@ namespace CreateKnxProd.Model
 
         private bool registrationDateFieldSpecified;
 
-        private ObservableCollection<byte> registrationSignatureField = new ObservableCollection<byte>();
+        private byte[] registrationSignatureField;
 
         private RegistrationInfo_tRegistrationKey registrationKeyField;
 
@@ -7130,7 +7131,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> RegistrationSignature
+        public byte[] RegistrationSignature
         {
             get
             {
@@ -7736,7 +7737,7 @@ namespace CreateKnxProd.Model
 
         private ushort nonRegRelevantDataVersionField;
 
-        private ObservableCollection<byte> hashField = new ObservableCollection<byte>();
+        private byte[] hashField;
 
         private string internalDescriptionField;
 
@@ -7927,7 +7928,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Hash
+        public byte[] Hash
         {
             get
             {
@@ -10797,7 +10798,7 @@ namespace CreateKnxProd.Model
     public partial class BinaryData_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
+        private byte[] dataField;
 
         private string nameField;
 
@@ -10807,7 +10808,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Data
+        public byte[] Data
         {
             get
             {
@@ -11236,7 +11237,7 @@ namespace CreateKnxProd.Model
     public partial class BinaryDataRef_t : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
+        private byte[] dataField;
 
         private string refIdField;
 
@@ -11244,7 +11245,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Data
+        public byte[] Data
         {
             get
             {
@@ -12961,7 +12962,7 @@ namespace CreateKnxProd.Model
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://knx.org/xml/project/14")]
-    public partial class ParameterType_t : object, System.ComponentModel.INotifyPropertyChanged
+    public partial class ParameterType_t : object, INotifyPropertyChanged, INotifyPropertyChanging
     {
 
         private object itemField;
@@ -12976,6 +12977,12 @@ namespace CreateKnxProd.Model
 
         private string validationErrorRefField;
 
+        public ParameterType_t()
+        {
+            OnCreated();
+        }
+
+        partial void OnCreated();
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TypeColor", typeof(ParameterType_tTypeColor))]
         [System.Xml.Serialization.XmlElementAttribute("TypeDate", typeof(ParameterType_tTypeDate))]
@@ -12996,6 +13003,7 @@ namespace CreateKnxProd.Model
             }
             set
             {
+                this.RaisePropertyChanging("Item");
                 this.itemField = value;
                 this.RaisePropertyChanged("Item");
             }
@@ -13084,6 +13092,17 @@ namespace CreateKnxProd.Model
             if ((propertyChanged != null))
             {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        protected void RaisePropertyChanging(string propertyName)
+        {
+            System.ComponentModel.PropertyChangingEventHandler propertyChanging = this.PropertyChanging;
+            if ((propertyChanging != null))
+            {
+                propertyChanging(this, new PropertyChangingEventArgs(propertyName));
             }
         }
     }
@@ -13893,7 +13912,7 @@ namespace CreateKnxProd.Model
 
         private bool displayOrderFieldSpecified;
 
-        private ObservableCollection<byte> binaryValueField = new ObservableCollection<byte>();
+        private byte[] binaryValueField;
 
         public ParameterType_tTypeRestrictionEnumeration()
         {
@@ -14008,7 +14027,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> BinaryValue
+        public byte[] BinaryValue
         {
             get
             {
@@ -14354,11 +14373,11 @@ namespace CreateKnxProd.Model
 
         private ApplicationProgramStatic_tCode codeField;
 
-        private ObservableCollection<ParameterType_t> parameterTypesField;
+        private ObservableCollection<ParameterType_t> parameterTypesField = new ObservableCollection<ParameterType_t>();
 
-        private ObservableCollection<object> parametersField;
+        private ObservableCollection<object> parametersField = new ObservableCollection<object>();
 
-        private ObservableCollection<ParameterRef_t> parameterRefsField;
+        private ObservableCollection<ParameterRef_t> parameterRefsField = new ObservableCollection<ParameterRef_t>();
 
         private ObservableCollection<ParameterCalculation_t> parameterCalculationsField;
 
@@ -14366,7 +14385,7 @@ namespace CreateKnxProd.Model
 
         private ApplicationProgramStatic_tComObjectTable comObjectTableField;
 
-        private ObservableCollection<ComObjectRef_t> comObjectRefsField;
+        private ObservableCollection<ComObjectRef_t> comObjectRefsField = new ObservableCollection<ComObjectRef_t>();
 
         private ApplicationProgramStatic_tAddressTable addressTableField;
 
@@ -14374,7 +14393,7 @@ namespace CreateKnxProd.Model
 
         private ObservableCollection<Fixup_t> fixupListField;
 
-        private ObservableCollection<LoadProcedures_tLoadProcedure> loadProceduresField;
+        private ObservableCollection<LoadProcedures_tLoadProcedure> loadProceduresField = new ObservableCollection<LoadProcedures_tLoadProcedure>();
 
         private ApplicationProgramStatic_tExtension extensionField;
 
@@ -14761,9 +14780,9 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tCodeAbsoluteSegment : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
+        private byte[] dataField;
 
-        private ObservableCollection<byte> maskField = new ObservableCollection<byte>();
+        private byte[] maskField;
 
         private string idField;
 
@@ -14788,7 +14807,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Data
+        public byte[] Data
         {
             get
             {
@@ -14803,7 +14822,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Mask
+        public byte[] Mask
         {
             get
             {
@@ -14975,9 +14994,9 @@ namespace CreateKnxProd.Model
     public partial class ApplicationProgramStatic_tCodeRelativeSegment : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> dataField = new ObservableCollection<byte>();
+        private byte[] dataField;
 
-        private ObservableCollection<byte> maskField = new ObservableCollection<byte>();
+        private byte[] maskField;
 
         private string idField;
 
@@ -14993,7 +15012,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Data
+        public byte[] Data
         {
             get
             {
@@ -15008,7 +15027,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Mask
+        public byte[] Mask
         {
             get
             {
@@ -16236,9 +16255,9 @@ namespace CreateKnxProd.Model
 
         private bool allowCachedValueField;
 
-        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
+        private byte[] inlineDataField;
 
-        private ObservableCollection<byte> maskField = new ObservableCollection<byte>();
+        private byte[] maskField;
 
         private string rangeField;
 
@@ -16274,7 +16293,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> InlineData
+        public byte[] InlineData
         {
             get
             {
@@ -16289,7 +16308,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> Mask
+        public byte[] Mask
         {
             get
             {
@@ -17221,7 +17240,7 @@ namespace CreateKnxProd.Model
 
         private byte propIdField;
 
-        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
+        private byte[] inlineDataField;
 
         public LoadProcedure_tLdCtrlInvokeFunctionProp()
         {
@@ -17321,7 +17340,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> InlineData
+        public byte[] InlineData
         {
             get
             {
@@ -19268,7 +19287,7 @@ namespace CreateKnxProd.Model
 
         private bool verifyField;
 
-        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
+        private byte[] inlineDataField;
 
         public LoadProcedure_tLdCtrlWriteMem()
         {
@@ -19338,7 +19357,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> InlineData
+        public byte[] InlineData
         {
             get
             {
@@ -19380,7 +19399,7 @@ namespace CreateKnxProd.Model
 
         private bool verifyField;
 
-        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
+        private byte[] inlineDataField;
 
         public LoadProcedure_tLdCtrlWriteProp()
         {
@@ -19529,7 +19548,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> InlineData
+        public byte[] InlineData
         {
             get
             {
@@ -19569,7 +19588,7 @@ namespace CreateKnxProd.Model
 
         private bool verifyField;
 
-        private ObservableCollection<byte> inlineDataField = new ObservableCollection<byte>();
+        private byte[] inlineDataField;
 
         public LoadProcedure_tLdCtrlWriteRelMem()
         {
@@ -19699,7 +19718,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> InlineData
+        public byte[] InlineData
         {
             get
             {
@@ -21679,9 +21698,9 @@ namespace CreateKnxProd.Model
 
         private bool downloadInfoIncompleteField;
 
-        private ObservableCollection<byte> replacesVersionsField = new ObservableCollection<byte>();
+        private byte[] replacesVersionsField;
 
-        private ObservableCollection<byte> hashField = new ObservableCollection<byte>();
+        private byte[] hashField;
 
         private string internalDescriptionField;
 
@@ -22245,7 +22264,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ObservableCollection<byte> ReplacesVersions
+        public byte[] ReplacesVersions
         {
             get
             {
@@ -22260,7 +22279,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Hash
+        public byte[] Hash
         {
             get
             {
@@ -25157,7 +25176,7 @@ namespace CreateKnxProd.Model
 
         private ushort maskVersionField;
 
-        private ObservableCollection<byte> mgmtDescriptor01Field = new ObservableCollection<byte>();
+        private byte[] mgmtDescriptor01Field;
 
         private MaskVersion_tManagementModel managementModelField;
 
@@ -25257,7 +25276,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "hexBinary")]
-        public ObservableCollection<byte> MgmtDescriptor01
+        public byte[] MgmtDescriptor01
         {
             get
             {
@@ -27647,13 +27666,13 @@ namespace CreateKnxProd.Model
     public partial class MasterData_tManufacturerPublicKeyRSAKeyValue : object, System.ComponentModel.INotifyPropertyChanged
     {
 
-        private ObservableCollection<byte> modulusField = new ObservableCollection<byte>();
+        private byte[] modulusField;
 
-        private ObservableCollection<byte> exponentField = new ObservableCollection<byte>();
+        private byte[] exponentField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Modulus
+        public byte[] Modulus
         {
             get
             {
@@ -27668,7 +27687,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
-        public ObservableCollection<byte> Exponent
+        public byte[] Exponent
         {
             get
             {

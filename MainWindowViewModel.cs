@@ -1,6 +1,7 @@
 ﻿using CreateKnxProd.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -21,9 +22,6 @@ namespace CreateKnxProd
         private RelayCommand _saveCommand;
         private RelayCommand _closeCommand;
 
-        private RelayCommand _addParameterCommand;
-        private RelayCommand _delParameterCommand;
-
         private RelayCommand _addCommObjCommand;
         private RelayCommand _delCommObjCommand;
 
@@ -40,8 +38,6 @@ namespace CreateKnxProd
             _exportCommand = new RelayCommand(o => true, Export);
             _saveCommand = new RelayCommand(o => true, Save);
             _openCommand = new RelayCommand(o => true, Dummy);
-            _addParameterCommand = new RelayCommand(o => true, Dummy);
-            _delParameterCommand = new RelayCommand(o => true, Dummy);
             _createNewCommand = new RelayCommand(o => true, CreateNew);
             _addCommObjCommand = new RelayCommand(o => true, Dummy);
             _delCommObjCommand = new RelayCommand(o => true, Dummy);
@@ -80,6 +76,10 @@ namespace CreateKnxProd
         private ApplicationProgram_t _applicationProgram = new ApplicationProgram_t();
         private Hardware2Program_t _hardware2Program = new Hardware2Program_t();
         private ApplicationProgramRef_t _appProgRef = new ApplicationProgramRef_t();
+        private ApplicationProgramStatic_tCodeRelativeSegment _codeSement;
+        private LoadProcedure_tLdCtrlRelSegment _ldCtrlCreate;
+        private LoadProcedure_tLdCtrlWriteRelMem _ldCtrlWrite;
+        private ComObjectParameterBlock_t _parameterBlock;
 
         private void CreateNew(object param)
         {
@@ -125,6 +125,60 @@ namespace CreateKnxProd
             var appStatic = new ApplicationProgramStatic_t();
             _applicationProgram.Static = appStatic;
 
+            var code = new ApplicationProgramStatic_tCode();
+            appStatic.Code = code;
+
+            _codeSement = new ApplicationProgramStatic_tCodeRelativeSegment();
+            code.RelativeSegment.Add(_codeSement);
+            _codeSement.Name = "Parameters";
+            _codeSement.Offset = 0;
+            _codeSement.LoadStateMachine = 4;
+            _codeSement.Size = 0;
+
+            appStatic.AddressTable = new ApplicationProgramStatic_tAddressTable();
+            appStatic.AddressTable.MaxEntries = 0;
+
+            appStatic.AssociationTable = new ApplicationProgramStatic_tAssociationTable();
+            appStatic.AssociationTable.MaxEntries = 0;
+
+            var ldProc1 = new LoadProcedures_tLoadProcedure();
+            ldProc1.MergeId = 2;
+            ldProc1.MergeIdSpecified = true;
+
+            _ldCtrlCreate = new LoadProcedure_tLdCtrlRelSegment();
+            _ldCtrlCreate.LsmIdx = 4;
+            _ldCtrlCreate.LsmIdxSpecified = true;
+            _ldCtrlCreate.Mode = 0;
+            _ldCtrlCreate.Fill = 0;
+            _ldCtrlCreate.Size = 0;
+            ldProc1.Items.Add(_ldCtrlCreate);
+
+            var ldProc2 = new LoadProcedures_tLoadProcedure();
+            ldProc2.MergeId = 4;
+            ldProc2.MergeIdSpecified = true;
+
+            _ldCtrlWrite = new LoadProcedure_tLdCtrlWriteRelMem();
+            _ldCtrlWrite.ObjIdx = 4;
+            _ldCtrlWrite.ObjIdxSpecified = true;
+            _ldCtrlWrite.Offset = 0;
+            _ldCtrlWrite.Verify = true;
+            _ldCtrlWrite.Size = 0;
+            ldProc2.Items.Add(_ldCtrlWrite);
+
+            appStatic.LoadProcedures.Add(ldProc1);
+            appStatic.LoadProcedures.Add(ldProc2);
+
+            appStatic.Options = new ApplicationProgramStatic_tOptions();
+
+            var appDynamic = _applicationProgram.Dynamic;
+            var commonChannel = new ApplicationProgramDynamic_tChannelIndependentBlock();
+            _parameterBlock = new ComObjectParameterBlock_t();
+            _parameterBlock.Name = "ParameterPage";
+            _parameterBlock.Text = "Allgemeine Parameter";
+
+            commonChannel.Items.Add(_parameterBlock);
+            appDynamic.Add(commonChannel);
+
             HardwareSerial = "0";
             HardwareVersion = 0;
             _hardware.HasIndividualAddress = true;
@@ -147,8 +201,49 @@ namespace CreateKnxProd
             _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
             _catalogItem.DefaultLanguage = "de_DE";
 
-            CorrectIds();
+            RaisePropertyChanged(nameof(ParameterTypes));
 
+
+
+            var par = new ParameterType_t();
+            par.Name = "ParameterTypeText1";
+            var typeText = new ParameterType_tTypeText();
+            typeText.SizeInBit = 128;
+            par.Item = typeText;
+            _applicationProgram.Static.ParameterTypes.Add(par);
+
+            par = new ParameterType_t();
+            par.Name = "ParameterTypeNumber1";
+            var typeNumber = new ParameterType_tTypeNumber();
+            typeNumber.SizeInBit = 8;
+            typeNumber.Type = ParameterType_tTypeNumberType.unsignedInt;
+            typeNumber.minInclusive = 0;
+            typeNumber.maxInclusive = 100;
+            par.Item = typeNumber;
+            _applicationProgram.Static.ParameterTypes.Add(par);
+
+            par = new ParameterType_t();
+            par.Name = "ParameterTypeFloat1";
+            var typeFloat = new ParameterType_tTypeFloat();
+            typeFloat.Encoding = ParameterType_tTypeFloatEncoding.IEEE754Single;
+            typeFloat.minInclusive = 0;
+            typeFloat.maxInclusive = 100;
+            par.Item = typeFloat;
+            _applicationProgram.Static.ParameterTypes.Add(par);
+
+            par = new ParameterType_t();
+            par.Name = "ParameterTypeRestriction1";
+            var typeEnum = new ParameterType_tTypeRestriction();
+            typeEnum.SizeInBit = 8;
+            typeEnum.Base = ParameterType_tTypeRestrictionBase.Value;
+            typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 0, Text = "Null" });
+            typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 1, Text = "Eins" });
+            typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 2, Text = "Zwei" });
+            par.Item = typeEnum;
+            _applicationProgram.Static.ParameterTypes.Add(par);
+
+            CorrectIds();
+            
         }
 
         private void CorrectIds()
@@ -157,6 +252,10 @@ namespace CreateKnxProd
             _applicationProgram.Id = string.Format("{0}_A-{1:0000}-{2:00}-0000", _manufacturerData.RefId,
                     _applicationProgram.ApplicationNumber, _applicationProgram.ApplicationVersion);
             _appProgRef.RefId = _applicationProgram.Id;
+            _codeSement.Id = string.Format("{0}_RS-{1:00}-{2:00000}", _applicationProgram.Id, _codeSement.LoadStateMachine,
+                _codeSement.Offset);
+            _parameterBlock.Id = string.Format("{0}_PB-1", _applicationProgram.Id);
+
             _hardware.Id = string.Format("{0}_H-{1}-{2}", _manufacturerData.RefId, _hardware.SerialNumber,
                                         _hardware.VersionNumber);
             _product.Id = string.Format("{0}_P-{1}", _hardware.Id, _product.OrderNumber);
@@ -168,6 +267,18 @@ namespace CreateKnxProd
             _catalogItem.Id = string.Format("{0}_CI-{1}-{2}", _hardware2Program.Id, _product.OrderNumber, _catalogItem.Number);
             _catalogItem.ProductRefId = _product.Id;
             _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
+
+            foreach(var paraType in _applicationProgram.Static.ParameterTypes)
+            {
+                paraType.Id = string.Format("{0}_PT-{1}", _applicationProgram.Id, paraType.Name);
+
+                var paraTypeRestriction = paraType.Item as ParameterType_tTypeRestriction;
+                if (paraTypeRestriction == null)
+                    continue;
+
+                foreach (var paraEnum in paraTypeRestriction.Enumeration)
+                    paraEnum.Id = string.Format("{0}_EN-{1}", paraType.Id, paraEnum.Value);
+            }
         }
 
         private void Export(object param)
@@ -314,6 +425,12 @@ namespace CreateKnxProd
                 RaisePropertyChanged(nameof(ApplicationVersion));
             }
         }
+        
+        public ObservableCollection<ParameterType_t> ParameterTypes
+        {
+            get => _applicationProgram?.Static?.ParameterTypes;
+        }
+
         #endregion
 
         #region Reflection
@@ -370,22 +487,6 @@ namespace CreateKnxProd
             get
             {
                 return _saveCommand;
-            }
-        }
-
-        public ICommand AddParameterCommand
-        {
-            get
-            {
-                return _addParameterCommand;
-            }
-        }
-
-        public ICommand DelParameterCommand
-        {
-            get
-            {
-                return _delParameterCommand;
             }
         }
 
