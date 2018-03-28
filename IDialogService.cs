@@ -9,6 +9,9 @@ namespace CreateKnxProd
     public interface IDialogService
     {
         void ShowMessage(string message);
-        string ChooseFile(string extension, string filter);
+        string ChooseSaveFile(string extension, string filter);
+        bool? Ask(string question);
+
+        string ChooseFileToOpen(string extension, string filter);
     }
 }

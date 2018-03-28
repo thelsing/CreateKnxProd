@@ -20,157 +20,214 @@ namespace CreateKnxProd
         private RelayCommand _createNewCommand;
         private RelayCommand _openCommand;
         private RelayCommand _saveCommand;
+        private RelayCommand _saveAsCommand;
         private RelayCommand _closeCommand;
-
-        private RelayCommand _addCommObjCommand;
-        private RelayCommand _delCommObjCommand;
 
         private IDialogService _dialogService;
 
         private const string _toolName = "KNX MT";
         private const string _toolVersion = "5.6.407.26745";
 
+        private string _openFile = null;
         private KNX _model = null;
+
+        private const string _fileExtension = ".xml";
+        private const string _fileFilter = "XML Datei|*.xml";
+
+        private ManufacturerData_tManufacturer _manufacturerData;
+        private Hardware_t _hardware;
+        private Hardware_tProduct _product;
+        private CatalogSection_t _catalogSection;
+        private CatalogSection_tCatalogItem _catalogItem;
+        private ApplicationProgram_t _applicationProgram;
+        private Hardware2Program_t _hardware2Program;
+        private ApplicationProgramRef_t _appProgRef;
+        private ApplicationProgramStatic_tCodeRelativeSegment _codeSement;
+
+        private ComObjectParameterBlock_t _parameterBlock;
 
         public MainWindowViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
-            _exportCommand = new RelayCommand(o => true, Export);
-            _saveCommand = new RelayCommand(o => true, Save);
-            _openCommand = new RelayCommand(o => true, Dummy);
+            _exportCommand = new RelayCommand(o => _model != null, Export);
+            _saveCommand = new RelayCommand(o => _model != null, Save);
+            _saveAsCommand = new RelayCommand(o => _model != null, SaveAs);
+            _openCommand = new RelayCommand(o => true, Open);
             _createNewCommand = new RelayCommand(o => true, CreateNew);
-            _addCommObjCommand = new RelayCommand(o => true, Dummy);
-            _delCommObjCommand = new RelayCommand(o => true, Dummy);
-            _closeCommand = new RelayCommand(o => true, Dummy);
+            _closeCommand = new RelayCommand(o => _model != null, Close);
         }
 
-        private void Dummy(object param)
+        private void Open(object param)
         {
-            _dialogService.ShowMessage("Dummy");
+            try
+            {
+                if (_model != null)
+                {
+                    var cancel = AskSaveCancel();
+                    if (cancel)
+                        return;
+                }
+
+                var filePath = _dialogService.ChooseFileToOpen(_fileExtension, _fileFilter);
+                if (filePath == null)
+                    return;
+
+                _openFile = filePath;
+
+                XmlSerializer serializer = new XmlSerializer(typeof(KNX));
+                using (var reader = new StreamReader(_openFile))
+                {
+                    _model = (KNX)serializer.Deserialize(reader);
+                }
+
+                _manufacturerData = _model.ManufacturerData.First();
+                _hardware = _manufacturerData.Hardware.First();
+                _product = _hardware.Products.First();
+                _catalogSection = _manufacturerData.Catalog.First();
+                _catalogItem = _catalogSection.CatalogItem.First();
+                _hardware2Program = _hardware.Hardware2Programs.First();
+                _applicationProgram = _manufacturerData.ApplicationPrograms.First();
+                _appProgRef = _hardware2Program.ApplicationProgramRef.First();
+                _codeSement = _applicationProgram.Static.Code.RelativeSegment.First();
+   
+
+                RaiseChanged();
+            }
+            catch (Exception ex)
+            {
+                ClearData();
+                _dialogService.ShowMessage(ex.ToString());
+            }
+        }
+
+        private void SaveAs(object param)
+        {
+            try
+            {
+                if (_model == null)
+                    return;
+
+                var filepath = _dialogService.ChooseSaveFile(_fileExtension, _fileFilter);
+                if (filepath == null)
+                    return;
+
+                _openFile = filepath;
+                Save(param);
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage(ex.ToString());
+            }
         }
 
         private void Save(object param)
         {
-            if (_model == null)
-                return;
+            try
+            {
+                if (_model == null)
+                    return;
 
-            CorrectIds();
+                if (_openFile == null)
+                    SaveAs(param);
 
-            var filepath = _dialogService.ChooseFile(".xml", "XML Datei|*.xml");
-            if (filepath == null)
-                return;
+                SetEmptyListsNull();
+                RegenerateDynamic();
 
-            XmlSerializer serializer = new XmlSerializer(typeof(KNX));
-            var xmlWriter = new StreamWriter(filepath, false, Encoding.Default);
-            serializer.Serialize(xmlWriter, _model);
-            xmlWriter.Close();
+                CorrectIds();
 
-            _dialogService.ShowMessage("Speichern erfolgreich!");
+
+
+                XmlSerializer serializer = new XmlSerializer(typeof(KNX));
+                using (var xmlWriter = new StreamWriter(_openFile, false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, _model);
+                }
+
+                _dialogService.ShowMessage("Speichern erfolgreich!");
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage(ex.ToString());
+            }
         }
 
-        private ManufacturerData_tManufacturer _manufacturerData = new ManufacturerData_tManufacturer();
-        private Hardware_t _hardware = new Hardware_t();
-        private Hardware_tProduct _product = new Hardware_tProduct();
-        private CatalogSection_tCatalogItem _catalogItem = new CatalogSection_tCatalogItem();
-        private CatalogSection_t _catalogSection = new CatalogSection_t();
-        private ApplicationProgram_t _applicationProgram = new ApplicationProgram_t();
-        private Hardware2Program_t _hardware2Program = new Hardware2Program_t();
-        private ApplicationProgramRef_t _appProgRef = new ApplicationProgramRef_t();
-        private ApplicationProgramStatic_tCodeRelativeSegment _codeSement;
-        private LoadProcedure_tLdCtrlRelSegment _ldCtrlCreate;
-        private LoadProcedure_tLdCtrlWriteRelMem _ldCtrlWrite;
-        private ComObjectParameterBlock_t _parameterBlock;
-
-        private void CreateNew(object param)
+        private void SetEmptyListsNull()
         {
-            if (_model != null)
-                _dialogService.ShowMessage("Es darf keine Datei geöffnet sein.");
+            var appStatic = _applicationProgram.Static;
 
-            _model = new KNX();
+            if (appStatic.ParameterCalculations?.Count() == 0)
+                appStatic.ParameterCalculations = null;
 
+            if (appStatic.ParameterValidations?.Count() == 0)
+                appStatic.ParameterValidations = null;
 
-            _manufacturerData = new ManufacturerData_tManufacturer();
-            _applicationProgram = new ApplicationProgram_t();
-            _hardware = new Hardware_t();
-            _catalogSection = new CatalogSection_t();
-            _product = new Hardware_tProduct();
-            _hardware2Program = new Hardware2Program_t();
-            _appProgRef = new ApplicationProgramRef_t();
-            _catalogItem = new CatalogSection_tCatalogItem();
+            if (appStatic.FixupList?.Count() == 0)
+                appStatic.FixupList = null;
 
-            _model.ManufacturerData.Add(_manufacturerData);
-            _manufacturerData.Catalog.Add(_catalogSection);
-            _manufacturerData.ApplicationPrograms.Add(_applicationProgram);
-            _manufacturerData.Hardware.Add(_hardware);
-            _hardware.Products.Add(_product);
-            _hardware.Hardware2Programs.Add(_hardware2Program);
-            _hardware2Program.ApplicationProgramRef.Add(_appProgRef);
-            _catalogSection.CatalogItem.Add(_catalogItem);
+            if (appStatic.BinaryData?.Count() == 0)
+                appStatic.BinaryData = null;
 
+            if (appStatic.Messages?.Count() == 0)
+                appStatic.Messages = null;
 
-            _model.CreatedBy = _toolName;
-            _model.ToolVersion = _toolVersion;
+            if (appStatic.SecurityRoles?.Count() == 0)
+                appStatic.SecurityRoles = null;
 
-            ApplicationNumber = 0;
-            ApplicationVersion = 0;
-            _applicationProgram.ProgramType = ApplicationProgramType_t.ApplicationProgram;
-            _applicationProgram.MaskVersion = "MV-57B0";
-            _applicationProgram.LoadProcedureStyle = LoadProcedureStyle_t.MergedProcedure;
-            _applicationProgram.PeiType = 0;
-            _applicationProgram.DefaultLanguage = "de_DE";
-            _applicationProgram.DynamicTableManagement = true;
-            _applicationProgram.Linkable = false;
-            _applicationProgram.MinEtsVersion = "4.0";
+            if (appStatic.BusInterfaces?.Count() == 0)
+                appStatic.BusInterfaces = null;
 
-            var appStatic = new ApplicationProgramStatic_t();
-            _applicationProgram.Static = appStatic;
+            if (_manufacturerData.Baggages?.Count() == 0)
+                _manufacturerData.Baggages = null;
 
-            var code = new ApplicationProgramStatic_tCode();
-            appStatic.Code = code;
+            if (_manufacturerData.Languages?.Count() == 0)
+                _manufacturerData.Languages = null;
 
-            _codeSement = new ApplicationProgramStatic_tCodeRelativeSegment();
-            code.RelativeSegment.Add(_codeSement);
-            _codeSement.Name = "Parameters";
-            _codeSement.Offset = 0;
-            _codeSement.LoadStateMachine = 4;
-            _codeSement.Size = 0;
+            if (_product.Baggages?.Count() == 0)
+                _product.Baggages = null;
 
-            appStatic.AddressTable = new ApplicationProgramStatic_tAddressTable();
-            appStatic.AddressTable.MaxEntries = 0;
+            if (_product.Attributes?.Count() == 0)
+                _product.Attributes = null;
 
-            appStatic.AssociationTable = new ApplicationProgramStatic_tAssociationTable();
-            appStatic.AssociationTable.MaxEntries = 0;
+        }
 
+        private void RegenerateLoadProcedure()
+        {
             var ldProc1 = new LoadProcedures_tLoadProcedure();
             ldProc1.MergeId = 2;
             ldProc1.MergeIdSpecified = true;
 
-            _ldCtrlCreate = new LoadProcedure_tLdCtrlRelSegment();
-            _ldCtrlCreate.LsmIdx = 4;
-            _ldCtrlCreate.LsmIdxSpecified = true;
-            _ldCtrlCreate.Mode = 0;
-            _ldCtrlCreate.Fill = 0;
-            _ldCtrlCreate.Size = 0;
-            ldProc1.Items.Add(_ldCtrlCreate);
+            var ldCtrlCreate = new LoadProcedure_tLdCtrlRelSegment();
+            ldCtrlCreate.LsmIdx = 4;
+            ldCtrlCreate.LsmIdxSpecified = true;
+            ldCtrlCreate.Mode = 0;
+            ldCtrlCreate.Fill = 0;
+            ldCtrlCreate.Size = 0;
+            ldProc1.Items.Add(ldCtrlCreate);
 
             var ldProc2 = new LoadProcedures_tLoadProcedure();
             ldProc2.MergeId = 4;
             ldProc2.MergeIdSpecified = true;
 
-            _ldCtrlWrite = new LoadProcedure_tLdCtrlWriteRelMem();
-            _ldCtrlWrite.ObjIdx = 4;
-            _ldCtrlWrite.ObjIdxSpecified = true;
-            _ldCtrlWrite.Offset = 0;
-            _ldCtrlWrite.Verify = true;
-            _ldCtrlWrite.Size = 0;
-            ldProc2.Items.Add(_ldCtrlWrite);
+            var ldCtrlWrite = new LoadProcedure_tLdCtrlWriteRelMem();
+            ldCtrlWrite.ObjIdx = 4;
+            ldCtrlWrite.ObjIdxSpecified = true;
+            ldCtrlWrite.Offset = 0;
+            ldCtrlWrite.Verify = true;
+            ldCtrlWrite.Size = 0;
+            ldProc2.Items.Add(ldCtrlWrite);
 
+            var appStatic = _applicationProgram.Static;
+
+            appStatic.LoadProcedures.Clear();
             appStatic.LoadProcedures.Add(ldProc1);
             appStatic.LoadProcedures.Add(ldProc2);
+        }
 
-            appStatic.Options = new ApplicationProgramStatic_tOptions();
-
+        private void RegenerateDynamic()
+        {
             var appDynamic = _applicationProgram.Dynamic;
+            appDynamic.Clear();
+
             var commonChannel = new ApplicationProgramDynamic_tChannelIndependentBlock();
             _parameterBlock = new ComObjectParameterBlock_t();
             _parameterBlock.Name = "ParameterPage";
@@ -178,72 +235,195 @@ namespace CreateKnxProd
 
             commonChannel.Items.Add(_parameterBlock);
             appDynamic.Add(commonChannel);
+        }
 
-            HardwareSerial = "0";
-            HardwareVersion = 0;
-            _hardware.HasIndividualAddress = true;
-            _hardware.HasApplicationProgram = true;
-            _hardware.IsIPEnabled = true;
+        private bool AskSaveCancel()
+        {
+            var result = _dialogService.Ask("Soll gespeichert werden?");
+            if (result == null)
+                return true;
 
-            _product.IsRailMounted = false;
-            _product.DefaultLanguage = "de_DE";
-            OrderNumber = "0";
-            
-            _hardware2Program.MediumTypes.Add("MT-5");
+            if (result.Value)
+                Save(null);
 
-            _catalogSection.Name = "Geräte";
-            _catalogSection.Number = "1";
-            _catalogSection.DefaultLanguage = "de_DE";
-            
-            _catalogItem.Name = _product.Text;
-            _catalogItem.Number = 1;
-            _catalogItem.ProductRefId = _product.Id;
-            _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
-            _catalogItem.DefaultLanguage = "de_DE";
+            return false;
+        }
 
-            RaisePropertyChanged(nameof(ParameterTypes));
+        private void ClearData()
+        {
+            _model = null;
+            _openFile = null;
+            _manufacturerData = null;
+            _hardware = null;
+            _product = null;
+            _catalogItem = null;
+            _catalogSection = null;
+            _applicationProgram = null;
+            _hardware2Program = null;
+            _appProgRef = null;
+            _codeSement = null;
+            _parameterBlock = null;
+            RaiseChanged();
+        }
+
+        private void Close(object param)
+        {
+            try
+            {
+                if (_model == null)
+                    return;
+
+                var cancel = AskSaveCancel();
+                if (cancel)
+                    return;
+
+                ClearData();
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage(ex.ToString());
+            }
+        }
+
+        private void CreateNew(object param)
+        {
+            try
+            {
+                if (_model != null)
+                {
+                    var cancel = AskSaveCancel();
+                    if (cancel)
+                        return;
+                }
+
+                _model = new KNX();
+
+                string lang = "en-US";
+
+                _manufacturerData = new ManufacturerData_tManufacturer();
+                _applicationProgram = new ApplicationProgram_t();
+                _hardware = new Hardware_t();
+                _catalogSection = new CatalogSection_t();
+                _product = new Hardware_tProduct();
+                _hardware2Program = new Hardware2Program_t();
+                _appProgRef = new ApplicationProgramRef_t();
+                _catalogItem = new CatalogSection_tCatalogItem();
+
+                _model.ManufacturerData.Add(_manufacturerData);
+                _manufacturerData.Catalog.Add(_catalogSection);
+                _manufacturerData.ApplicationPrograms.Add(_applicationProgram);
+                _manufacturerData.Hardware.Add(_hardware);
+                _hardware.Products.Add(_product);
+                _hardware.Hardware2Programs.Add(_hardware2Program);
+                _hardware2Program.ApplicationProgramRef.Add(_appProgRef);
+                _catalogSection.CatalogItem.Add(_catalogItem);
+
+
+                _model.CreatedBy = _toolName;
+                _model.ToolVersion = _toolVersion;
+
+                ApplicationNumber = 0;
+                ApplicationVersion = 0;
+                _applicationProgram.ProgramType = ApplicationProgramType_t.ApplicationProgram;
+                _applicationProgram.MaskVersion = "MV-57B0";
+                _applicationProgram.LoadProcedureStyle = LoadProcedureStyle_t.MergedProcedure;
+                _applicationProgram.PeiType = 0;
+                _applicationProgram.DefaultLanguage = lang;
+                _applicationProgram.DynamicTableManagement = true;
+                _applicationProgram.Linkable = false;
+                _applicationProgram.MinEtsVersion = "4.0";
+
+                var appStatic = new ApplicationProgramStatic_t();
+                _applicationProgram.Static = appStatic;
+
+                var code = new ApplicationProgramStatic_tCode();
+                appStatic.Code = code;
+
+                _codeSement = new ApplicationProgramStatic_tCodeRelativeSegment();
+                code.RelativeSegment.Add(_codeSement);
+                _codeSement.Name = "Parameters";
+                _codeSement.Offset = 0;
+                _codeSement.LoadStateMachine = 4;
+                _codeSement.Size = 0;
+
+                appStatic.AddressTable = new ApplicationProgramStatic_tAddressTable();
+                appStatic.AddressTable.MaxEntries = 0;
+
+                appStatic.AssociationTable = new ApplicationProgramStatic_tAssociationTable();
+                appStatic.AssociationTable.MaxEntries = 0;
+
+                appStatic.Options = new ApplicationProgramStatic_tOptions();
+
+                HardwareSerial = "0";
+                HardwareVersion = 0;
+                _hardware.HasIndividualAddress = true;
+                _hardware.HasApplicationProgram = true;
+                _hardware.IsIPEnabled = true;
+
+                _product.IsRailMounted = false;
+                _product.DefaultLanguage = "de_DE";
+                OrderNumber = "0";
+
+                _hardware2Program.MediumTypes.Add("MT-5");
+
+                _catalogSection.Name = "Geräte";
+                _catalogSection.Number = "1";
+                _catalogSection.DefaultLanguage = lang;
+
+                _catalogItem.Name = _product.Text;
+                _catalogItem.Number = 1;
+                _catalogItem.ProductRefId = _product.Id;
+                _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
+                _catalogItem.DefaultLanguage = lang;
+
+                RaisePropertyChanged(nameof(ParameterTypes));
 
 
 
-            var par = new ParameterType_t();
-            par.Name = "ParameterTypeText1";
-            var typeText = new ParameterType_tTypeText();
-            typeText.SizeInBit = 128;
-            par.Item = typeText;
-            _applicationProgram.Static.ParameterTypes.Add(par);
+                var par = new ParameterType_t();
+                par.Name = "ParameterTypeText1";
+                var typeText = new ParameterType_tTypeText();
+                typeText.SizeInBit = 128;
+                par.Item = typeText;
+                _applicationProgram.Static.ParameterTypes.Add(par);
 
-            par = new ParameterType_t();
-            par.Name = "ParameterTypeNumber1";
-            var typeNumber = new ParameterType_tTypeNumber();
-            typeNumber.SizeInBit = 8;
-            typeNumber.Type = ParameterType_tTypeNumberType.unsignedInt;
-            typeNumber.minInclusive = 0;
-            typeNumber.maxInclusive = 100;
-            par.Item = typeNumber;
-            _applicationProgram.Static.ParameterTypes.Add(par);
+                par = new ParameterType_t();
+                par.Name = "ParameterTypeNumber1";
+                var typeNumber = new ParameterType_tTypeNumber();
+                typeNumber.SizeInBit = 8;
+                typeNumber.Type = ParameterType_tTypeNumberType.unsignedInt;
+                typeNumber.minInclusive = 0;
+                typeNumber.maxInclusive = 100;
+                par.Item = typeNumber;
+                _applicationProgram.Static.ParameterTypes.Add(par);
 
-            par = new ParameterType_t();
-            par.Name = "ParameterTypeFloat1";
-            var typeFloat = new ParameterType_tTypeFloat();
-            typeFloat.Encoding = ParameterType_tTypeFloatEncoding.IEEE754Single;
-            typeFloat.minInclusive = 0;
-            typeFloat.maxInclusive = 100;
-            par.Item = typeFloat;
-            _applicationProgram.Static.ParameterTypes.Add(par);
+                par = new ParameterType_t();
+                par.Name = "ParameterTypeFloat1";
+                var typeFloat = new ParameterType_tTypeFloat();
+                typeFloat.Encoding = ParameterType_tTypeFloatEncoding.IEEE754Single;
+                typeFloat.minInclusive = 0;
+                typeFloat.maxInclusive = 100;
+                par.Item = typeFloat;
+                _applicationProgram.Static.ParameterTypes.Add(par);
 
-            par = new ParameterType_t();
-            par.Name = "ParameterTypeRestriction1";
-            var typeEnum = new ParameterType_tTypeRestriction();
-            typeEnum.SizeInBit = 8;
-            typeEnum.Base = ParameterType_tTypeRestrictionBase.Value;
-            typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 0, Text = "Null" });
-            typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 1, Text = "Eins" });
-            typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 2, Text = "Zwei" });
-            par.Item = typeEnum;
-            _applicationProgram.Static.ParameterTypes.Add(par);
+                par = new ParameterType_t();
+                par.Name = "ParameterTypeRestriction1";
+                var typeEnum = new ParameterType_tTypeRestriction();
+                typeEnum.SizeInBit = 8;
+                typeEnum.Base = ParameterType_tTypeRestrictionBase.Value;
+                typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 0, Text = "Null" });
+                typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 1, Text = "Eins" });
+                typeEnum.Enumeration.Add(new ParameterType_tTypeRestrictionEnumeration() { Value = 2, Text = "Zwei" });
+                par.Item = typeEnum;
+                _applicationProgram.Static.ParameterTypes.Add(par);
 
-            CorrectIds();
-            
+                CorrectIds();
+                RaiseChanged();
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage(ex.ToString());
+            }
         }
 
         private void CorrectIds()
@@ -268,7 +448,7 @@ namespace CreateKnxProd
             _catalogItem.ProductRefId = _product.Id;
             _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
 
-            foreach(var paraType in _applicationProgram.Static.ParameterTypes)
+            foreach (var paraType in _applicationProgram.Static.ParameterTypes)
             {
                 paraType.Id = string.Format("{0}_PT-{1}", _applicationProgram.Id, paraType.Name);
 
@@ -285,6 +465,13 @@ namespace CreateKnxProd
         {
             try
             {
+                if (_model == null)
+                    return;
+
+                var cancel = AskSaveCancel();
+                if (cancel)
+                    return;
+
                 var files = new string[] { "Catalog.mtxml", "Hardware.mtxml", "ApplicationProgram.mtxml" };
                 var outputFile = "TestRef.knxprod";
                 var toolName = "MT";
@@ -296,7 +483,7 @@ namespace CreateKnxProd
 
                 //ConvertBase.Uninitialize();
                 InvokeMethod(bas, "Uninitialize", null);
-                
+
                 //documentSet = ConverterEngine.BuildUpRawDocumentSet(fileList);
                 var dset = InvokeMethod(eng, "BuildUpRawDocumentSet", new object[] { files });
 
@@ -305,7 +492,7 @@ namespace CreateKnxProd
 
                 //ConvertBase.CleanUnregistered = true;
                 SetProperty(bas, "CleanUnregistered", false);
-                
+
                 //DocumentSet documentSet = ConverterEngine.ReOrganizeDocumentSet(docSet);
                 dset = InvokeMethod(eng, "ReOrganizeDocumentSet", new object[] { dset });
 
@@ -323,7 +510,26 @@ namespace CreateKnxProd
             }
         }
 
+        private void RaiseChanged()
+        {
+            RaisePropertyChanged(nameof(EditEnabled));
+            RaisePropertyChanged(nameof(HardwareName));
+            RaisePropertyChanged(nameof(HardwareSerial));
+            RaisePropertyChanged(nameof(HardwareVersion));
+            RaisePropertyChanged(nameof(ProductName));
+            RaisePropertyChanged(nameof(OrderNumber));
+            RaisePropertyChanged(nameof(ApplicationName));
+            RaisePropertyChanged(nameof(ApplicationNumber));
+            RaisePropertyChanged(nameof(ApplicationVersion));
+            RaisePropertyChanged(nameof(ParameterTypes));
+        }
+
         #region Properties
+        public bool EditEnabled
+        {
+            get => _model != null;
+        }
+
         public string HardwareName
         {
             get
@@ -425,7 +631,7 @@ namespace CreateKnxProd
                 RaisePropertyChanged(nameof(ApplicationVersion));
             }
         }
-        
+
         public ObservableCollection<ParameterType_t> ParameterTypes
         {
             get => _applicationProgram?.Static?.ParameterTypes;
@@ -434,9 +640,9 @@ namespace CreateKnxProd
         #endregion
 
         #region Reflection
-        private object InvokeMethod(Type type, string methodName, object[]  args)
+        private object InvokeMethod(Type type, string methodName, object[] args)
         {
-         
+
             var mi = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic);
             return mi.Invoke(null, args);
         }
@@ -490,19 +696,11 @@ namespace CreateKnxProd
             }
         }
 
-        public ICommand AddCommObjCommand
+        public ICommand SaveAsCommand
         {
             get
             {
-                return _addCommObjCommand;
-            }
-        }
-
-        public ICommand DelCommObjCommand
-        {
-            get
-            {
-                return _delCommObjCommand;
+                return _saveAsCommand;
             }
         }
 
@@ -516,10 +714,5 @@ namespace CreateKnxProd
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
         #endregion
-
-        class Utf8StringWriter : StringWriter
-        {
-            public override Encoding Encoding => Encoding.UTF8;
-        }
     }
 }

@@ -15,9 +15,31 @@ namespace CreateKnxProd
             MessageBox.Show(message);
         }
 
-        public string ChooseFile(string extension, string filter)
+        public string ChooseSaveFile(string extension, string filter)
         {
             var dlg = new SaveFileDialog();
+            dlg.DefaultExt = extension;
+            dlg.Filter = filter;
+
+            var result = dlg.ShowDialog();
+            if (result != true)
+                return null;
+
+            return dlg.FileName;
+        }
+
+        public bool? Ask(string question)
+        {
+            var result = MessageBox.Show(question, "Frage", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Cancel)
+                return null;
+
+            return result == MessageBoxResult.Yes;
+        }
+
+        public string ChooseFileToOpen(string extension, string filter)
+        {
+            var dlg = new OpenFileDialog();
             dlg.DefaultExt = extension;
             dlg.Filter = filter;
 

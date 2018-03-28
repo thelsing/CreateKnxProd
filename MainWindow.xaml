@@ -22,10 +22,11 @@
                 <Button Content="Öffnen" Command="{Binding OpenCommand}"/>
                 <Button Content="Schließen" Command="{Binding CloseCommand}"/>
                 <Button Content="Speichern" Command="{Binding SaveCommand}"/>
+                <Button Content="Speichern unter" Command="{Binding SaveAsCommand}"/>
                 <Button Content="Exportieren" Command="{Binding ExportCommand}"/>
             </ToolBar>
         </ToolBarTray>
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" IsEnabled="{Binding EditEnabled}">
             <TabItem Header="Allgemein">
                 <Grid>
                     <Grid.ColumnDefinitions>
