@@ -116,10 +116,32 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Parameter">
-                
+                <DataGrid ItemsSource="{Binding Parameters }" AutoGenerateColumns="False"
+                          dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
+                                                DisplayMemberPath="Name">
+                            <DataGridComboBoxColumn.ElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ParameterTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                </Style>
+                            </DataGridComboBoxColumn.ElementStyle>
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ParameterTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        <DataGridTextColumn Header="Text" Binding="{Binding Text}"/>
+                        <DataGridTextColumn Header="Wert" Binding="{Binding Value}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem Header="Kommunikationsobject">
-                
+                <DataGrid ItemsSource="{Binding ComObjects }" AutoGenerateColumns="True"
+                          dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
+                </DataGrid>
             </TabItem>
         </TabControl>
     </Grid>

@@ -4,10 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class CatalogSection_t : object, System.ComponentModel.INotifyPropertyChanged
+    public partial class ParameterRefRef_t : INotifyPropertyChanged
     {
+        [XmlIgnore]
+        public ParameterRef_t ParameterRef { get; set; }
     }
 }

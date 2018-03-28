@@ -58,14 +58,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\EnumDescriptionTypeConverter.cs" />
-    <Compile Include="Model\CatalogSection_t.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Model\IGetByteSize.cs" />
+    <Compile Include="Model\ParameterRefRef_t.cs" />
+    <Compile Include="Model\ParameterRef_t.cs" />
     <Compile Include="Model\ParameterTypeType.cs" />
     <Compile Include="Model\ParameterType_t.cs" />
     <Compile Include="Model\ParameterType_tTypeFloat.cs" />
     <Compile Include="Model\ParameterType_tTypeNumber.cs" />
     <Compile Include="Model\ParameterType_tTypeRestriction.cs" />
     <Compile Include="Model\ParameterType_tTypeText.cs" />
+    <Compile Include="Model\Parameter_t.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
