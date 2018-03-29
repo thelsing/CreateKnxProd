@@ -167,11 +167,12 @@ namespace CreateKnxProd
             var appStatic = _applicationProgram.Static;
             appStatic.ComObjectRefs.Clear();
 
-            uint i = 0;
+            uint i = 1;
             foreach (var item in appStatic.ComObjectTable.ComObject)
             {
                 item.Number = i++;
-
+                item.Name = item.Text;
+                item.ReadOnInitFlag = Enable_t.Disabled;
                 appStatic.ComObjectRefs.Add(new ComObjectRef_t() { ComObject = item, DatapointType = null, Roles = null });
                 
             }
@@ -182,12 +183,14 @@ namespace CreateKnxProd
             var ldProc1 = new LoadProcedures_tLoadProcedure();
             ldProc1.MergeId = 2;
             ldProc1.MergeIdSpecified = true;
+            
 
             var ldCtrlCreate = new LoadProcedure_tLdCtrlRelSegment();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.LsmIdxSpecified = true;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
+            ldCtrlCreate.AppliesTo = LdCtrlProcType_t.full;
             ldCtrlCreate.Size = _codeSegment.Size;
             ldProc1.Items.Add(ldCtrlCreate);
 
@@ -419,7 +422,7 @@ namespace CreateKnxProd
                 _applicationProgram.LoadProcedureStyle = LoadProcedureStyle_t.MergedProcedure;
                 _applicationProgram.PeiType = 0;
                 _applicationProgram.DefaultLanguage = lang;
-                _applicationProgram.DynamicTableManagement = true;
+                _applicationProgram.DynamicTableManagement = false;
                 _applicationProgram.Linkable = false;
                 _applicationProgram.MinEtsVersion = "4.0";
 
@@ -593,6 +596,8 @@ namespace CreateKnxProd
                 //ConverterEngine.PersistDocumentSetAsXmlOutput(documentSet, outputFileName, externalFiles, string.Empty, true, createdBy, toolVersion);
                 InvokeMethod(eng, "PersistDocumentSetAsXmlOutput", new object[] { dset, outputFile, null,
                             "", true, _toolName, _toolVersion });
+
+                _dialogService.ShowMessage("Export erfolgreich!");
             }
             catch (Exception ex)
             {

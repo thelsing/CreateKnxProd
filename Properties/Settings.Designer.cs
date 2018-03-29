@@ -25,7 +25,7 @@ namespace CreateKnxProd.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\ETS5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\ETS4")]
         public string ETS5Path {
             get {
                 return ((string)(this["ETS5Path"]));
