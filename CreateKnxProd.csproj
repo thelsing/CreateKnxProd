@@ -59,6 +59,8 @@
     </ApplicationDefinition>
     <Compile Include="Converter\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Model\ComObjectRefRef_t.cs" />
+    <Compile Include="Model\ComObjectRef_t.cs" />
     <Compile Include="Model\IGetByteSize.cs" />
     <Compile Include="Model\ParameterRefRef_t.cs" />
     <Compile Include="Model\ParameterRef_t.cs" />

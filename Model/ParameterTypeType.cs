@@ -21,8 +21,15 @@ namespace CreateKnxProd.Model
         Text
     }
 
-    public static class ParameterTypeTypeExtension
+    public static class EnumExtension
     {
-        public static IEnumerable<ParameterTypeType> GetEnumTypes => Enum.GetValues(typeof(ParameterTypeType)).Cast<ParameterTypeType>();
+        public static IEnumerable<ParameterTypeType> GetEnumParameterTypTypes => 
+            Enum.GetValues(typeof(ParameterTypeType)).Cast<ParameterTypeType>();
+        public static IEnumerable<Enable_t> GetEnumEnable_t =>
+            Enum.GetValues(typeof(Enable_t)).Cast<Enable_t>();
+        public static IEnumerable<ComObjectSize_t> GetEnumComObjectSize_t =>
+            Enum.GetValues(typeof(ComObjectSize_t)).Cast<ComObjectSize_t>();
+        public static IEnumerable<ComObjectPriority_t> GetEnumComObjectPriority_t =>
+            Enum.GetValues(typeof(ComObjectPriority_t)).Cast<ComObjectPriority_t>();
     }
 }

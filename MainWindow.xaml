@@ -47,29 +47,29 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="3" Text="Name" Grid.Column="1" Grid.Row="0"/>
-                    <TextBox Margin="3" Text="{Binding HardwareName}" Grid.Column="2" Grid.Row="0" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding HardwareName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="0" Width="200"/>
                     <TextBlock Margin="3" Text="Hardware Version" Grid.Column="1" Grid.Row="1"/>
-                    <TextBox Margin="3" Text="{Binding HardwareVersion}" Grid.Column="2" Grid.Row="1" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding HardwareVersion, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1" Width="200"/>
                     <TextBlock Margin="3" Text="Seriennummer" Grid.Column="1" Grid.Row="2"/>
-                    <TextBox Margin="3" Text="{Binding HardwareSerial}" Grid.Column="2" Grid.Row="2" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding HardwareSerial, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2" Width="200"/>
                     <TextBlock Margin="3" Text="Produkt" Grid.Column="1" Grid.Row="3"/>
-                    <TextBox Margin="3" Text="{Binding ProductName}" Grid.Column="2" Grid.Row="3" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3" Width="200"/>
                     <TextBlock Margin="3" Text="Bestellnummer" Grid.Column="1" Grid.Row="4"/>
-                    <TextBox Margin="3" Text="{Binding OrderNumber}" Grid.Column="2" Grid.Row="4" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding OrderNumber, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Width="200"/>
                     <TextBlock Margin="3" Text="Applikationsprogramm" Grid.Column="1" Grid.Row="5"/>
-                    <TextBox Margin="3" Text="{Binding ApplicationName}" Grid.Column="2" Grid.Row="5" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding ApplicationName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5" Width="200"/>
                     <TextBlock Margin="3" Text="Applikationsversion" Grid.Column="1" Grid.Row="6"/>
-                    <TextBox Margin="3" Text="{Binding ApplicationNumber}" Grid.Column="2" Grid.Row="6" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding ApplicationVersion, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6" Width="200"/>
                     <TextBlock Margin="3" Text="Applikationsnummer" Grid.Column="1" Grid.Row="7"/>
-                    <TextBox Margin="3" Text="{Binding ApplicationVersion}" Grid.Column="2" Grid.Row="7" Width="200"/>
+                    <TextBox Margin="3" Text="{Binding ApplicationNumber, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="7" Width="200"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Parametertypen">
-                <DataGrid ItemsSource="{Binding ParameterTypes }" AutoGenerateColumns="False" RowDetailsVisibilityMode="Visible"
+                <DataGrid ItemsSource="{Binding ParameterTypes }" AutoGenerateColumns="False"
                           CanUserDeleteRows="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                        <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:ParameterTypeTypeExtension.GetEnumTypes}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumParameterTypTypes}" />
                         <DataGridTextColumn Header="Bytes" Binding="{Binding SizeInByte}" IsReadOnly="True"/>
                     </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
@@ -79,31 +79,31 @@
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeText}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Anzahl der Zeichen" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding SizeInByte}"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding SizeInByte, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeFloat}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Minimum" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive}"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive, UpdateSourceTrigger=PropertyChanged}"/>
                                             <TextBlock Text="Maximum" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive}"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeNumber}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Minimum" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive}"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive, UpdateSourceTrigger=PropertyChanged}"/>
                                             <TextBlock Text="Maximum" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive}"/>
+                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeRestriction}">
                                         <DataGrid ItemsSource="{Binding Enumeration}" Margin="5" AutoGenerateColumns="False" 
                                                   dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Wert" Binding="{Binding Value}" />
-                                                <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="200"/>
+                                                <DataGridTextColumn Header="Wert" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+                                                <DataGridTextColumn Header="Text" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </DataTemplate>
@@ -119,7 +119,7 @@
                 <DataGrid ItemsSource="{Binding Parameters }" AutoGenerateColumns="False"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                         <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
                                                 DisplayMemberPath="Name">
                             <DataGridComboBoxColumn.ElementStyle>
@@ -133,14 +133,25 @@
                                 </Style>
                             </DataGridComboBoxColumn.EditingElementStyle>
                         </DataGridComboBoxColumn>
-                        <DataGridTextColumn Header="Text" Binding="{Binding Text}"/>
-                        <DataGridTextColumn Header="Wert" Binding="{Binding Value}"/>
+                        <DataGridTextColumn Header="Text" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Wert" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
             <TabItem Header="Kommunikationsobject">
-                <DataGrid ItemsSource="{Binding ComObjects }" AutoGenerateColumns="True"
+                <DataGrid ItemsSource="{Binding ComObjects }" AutoGenerateColumns="False"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Text" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="Funktionstext" Binding="{Binding FunctionText, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn Header="Länge"  SelectedItemBinding="{Binding ObjectSize, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectSize_t}" />
+                        <DataGridComboBoxColumn Header="K"  SelectedItemBinding="{Binding CommunicationFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="L"  SelectedItemBinding="{Binding ReadFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="S"  SelectedItemBinding="{Binding WriteFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="Ü"  SelectedItemBinding="{Binding TransmitFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="A"  SelectedItemBinding="{Binding UpdateFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="Priorität"  SelectedItemBinding="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectPriority_t}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
         </TabControl>
