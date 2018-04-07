@@ -26,9 +26,27 @@ namespace CreateKnxProd.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\ETS4")]
-        public string ETS5Path {
+        public string ETSPath {
             get {
-                return ((string)(this["ETS5Path"]));
+                return ((string)(this["ETSPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("de")]
+        public string Culture {
+            get {
+                return ((string)(this["Culture"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("de")]
+        public string UICulture {
+            get {
+                return ((string)(this["UICulture"]));
             }
         }
     }

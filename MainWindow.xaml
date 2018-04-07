@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:CreateKnxProd"
         xmlns:model="clr-namespace:CreateKnxProd.Model"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:ResxLocalizationProvider.DefaultAssembly="CreateKnxProd"
+        lex:ResxLocalizationProvider.DefaultDictionary="Ressources"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{lex:Loc WindowTitle}" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,16 +21,16 @@
         </Grid.RowDefinitions>
         <ToolBarTray>
             <ToolBar>
-                <Button Content="Neu" Command="{Binding CreateNewCommand}"/>
-                <Button Content="Öffnen" Command="{Binding OpenCommand}"/>
-                <Button Content="Schließen" Command="{Binding CloseCommand}"/>
-                <Button Content="Speichern" Command="{Binding SaveCommand}"/>
-                <Button Content="Speichern unter" Command="{Binding SaveAsCommand}"/>
-                <Button Content="Exportieren" Command="{Binding ExportCommand}"/>
+                <Button Content="{lex:Loc New}" Command="{Binding CreateNewCommand}"/>
+                <Button Content="{lex:Loc Open}" Command="{Binding OpenCommand}"/>
+                <Button Content="{lex:Loc Close}" Command="{Binding CloseCommand}"/>
+                <Button Content="{lex:Loc Save}" Command="{Binding SaveCommand}"/>
+                <Button Content="{lex:Loc SaveAs}" Command="{Binding SaveAsCommand}"/>
+                <Button Content="{lex:Loc Export}" Command="{Binding ExportCommand}"/>
             </ToolBar>
         </ToolBarTray>
         <TabControl Grid.Row="1" IsEnabled="{Binding EditEnabled}">
-            <TabItem Header="Allgemein">
+            <TabItem Header="{lex:Loc Common}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -46,31 +49,31 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="3" Text="Name" Grid.Column="1" Grid.Row="0"/>
+                    <TextBlock Margin="3" Text="{lex:Loc Name}" Grid.Column="1" Grid.Row="0"/>
                     <TextBox Margin="3" Text="{Binding HardwareName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="0" Width="200"/>
-                    <TextBlock Margin="3" Text="Hardware Version" Grid.Column="1" Grid.Row="1"/>
+                    <TextBlock Margin="3" Text="{lex:Loc HardwareVersion}" Grid.Column="1" Grid.Row="1"/>
                     <TextBox Margin="3" Text="{Binding HardwareVersion, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1" Width="200"/>
-                    <TextBlock Margin="3" Text="Seriennummer" Grid.Column="1" Grid.Row="2"/>
+                    <TextBlock Margin="3" Text="{lex:Loc SerialNumber}" Grid.Column="1" Grid.Row="2"/>
                     <TextBox Margin="3" Text="{Binding HardwareSerial, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2" Width="200"/>
-                    <TextBlock Margin="3" Text="Produkt" Grid.Column="1" Grid.Row="3"/>
+                    <TextBlock Margin="3" Text="{lex:Loc ProductName}" Grid.Column="1" Grid.Row="3"/>
                     <TextBox Margin="3" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3" Width="200"/>
-                    <TextBlock Margin="3" Text="Bestellnummer" Grid.Column="1" Grid.Row="4"/>
+                    <TextBlock Margin="3" Text="{lex:Loc OrderNumber}" Grid.Column="1" Grid.Row="4"/>
                     <TextBox Margin="3" Text="{Binding OrderNumber, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Width="200"/>
-                    <TextBlock Margin="3" Text="Applikationsprogramm" Grid.Column="1" Grid.Row="5"/>
+                    <TextBlock Margin="3" Text="{lex:Loc ApplicationName}" Grid.Column="1" Grid.Row="5"/>
                     <TextBox Margin="3" Text="{Binding ApplicationName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5" Width="200"/>
-                    <TextBlock Margin="3" Text="Applikationsversion" Grid.Column="1" Grid.Row="6"/>
+                    <TextBlock Margin="3" Text="{lex:Loc ApplicationVersion}" Grid.Column="1" Grid.Row="6"/>
                     <TextBox Margin="3" Text="{Binding ApplicationVersion, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6" Width="200"/>
-                    <TextBlock Margin="3" Text="Applikationsnummer" Grid.Column="1" Grid.Row="7"/>
+                    <TextBlock Margin="3" Text="{lex:Loc ApplicationNumber}" Grid.Column="1" Grid.Row="7"/>
                     <TextBox Margin="3" Text="{Binding ApplicationNumber, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="7" Width="200"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Parametertypen">
+            <TabItem Header="{lex:Loc ParameterTypes}">
                 <DataGrid ItemsSource="{Binding ParameterTypes }" AutoGenerateColumns="False"
                           CanUserDeleteRows="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumParameterTypTypes}" />
-                        <DataGridTextColumn Header="Bytes" Binding="{Binding SizeInByte}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="{lex:Loc Name}" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc Type}"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumParameterTypTypes}" />
+                        <DataGridTextColumn Header="{lex:Loc SizeInByte}" Binding="{Binding SizeInByte}" IsReadOnly="True"/>
                     </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
@@ -78,23 +81,23 @@
                                 <StackPanel.Resources>
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeText}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Anzahl der Zeichen" Margin="5"/>
+                                            <TextBlock Text="{lex:Loc CharacterCount}" Margin="5"/>
                                             <TextBox Width="50" Margin="5" Text="{Binding SizeInByte, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeFloat}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Minimum" Margin="5"/>
+                                            <TextBlock Text="{lex:Loc Minimum}" Margin="5"/>
                                             <TextBox Width="50" Margin="5" Text="{Binding minInclusive, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <TextBlock Text="Maximum" Margin="5"/>
+                                            <TextBlock Text="{lex:Loc Maximum}" Margin="5"/>
                                             <TextBox Width="50" Margin="5" Text="{Binding maxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_tTypeNumber}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Minimum" Margin="5"/>
+                                            <TextBlock Text="{lex:Loc Minimum}" Margin="5"/>
                                             <TextBox Width="50" Margin="5" Text="{Binding minInclusive, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <TextBlock Text="Maximum" Margin="5"/>
+                                            <TextBlock Text="{lex:Loc Maximum}" Margin="5"/>
                                             <TextBox Width="50" Margin="5" Text="{Binding maxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </DataTemplate>
@@ -102,8 +105,8 @@
                                         <DataGrid ItemsSource="{Binding Enumeration}" Margin="5" AutoGenerateColumns="False" 
                                                   dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Wert" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
-                                                <DataGridTextColumn Header="Text" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                                <DataGridTextColumn Header="{lex:Loc Value}" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+                                                <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </DataTemplate>
@@ -115,12 +118,12 @@
                     </DataGrid.RowDetailsTemplate>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Parameter">
+            <TabItem Header="{lex:Loc Parameters}">
                 <DataGrid ItemsSource="{Binding Parameters }" AutoGenerateColumns="False"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridComboBoxColumn Header="Typ"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
+                        <DataGridTextColumn Header="{lex:Loc Name}" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc Type}"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
                                                 DisplayMemberPath="Name">
                             <DataGridComboBoxColumn.ElementStyle>
                                 <Style TargetType="{x:Type ComboBox}">
@@ -133,24 +136,24 @@
                                 </Style>
                             </DataGridComboBoxColumn.EditingElementStyle>
                         </DataGridComboBoxColumn>
-                        <DataGridTextColumn Header="Text" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="Wert" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="{lex:Loc Value}" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Kommunikationsobject">
+            <TabItem Header="{lex:Loc ComObjects}">
                 <DataGrid ItemsSource="{Binding ComObjects }" AutoGenerateColumns="False"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Text" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="Funktionstext" Binding="{Binding FunctionText, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridComboBoxColumn Header="Länge"  SelectedItemBinding="{Binding ObjectSize, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectSize_t}" />
-                        <DataGridComboBoxColumn Header="K"  SelectedItemBinding="{Binding CommunicationFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
-                        <DataGridComboBoxColumn Header="L"  SelectedItemBinding="{Binding ReadFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
-                        <DataGridComboBoxColumn Header="S"  SelectedItemBinding="{Binding WriteFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
-                        <DataGridComboBoxColumn Header="Ü"  SelectedItemBinding="{Binding TransmitFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
-                        <DataGridComboBoxColumn Header="A"  SelectedItemBinding="{Binding UpdateFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
-                        <DataGridComboBoxColumn Header="Priorität"  SelectedItemBinding="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectPriority_t}" />
+                        <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="{lex:Loc FunctionText}" Binding="{Binding FunctionText, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc Size}"  SelectedItemBinding="{Binding ObjectSize, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectSize_t}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc CFlag}"  SelectedItemBinding="{Binding CommunicationFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc RFlag}"  SelectedItemBinding="{Binding ReadFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc WFlag}"  SelectedItemBinding="{Binding WriteFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc TFlag}"  SelectedItemBinding="{Binding TransmitFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc UFlag}"  SelectedItemBinding="{Binding UpdateFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_t}" />
+                        <DataGridComboBoxColumn Header="{lex:Loc Priority}"  SelectedItemBinding="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectPriority_t}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

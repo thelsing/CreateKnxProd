@@ -2,8 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CreateKnxProd.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ETS5Path" Type="System.String" Scope="Application">
+    <Setting Name="ETSPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">C:\Program Files (x86)\ETS4</Value>
+    </Setting>
+    <Setting Name="Culture" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">de</Value>
+    </Setting>
+    <Setting Name="UICulture" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">de</Value>
     </Setting>
   </Settings>
 </SettingsFile>

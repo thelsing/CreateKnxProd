@@ -569,7 +569,7 @@ namespace CreateKnxProd
                 if (outputFile == null)
                     return;
 
-                var asmPath = Path.Combine(Properties.Settings.Default.ETS5Path, "Knx.Ets.Converter.ConverterEngine.dll");
+                var asmPath = Path.Combine(Properties.Settings.Default.ETSPath, "Knx.Ets.Converter.ConverterEngine.dll");
                 var asm = Assembly.LoadFrom(asmPath);
                 var eng = asm.GetType("Knx.Ets.Converter.ConverterEngine.ConverterEngine");
                 var bas = asm.GetType("Knx.Ets.Converter.ConverterEngine.ConvertBase");

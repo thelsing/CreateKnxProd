@@ -1,4 +1,5 @@
 ﻿using CreateKnxProd.Converter;
+using CreateKnxProd.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ namespace CreateKnxProd.Model
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum ParameterTypeType
     {
-        [Description("Zahl")]
+        [Description("Number")]
         Number,
         [Description("Fließkommazahl")]
         Float,
