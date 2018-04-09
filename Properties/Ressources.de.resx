@@ -126,6 +126,9 @@
   <data name="ApplicationVersion" xml:space="preserve">
     <value>Applikationsversion</value>
   </data>
+  <data name="AskSave" xml:space="preserve">
+    <value>Soll gespeichert werden?</value>
+  </data>
   <data name="CFlag" xml:space="preserve">
     <value>K</value>
   </data>
@@ -138,11 +141,20 @@
   <data name="Common" xml:space="preserve">
     <value>Allgemein</value>
   </data>
+  <data name="CommonParameters" xml:space="preserve">
+    <value>Allgemeine Parameter</value>
+  </data>
   <data name="ComObjects" xml:space="preserve">
     <value>Kommunikationsobjekte</value>
   </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Geräte</value>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>Exportieren</value>
+  </data>
+  <data name="ExportSuccess" xml:space="preserve">
+    <value>Export erfolgreich!</value>
   </data>
   <data name="FunctionText" xml:space="preserve">
     <value>Funktionstext</value>
@@ -192,6 +204,9 @@
   <data name="SaveAs" xml:space="preserve">
     <value>Speichern unter</value>
   </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Speichern erfolgreich!</value>
+  </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>Seriennummer</value>
   </data>
@@ -218,5 +233,8 @@
   </data>
   <data name="WFlag" xml:space="preserve">
     <value>S</value>
+  </data>
+  <data name="XMLFiles" xml:space="preserve">
+    <value>XML Datei|*.xml</value>
   </data>
 </root>

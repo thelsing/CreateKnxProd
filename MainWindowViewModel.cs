@@ -1,5 +1,6 @@
 ﻿using CreateKnxProd.Extensions;
 using CreateKnxProd.Model;
+using CreateKnxProd.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml;
@@ -33,7 +35,7 @@ namespace CreateKnxProd
         private KNX _model = null;
 
         private const string _fileExtension = ".xml";
-        private const string _fileFilter = "XML Datei|*.xml";
+        private readonly string _fileFilter = Ressources.XMLFiles;
 
         private ManufacturerData_tManufacturer _manufacturerData;
         private Hardware_t _hardware;
@@ -154,7 +156,7 @@ namespace CreateKnxProd
                     serializer.Serialize(xmlWriter, _model);
                 }
 
-                _dialogService.ShowMessage("Speichern erfolgreich!");
+                _dialogService.ShowMessage(Ressources.SaveSuccess);
             }
             catch (Exception ex)
             {
@@ -313,7 +315,7 @@ namespace CreateKnxProd
             var commonChannel = new ApplicationProgramDynamic_tChannelIndependentBlock();
             _parameterBlock = new ComObjectParameterBlock_t();
             _parameterBlock.Name = "ParameterPage";
-            _parameterBlock.Text = "Allgemeine Parameter";
+            _parameterBlock.Text = Ressources.CommonParameters;
 
             foreach(var paramRef in appStatic.ParameterRefs)
             {
@@ -331,7 +333,7 @@ namespace CreateKnxProd
 
         private bool AskSaveCancel()
         {
-            var result = _dialogService.Ask("Soll gespeichert werden?");
+            var result = _dialogService.Ask(Ressources.AskSave);
             if (result == null)
                 return true;
 
@@ -391,7 +393,7 @@ namespace CreateKnxProd
 
                 _model = new KNX();
 
-                string lang = "en-US";
+                string lang = Thread.CurrentThread.CurrentCulture.Name;
 
                 _manufacturerData = new ManufacturerData_tManufacturer();
                 _applicationProgram = new ApplicationProgram_t();
@@ -459,7 +461,7 @@ namespace CreateKnxProd
 
                 _hardware2Program.MediumTypes.Add("MT-5");
 
-                _catalogSection.Name = "Geräte";
+                _catalogSection.Name = Ressources.Devices;
                 _catalogSection.Number = "1";
                 _catalogSection.DefaultLanguage = lang;
 
@@ -597,7 +599,7 @@ namespace CreateKnxProd
                 InvokeMethod(eng, "PersistDocumentSetAsXmlOutput", new object[] { dset, outputFile, null,
                             "", true, _toolName, _toolVersion });
 
-                _dialogService.ShowMessage("Export erfolgreich!");
+                _dialogService.ShowMessage(Ressources.ExportSuccess);
             }
             catch (Exception ex)
             {

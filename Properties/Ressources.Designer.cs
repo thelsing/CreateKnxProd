@@ -88,6 +88,15 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Should the file be saved? ähnelt.
+        /// </summary>
+        public static string AskSave {
+            get {
+                return ResourceManager.GetString("AskSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die C ähnelt.
         /// </summary>
         public static string CFlag {
@@ -124,6 +133,15 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Common Parameters ähnelt.
+        /// </summary>
+        public static string CommonParameters {
+            get {
+                return ResourceManager.GetString("CommonParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ComObjects ähnelt.
         /// </summary>
         public static string ComObjects {
@@ -133,11 +151,29 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Devices ähnelt.
+        /// </summary>
+        public static string Devices {
+            get {
+                return ResourceManager.GetString("Devices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Export ähnelt.
         /// </summary>
         public static string Export {
             get {
                 return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Export was successful! ähnelt.
+        /// </summary>
+        public static string ExportSuccess {
+            get {
+                return ResourceManager.GetString("ExportSuccess", resourceCulture);
             }
         }
         
@@ -286,6 +322,15 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Saved successfully! ähnelt.
+        /// </summary>
+        public static string SaveSuccess {
+            get {
+                return ResourceManager.GetString("SaveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Serial Number ähnelt.
         /// </summary>
         public static string SerialNumber {
@@ -372,6 +417,15 @@ namespace CreateKnxProd.Properties {
         public static string WindowTitle {
             get {
                 return ResourceManager.GetString("WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die XML Files|*.xml ähnelt.
+        /// </summary>
+        public static string XMLFiles {
+            get {
+                return ResourceManager.GetString("XMLFiles", resourceCulture);
             }
         }
     }
