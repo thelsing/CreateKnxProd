@@ -47,6 +47,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="3" Text="{lex:Loc Name}" Grid.Column="1" Grid.Row="0"/>
@@ -65,6 +66,11 @@
                     <TextBox Margin="3" Text="{Binding ApplicationVersion, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6" Width="200"/>
                     <TextBlock Margin="3" Text="{lex:Loc ApplicationNumber}" Grid.Column="1" Grid.Row="7"/>
                     <TextBox Margin="3" Text="{Binding ApplicationNumber, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="7" Width="200"/>
+                    <TextBlock Margin="3" Text="{lex:Loc MediumType}" Grid.Column="1" Grid.Row="8"/>
+                    <ComboBox Margin="3" SelectedValuePath="Tag" SelectedValue="{Binding MediumType, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8" Width="200">
+                        <ComboBoxItem Content="{lex:Loc IP}" Tag="MT-5"/>
+                        <ComboBoxItem Content="{lex:Loc TP}" Tag="MT-0"/>
+                    </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc ParameterTypes}">

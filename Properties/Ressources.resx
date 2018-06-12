@@ -240,4 +240,13 @@
   <data name="XMLFiles" xml:space="preserve">
     <value>XML Files|*.xml</value>
   </data>
+  <data name="IP" xml:space="preserve">
+    <value>IP</value>
+  </data>
+  <data name="MediumType" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="TP" xml:space="preserve">
+    <value>TP</value>
+  </data>
 </root>

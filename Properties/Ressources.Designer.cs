@@ -196,11 +196,29 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP ähnelt.
+        /// </summary>
+        public static string IP {
+            get {
+                return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Maximum ähnelt.
         /// </summary>
         public static string Maximum {
             get {
                 return ResourceManager.GetString("Maximum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Medium ähnelt.
+        /// </summary>
+        public static string MediumType {
+            get {
+                return ResourceManager.GetString("MediumType", resourceCulture);
             }
         }
         
@@ -372,6 +390,15 @@ namespace CreateKnxProd.Properties {
         public static string TFlag {
             get {
                 return ResourceManager.GetString("TFlag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die TP ähnelt.
+        /// </summary>
+        public static string TP {
+            get {
+                return ResourceManager.GetString("TP", resourceCulture);
             }
         }
         

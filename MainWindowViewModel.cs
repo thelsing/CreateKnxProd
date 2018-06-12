@@ -141,6 +141,7 @@ namespace CreateKnxProd
                 if (_openFile == null)
                     SaveAs(param);
 
+                UpdateMediumInfo();
                 SetEmptyListsNull();
                 HandleParameters();
                 RegenerateDynamic();
@@ -161,6 +162,24 @@ namespace CreateKnxProd
             catch (Exception ex)
             {
                 _dialogService.ShowMessage(ex.ToString());
+            }
+        }
+
+        private void UpdateMediumInfo()
+        {
+            if (_hardware2Program.MediumTypes[0] == "MT-5")
+            {
+                _applicationProgram.MaskVersion = "MV-57B0";
+                _hardware.IsIPEnabled = true;
+                _hardware.BusCurrent = 0;
+                _hardware.BusCurrentSpecified = false;
+            }
+            else
+            {
+                _applicationProgram.MaskVersion = "MV-07B0";
+                _hardware.IsIPEnabled = false;
+                _hardware.BusCurrent = 10;
+                _hardware.BusCurrentSpecified = true;
             }
         }
 
@@ -621,6 +640,7 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(ParameterTypes));
             RaisePropertyChanged(nameof(Parameters));
             RaisePropertyChanged(nameof(ComObjects));
+            RaisePropertyChanged(nameof(MediumType));
 
         }
 
@@ -742,6 +762,16 @@ namespace CreateKnxProd
         public ObservableCollection<ComObject_t> ComObjects
         {
             get => _applicationProgram?.Static?.ComObjectTable?.ComObject;
+        }
+
+        public string MediumType
+        {
+            get => _hardware2Program.MediumTypes[0];
+            set
+            {
+                _hardware2Program.MediumTypes[0] = value;
+                RaisePropertyChanged(nameof(MediumType));
+            }
         }
 
         #endregion
