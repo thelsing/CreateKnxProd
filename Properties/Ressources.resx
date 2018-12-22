@@ -249,4 +249,7 @@
   <data name="TP" xml:space="preserve">
     <value>TP</value>
   </data>
+  <data name="ReplacedVersion" xml:space="preserve">
+    <value>ReplacedVersion</value>
+  </data>
 </root>

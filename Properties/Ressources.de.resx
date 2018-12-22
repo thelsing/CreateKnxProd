@@ -196,7 +196,7 @@
     <value>Produkt</value>
   </data>
   <data name="RFlag" xml:space="preserve">
-    <value>R</value>
+    <value>L</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
@@ -236,5 +236,8 @@
   </data>
   <data name="XMLFiles" xml:space="preserve">
     <value>XML Datei|*.xml</value>
+  </data>
+  <data name="ReplacedVersion" xml:space="preserve">
+    <value>Ersetzt Versionen</value>
   </data>
 </root>

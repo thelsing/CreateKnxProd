@@ -641,7 +641,7 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(Parameters));
             RaisePropertyChanged(nameof(ComObjects));
             RaisePropertyChanged(nameof(MediumType));
-
+            RaisePropertyChanged(nameof(ReplacedVersions));
         }
 
         #region Properties
@@ -752,6 +752,27 @@ namespace CreateKnxProd
             }
         }
 
+        public string ReplacedVersions
+        {
+            get
+            {
+                return string.Join(" ", _applicationProgram.ReplacesVersions.Select(b => b.ToString()));
+            }
+            set
+            {
+                try
+                {
+                    _applicationProgram.ReplacesVersions = value.Split(' ').Select(s => byte.Parse(s)).ToArray();
+                }
+                catch(Exception ex)
+                {
+                    _applicationProgram.ReplacesVersions = null;
+                }
+                                  
+                RaisePropertyChanged(nameof(ReplacedVersions));
+            }
+        }
+
         public ObservableCollection<ParameterType_t> ParameterTypes
         {
             get => _applicationProgram?.Static?.ParameterTypes;
@@ -795,50 +816,32 @@ namespace CreateKnxProd
 
         public ICommand ExportCommand
         {
-            get
-            {
-                return _exportCommand;
-            }
+            get => _exportCommand;
         }
 
         public ICommand CreateNewCommand
         {
-            get
-            {
-                return _createNewCommand;
-            }
+            get => _createNewCommand;
         }
 
         public ICommand OpenCommand
         {
-            get
-            {
-                return _openCommand;
-            }
+            get => _openCommand;
         }
 
         public ICommand CloseCommand
         {
-            get
-            {
-                return _closeCommand;
-            }
+            get => _closeCommand;
         }
 
         public ICommand SaveCommand
         {
-            get
-            {
-                return _saveCommand;
-            }
+            get => _saveCommand;
         }
 
         public ICommand SaveAsCommand
         {
-            get
-            {
-                return _saveAsCommand;
-            }
+            get => _saveAsCommand;
         }
 
         #endregion
