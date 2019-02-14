@@ -141,6 +141,13 @@ namespace CreateKnxProd
                 if (_openFile == null)
                     SaveAs(param);
 
+                _product.RegistrationInfo = new RegistrationInfo_t() { RegistrationStatus = RegistrationStatus_t.Registered };
+                _hardware2Program.RegistrationInfo = new RegistrationInfo_t()
+                {
+                    RegistrationStatus = RegistrationStatus_t.Registered,
+                    RegistrationNumber = "0001/" + _hardware.VersionNumber.ToString() + _applicationProgram.ApplicationVersion
+                };
+                
                 UpdateMediumInfo();
                 SetEmptyListsNull();
                 HandleParameters();
@@ -192,7 +199,10 @@ namespace CreateKnxProd
             foreach (var item in appStatic.ComObjectTable.ComObject)
             {
                 item.Number = i++;
-                item.Name = item.Text;
+                if (item.Text.Length <= 50)
+                    item.Name = item.Text;
+                else
+                    item.Name = item.Text.Substring(0, 50);
                 item.ReadOnInitFlag = Enable_t.Disabled;
                 appStatic.ComObjectRefs.Add(new ComObjectRef_t() { ComObject = item, DatapointType = null, Roles = null });
                 
@@ -289,7 +299,6 @@ namespace CreateKnxProd
 
             if (_product.Attributes?.Count() == 0)
                 _product.Attributes = null;
-
         }
 
         private void RegenerateLoadProcedure()
@@ -598,23 +607,19 @@ namespace CreateKnxProd
                 //ConvertBase.Uninitialize();
                 InvokeMethod(bas, "Uninitialize", null);
 
-                //documentSet = ConverterEngine.BuildUpRawDocumentSet(fileList);
+                //var dset = ConverterEngine.BuildUpRawDocumentSet( files );
                 var dset = InvokeMethod(eng, "BuildUpRawDocumentSet", new object[] { files });
 
-                //ConverterEngine.CheckOutputFileName(outputFileName, ".knxprod");
+                //ConverterEngine.CheckOutputFileName(outputFile, ".knxprod");
                 InvokeMethod(eng, "CheckOutputFileName", new object[] { outputFile, ".knxprod" });
 
-                //ConvertBase.CleanUnregistered = true;
-                SetProperty(bas, "CleanUnregistered", false);
+                //ConvertBase.CleanUnregistered = false;
+                //SetProperty(bas, "CleanUnregistered", false);
 
-                //DocumentSet documentSet = ConverterEngine.ReOrganizeDocumentSet(docSet);
+                //dset = ConverterEngine.ReOrganizeDocumentSet(dset);
                 dset = InvokeMethod(eng, "ReOrganizeDocumentSet", new object[] { dset });
 
-                //CheckSignaturesForKnxprod
-                //ConverterEngine.UpdateSignaturesForKnxprodFromTrustedSource(documentSet);
-                InvokeMethod(eng, "CheckSignaturesForKnxprod", new object[] { dset });
-
-                //ConverterEngine.PersistDocumentSetAsXmlOutput(documentSet, outputFileName, externalFiles, string.Empty, true, createdBy, toolVersion);
+                //ConverterEngine.PersistDocumentSetAsXmlOutput(dset, outputFile, null, string.Empty, true, _toolName, _toolVersion);
                 InvokeMethod(eng, "PersistDocumentSetAsXmlOutput", new object[] { dset, outputFile, null,
                             "", true, _toolName, _toolVersion });
 
@@ -756,18 +761,25 @@ namespace CreateKnxProd
         {
             get
             {
-                return string.Join(" ", _applicationProgram.ReplacesVersions.Select(b => b.ToString()));
+                if (_applicationProgram == null)
+                    return "";
+
+                return _applicationProgram.ReplacesVersions;
+                //return string.Join(" ", _applicationProgram.ReplacesVersions.Select(b => b.ToString()));
             }
             set
             {
-                try
-                {
-                    _applicationProgram.ReplacesVersions = value.Split(' ').Select(s => byte.Parse(s)).ToArray();
-                }
-                catch(Exception ex)
-                {
+                _applicationProgram.ReplacesVersions = value;
+                if (string.IsNullOrWhiteSpace(value))
                     _applicationProgram.ReplacesVersions = null;
-                }
+                //try
+                //{
+                //    _applicationProgram.ReplacesVersions = value.Split(' ').Select(s => byte.Parse(s)).ToArray();
+                //}
+                //catch(Exception ex)
+                //{
+                //    _applicationProgram.ReplacesVersions = null;
+                //}
                                   
                 RaisePropertyChanged(nameof(ReplacedVersions));
             }

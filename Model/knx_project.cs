@@ -21698,7 +21698,7 @@ namespace CreateKnxProd.Model
 
         private bool downloadInfoIncompleteField;
 
-        private byte[] replacesVersionsField;
+        private string replacesVersionsField;
 
         private byte[] hashField;
 
@@ -22264,7 +22264,7 @@ namespace CreateKnxProd.Model
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte[] ReplacesVersions
+        public string ReplacesVersions
         {
             get
             {
