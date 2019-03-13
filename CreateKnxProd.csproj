@@ -54,6 +54,7 @@
       <HintPath>packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
@@ -96,6 +97,7 @@
     <Compile Include="Model\ParameterType_tTypeRestriction.cs" />
     <Compile Include="Model\ParameterType_tTypeText.cs" />
     <Compile Include="Model\Parameter_t.cs" />
+    <Compile Include="Model\Xml.Project.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -106,7 +108,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IDialogService.cs" />
-    <Compile Include="Model\knx_project.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

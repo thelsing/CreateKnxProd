@@ -8,9 +8,9 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class ParameterRef_t : INotifyPropertyChanged
+    public partial class ParameterRef_T : INotifyPropertyChanged
     {
         [XmlIgnore]
-        public Parameter_t Parameter { get; set; }
+        public Parameter_T Parameter { get; set; }
     }
 }

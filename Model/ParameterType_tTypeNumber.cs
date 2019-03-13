@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class ParameterType_tTypeNumber : INotifyPropertyChanged, IGetByteSize
+    public partial class ParameterType_TTypeNumber : INotifyPropertyChanged, IGetByteSize
     {
         [XmlIgnore]
         public uint SizeInByte

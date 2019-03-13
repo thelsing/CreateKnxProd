@@ -8,9 +8,9 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class ComObjectRefRef_t : INotifyPropertyChanged
+    public partial class ComObjectRefRef_T : INotifyPropertyChanged
     {
         [XmlIgnore]
-        public ComObjectRef_t ComObjectRef { get; set; }
+        public ComObjectRef_T ComObjectRef { get; set; }
     }
 }

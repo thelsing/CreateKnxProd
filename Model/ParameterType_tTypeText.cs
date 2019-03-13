@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class ParameterType_tTypeText : INotifyPropertyChanged, IGetByteSize
+    public partial class ParameterType_TTypeText : INotifyPropertyChanged, IGetByteSize
     {
         [XmlIgnore]
         public uint SizeInByte
@@ -25,7 +25,7 @@ namespace CreateKnxProd.Model
             set
             {
                 SizeInBit = value * 8;
-                RaisePropertyChanged(nameof(SizeInByte));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SizeInByte)));
             }
         }
     }

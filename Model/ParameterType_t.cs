@@ -9,29 +9,29 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class ParameterType_t : object, System.ComponentModel.INotifyPropertyChanged
+    public partial class ParameterType_T : object, System.ComponentModel.INotifyPropertyChanged
     {
         [XmlIgnore]
         public ParameterTypeType Type
         {
             get
             {
-                if (Item is ParameterType_tTypeFloat)
+                if (TypeFloat != null)
                 {
                     return ParameterTypeType.Float;
                 }
 
-                if (Item is ParameterType_tTypeNumber)
+                if (TypeNumber != null)
                 {
                     return ParameterTypeType.Number;
                 }
 
-                if (Item is ParameterType_tTypeRestriction)
+                if (TypeRestriction != null)
                 {
                     return ParameterTypeType.Restriction;
                 }
 
-                if (Item is ParameterType_tTypeText)
+                if (TypeText != null)
                 {
                     return ParameterTypeType.Text;
                 }
@@ -40,22 +40,37 @@ namespace CreateKnxProd.Model
             }
             set
             {
+                PropertyChangedEventHandler eh = (s, e) =>
+                {
+                    if (e.PropertyName == nameof(SizeInByte))
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SizeInByte)));
+                };
+
+                TypeNumber = null;
+                TypeFloat = null;
+                TypeRestriction = null;
+                TypeText = null;
+
                 switch (value)
                 {
                     case ParameterTypeType.Number:
-                        Item = new ParameterType_tTypeNumber() { minInclusive = 0, maxInclusive = 50 , SizeInBit=32 };
+                        TypeNumber = new ParameterType_TTypeNumber() { MinInclusive = 0, MaxInclusive = 50 , SizeInBit=32 };
+                        TypeNumber.PropertyChanged += eh;
                         break;
                     case ParameterTypeType.Float:
-                        Item = new ParameterType_tTypeFloat() { minInclusive = 0, maxInclusive = 50, Encoding=ParameterType_tTypeFloatEncoding.IEEE754Single };
+                        TypeFloat = new ParameterType_TTypeFloat() { MinInclusive = 0, MaxInclusive = 50, Encoding=ParameterType_TTypeFloatEncoding.IEEE_754_Single };
+                        TypeFloat.PropertyChanged += eh;
                         break;
                     case ParameterTypeType.Restriction:
-                        Item = new ParameterType_tTypeRestriction() { Base = ParameterType_tTypeRestrictionBase.Value, SizeInBit = 8 };
+                        TypeRestriction = new ParameterType_TTypeRestriction() { Base = ParameterType_TTypeRestrictionBase.Value, SizeInBit = 8 };
+                        TypeRestriction.PropertyChanged += eh;
                         break;
                     case ParameterTypeType.Text:
-                        Item = new ParameterType_tTypeText() { SizeInByte = 50 };
+                        TypeText = new ParameterType_TTypeText() { SizeInByte = 50 };
+                        TypeText.PropertyChanged += eh;
                         break;
                 }
-                RaisePropertyChanged(nameof(SizeInByte));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SizeInByte)));
             }
         }
 
@@ -64,35 +79,28 @@ namespace CreateKnxProd.Model
         {
             get
             {
-                if (Item is IGetByteSize igetsize)
+                if (TypeNumber != null)
                 {
-                    return igetsize.SizeInByte;
+                    return TypeNumber.SizeInByte;
+                }
+
+                if (TypeFloat != null)
+                {
+                    return TypeFloat.SizeInByte;
+                }
+
+                if (TypeRestriction != null)
+                {
+                    return TypeRestriction.SizeInByte;
+                }
+
+                if (TypeText != null)
+                {
+                    return TypeText.SizeInByte;
                 }
 
                 return 0;
             }
-        }
-
-        partial void OnCreated()
-        {
-            PropertyChangedEventHandler eh = (s, e) =>
-            {
-                if (e.PropertyName == "SizeInByte")
-                    RaisePropertyChanged(e.PropertyName);
-            };
-            this.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName != "Item")
-                    return;
-
-                if (Item != null)
-                    ((INotifyPropertyChanged)Item).PropertyChanged += eh;
-            };
-            this.PropertyChanging += (sender, e) =>
-            {
-                if (Item != null)
-                    ((INotifyPropertyChanged)Item).PropertyChanged -= eh;
-            };
         }
     }
 }

@@ -9,12 +9,12 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class Parameter_t : INotifyPropertyChanged
+    public partial class Parameter_T : INotifyPropertyChanged
     {
         [XmlIgnore]
-        public ParameterType_t Type { get; set; }
+        public ParameterType_T Type { get; set; }
 
         [XmlIgnore]
-        public ObservableCollection<ParameterType_t> AllTypes { get; set; }
+        public ObservableCollection<ParameterType_T> AllTypes { get; set; }
     }
 }

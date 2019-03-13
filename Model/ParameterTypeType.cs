@@ -26,11 +26,11 @@ namespace CreateKnxProd.Model
     {
         public static IEnumerable<ParameterTypeType> GetEnumParameterTypTypes => 
             Enum.GetValues(typeof(ParameterTypeType)).Cast<ParameterTypeType>();
-        public static IEnumerable<Enable_t> GetEnumEnable_t =>
-            Enum.GetValues(typeof(Enable_t)).Cast<Enable_t>();
-        public static IEnumerable<ComObjectSize_t> GetEnumComObjectSize_t =>
-            Enum.GetValues(typeof(ComObjectSize_t)).Cast<ComObjectSize_t>();
-        public static IEnumerable<ComObjectPriority_t> GetEnumComObjectPriority_t =>
-            Enum.GetValues(typeof(ComObjectPriority_t)).Cast<ComObjectPriority_t>();
+        public static IEnumerable<Enable_T> GetEnumEnable_T =>
+            Enum.GetValues(typeof(Enable_T)).Cast<Enable_T>();
+        public static IEnumerable<ComObjectSize_T> GetEnumComObjectSize_T =>
+            Enum.GetValues(typeof(ComObjectSize_T)).Cast<ComObjectSize_T>();
+        public static IEnumerable<ComObjectPriority_T> GetEnumComObjectPriority_T =>
+            Enum.GetValues(typeof(ComObjectPriority_T)).Cast<ComObjectPriority_T>();
     }
 }
