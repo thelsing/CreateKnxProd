@@ -102,6 +102,15 @@ namespace CreateKnxProd
                     _model = (KNX)serializer.Deserialize(reader);
                 }
 
+                if(File.Exists("knx_master.xml"))
+                {
+                    using (var reader = new StreamReader("knx_master.xml"))
+                    {
+                        var masterData = (KNX)serializer.Deserialize(reader);
+                        _model.MasterData = masterData.MasterData;
+                    }
+                }
+
                 _manufacturerData = _model.ManufacturerData.First();
                 _hardware = _manufacturerData.Hardware.First();
                 _product = _hardware.Products.First();
@@ -174,13 +183,16 @@ namespace CreateKnxProd
                 HandleComObjects();
                 CorrectIds();
 
-
+                // remove masterdata temporaly to avoid writing it to file
+                var masterData = _model.MasterData;
+                _model.MasterData = null;
 
                 XmlSerializer serializer = new XmlSerializer(typeof(KNX));
                 using (var xmlWriter = new StreamWriter(_openFile, false, Encoding.UTF8))
                 {
                     serializer.Serialize(xmlWriter, _model);
                 }
+                _model.MasterData = masterData;
 
                 _dialogService.ShowMessage(Ressources.SaveSuccess);
             }
@@ -231,23 +243,23 @@ namespace CreateKnxProd
             ldProc1.MergeId = 2;
 
 
-            var ldCtrlCreate = new LdCtrlRelSegment();
+            var ldCtrlCreate = new LoadProcedure_TLdCtrlRelSegment();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
             ldCtrlCreate.AppliesTo = LdCtrlProcType_T.Full;
             ldCtrlCreate.Size = _codeSegment.Size;
-            ldProc1.LdCtrlBase.Add(ldCtrlCreate);
+            ldProc1.LdCtrlRelSegment.Add(ldCtrlCreate);
 
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
 
-            var ldCtrlWrite = new LdCtrlWriteRelMem();
+            var ldCtrlWrite = new LoadProcedure_TLdCtrlWriteRelMem();
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
             ldCtrlWrite.Size = _codeSegment.Size;
-            ldProc2.LdCtrlBase.Add(ldCtrlWrite);
+            ldProc2.LdCtrlWriteRelMem.Add(ldCtrlWrite);
 
             var appStatic = _applicationProgram.Static;
             appStatic.LoadProcedures.Clear();
@@ -281,22 +293,22 @@ namespace CreateKnxProd
             var ldProc1 = new LoadProcedures_TLoadProcedure();
             ldProc1.MergeId = 2;
 
-            var ldCtrlCreate = new LdCtrlRelSegment();
+            var ldCtrlCreate = new LoadProcedure_TLdCtrlRelSegment();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
             ldCtrlCreate.Size = 0;
-            ldProc1.LdCtrlBase.Add(ldCtrlCreate);
+            ldProc1.LdCtrlRelSegment.Add(ldCtrlCreate);
 
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
 
-            var ldCtrlWrite = new LdCtrlWriteRelMem();
+            var ldCtrlWrite = new LoadProcedure_TLdCtrlWriteRelMem();
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
             ldCtrlWrite.Size = 0;
-            ldProc2.LdCtrlBase.Add(ldCtrlWrite);
+            ldProc2.LdCtrlWriteRelMem.Add(ldCtrlWrite);
 
             var appStatic = _applicationProgram.Static;
 
@@ -427,7 +439,7 @@ namespace CreateKnxProd
                 _applicationProgram.DefaultLanguage = lang;
                 _applicationProgram.DynamicTableManagement = false;
                 _applicationProgram.Linkable = false;
-                _applicationProgram.MinEtsVersion = "4.0";
+                _applicationProgram.MinEtsVersion = ApplicationProgram_TMinEtsVersion.Item4Period0;
 
                 var appStatic = new ApplicationProgramStatic_T();
                 _applicationProgram.Static = appStatic;

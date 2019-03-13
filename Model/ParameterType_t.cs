@@ -70,7 +70,7 @@ namespace CreateKnxProd.Model
                         TypeText.PropertyChanged += eh;
                         break;
                 }
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SizeInByte)));
+                OnPropertyChanged(nameof(SizeInByte));
             }
         }
 

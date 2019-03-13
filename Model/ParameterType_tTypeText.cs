@@ -25,7 +25,7 @@ namespace CreateKnxProd.Model
             set
             {
                 SizeInBit = value * 8;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SizeInByte)));
+                OnPropertyChanged(nameof(SizeInByte));
             }
         }
     }
