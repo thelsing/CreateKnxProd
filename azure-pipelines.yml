@@ -27,11 +27,3 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: GitHubRelease@0
-  inputs:
-    gitHubConnection: thelsing
-    repositoryName: '$(Build.Repository.Name)'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: 'manual'
-    tag: 'v$(MajorVersion).$(MinorVersion).$(PatchVersion)'
