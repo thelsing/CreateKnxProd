@@ -33,4 +33,5 @@ steps:
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
-    tagSource: 'auto'
+    tagSource: 'manual'
+    tag: 'v$(MajorVersion).$(MinorVersion).$(PatchVersion)'
