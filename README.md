@@ -1,4 +1,5 @@
-# CreateKnxProd
+# CreateKnxProd [![Build Status](https://dev.azure.com/thesing/CreateKnxProd/_apis/build/status/thelsing.CreateKnxProd?branchName=master)](https://dev.azure.com/thesing/CreateKnxProd/_build/latest?definitionId=1&branchName=master)
+
 Simple Gui to create simple knxprod file for ETS. 
 
 Configuration:
