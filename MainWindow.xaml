@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreateKnxProd"
+        xmlns:lc="clr-namespace:CreateKnxProd.Converter"
         xmlns:model="clr-namespace:CreateKnxProd.Model"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -11,6 +12,9 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Ressources"
         mc:Ignorable="d"
         Title="{lex:Loc WindowTitle}" Height="450" Width="800">
+    <Window.Resources>
+        <lc:EnableTBoolTypeConverter x:Key="EnableBoolConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -157,11 +161,11 @@
                         <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
                         <DataGridTextColumn Header="{lex:Loc FunctionText}" Binding="{Binding FunctionText, UpdateSourceTrigger=PropertyChanged}" />
                         <DataGridComboBoxColumn Header="{lex:Loc Size}"  SelectedItemBinding="{Binding ObjectSize, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectSize_T}" />
-                        <DataGridComboBoxColumn Header="{lex:Loc CFlag}"  SelectedItemBinding="{Binding CommunicationFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_T}" />
-                        <DataGridComboBoxColumn Header="{lex:Loc RFlag}"  SelectedItemBinding="{Binding ReadFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_T}" />
-                        <DataGridComboBoxColumn Header="{lex:Loc WFlag}"  SelectedItemBinding="{Binding WriteFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_T}" />
-                        <DataGridComboBoxColumn Header="{lex:Loc TFlag}"  SelectedItemBinding="{Binding TransmitFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_T}" />
-                        <DataGridComboBoxColumn Header="{lex:Loc UFlag}"  SelectedItemBinding="{Binding UpdateFlag, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumEnable_T}" />
+                        <DataGridCheckBoxColumn Header="{lex:Loc CFlag}" Binding="{Binding CommunicationFlag, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnableBoolConverter}}" />
+                        <DataGridCheckBoxColumn Header="{lex:Loc RFlag}" Binding="{Binding ReadFlag, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnableBoolConverter}}" />
+                        <DataGridCheckBoxColumn Header="{lex:Loc WFlag}" Binding="{Binding WriteFlag, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnableBoolConverter}}" />
+                        <DataGridCheckBoxColumn Header="{lex:Loc TFlag}" Binding="{Binding TransmitFlag, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnableBoolConverter}}" />
+                        <DataGridCheckBoxColumn Header="{lex:Loc UFlag}" Binding="{Binding UpdateFlag, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnableBoolConverter}}" />
                         <DataGridComboBoxColumn Header="{lex:Loc Priority}"  SelectedItemBinding="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{x:Static model:EnumExtension.GetEnumComObjectPriority_T}" />
                     </DataGrid.Columns>
                 </DataGrid>

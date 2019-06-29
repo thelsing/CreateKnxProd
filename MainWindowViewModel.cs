@@ -319,11 +319,15 @@ namespace CreateKnxProd
 
         private void RegenerateDynamic()
         {
+            if (_applicationProgram.Dynamic == null)
+                _applicationProgram.Dynamic = new ApplicationProgramDynamic_T();
+
             var appDynamic = _applicationProgram.Dynamic;
+
             var appStatic = _applicationProgram.Static;
-            appDynamic.Choose.Clear();
-            appDynamic.ChannelIndependentBlock.Clear();
-            appDynamic.Channel.Clear();
+            appDynamic.Choose?.Clear();
+            appDynamic.ChannelIndependentBlock?.Clear();
+            appDynamic.Channel?.Clear();
 
             var commonChannel = new ApplicationProgramDynamic_TChannelIndependentBlock();
             _parameterBlock = new ComObjectParameterBlock_T();
