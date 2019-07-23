@@ -458,6 +458,7 @@ namespace CreateKnxProd
                 _codeSegment.LoadStateMachine = 4;
                 _codeSegment.Size = 0;
 
+                appStatic.Parameters = new ApplicationProgramStatic_TParameters();
                 appStatic.AddressTable = new ApplicationProgramStatic_TAddressTable();
                 appStatic.AddressTable.MaxEntries = 255;
 
@@ -648,7 +649,7 @@ namespace CreateKnxProd
         {
             get
             {
-                return _hardware.Name;
+                return _hardware?.Name;
             }
             set
             {
@@ -661,7 +662,7 @@ namespace CreateKnxProd
         {
             get
             {
-                return _hardware.SerialNumber;
+                return _hardware?.SerialNumber;
             }
             set
             {
@@ -670,12 +671,12 @@ namespace CreateKnxProd
             }
         }
 
-        public ushort HardwareVersion
+        public ushort? HardwareVersion
         {
-            get => _hardware.VersionNumber;
+            get => _hardware?.VersionNumber;
             set
             {
-                _hardware.VersionNumber = value;
+                _hardware.VersionNumber = value ?? 0;
                 RaisePropertyChanged(nameof(HardwareVersion));
             }
         }
@@ -684,7 +685,7 @@ namespace CreateKnxProd
         {
             get
             {
-                return _product.Text;
+                return _product?.Text;
             }
             set
             {
@@ -698,7 +699,7 @@ namespace CreateKnxProd
         {
             get
             {
-                return _product.OrderNumber;
+                return _product?.OrderNumber;
             }
             set
             {
@@ -711,7 +712,7 @@ namespace CreateKnxProd
         {
             get
             {
-                return _applicationProgram.Name;
+                return _applicationProgram?.Name;
             }
             set
             {
@@ -720,28 +721,28 @@ namespace CreateKnxProd
             }
         }
 
-        public ushort ApplicationNumber
+        public ushort? ApplicationNumber
         {
             get
             {
-                return _applicationProgram.ApplicationNumber;
+                return _applicationProgram?.ApplicationNumber;
             }
             set
             {
-                _applicationProgram.ApplicationNumber = value;
+                _applicationProgram.ApplicationNumber = value ?? 0;
                 RaisePropertyChanged(nameof(ApplicationNumber));
             }
         }
 
-        public byte ApplicationVersion
+        public byte? ApplicationVersion
         {
             get
             {
-                return _applicationProgram.ApplicationVersion;
+                return _applicationProgram?.ApplicationVersion;
             }
             set
             {
-                _applicationProgram.ApplicationVersion = value;
+                _applicationProgram.ApplicationVersion = value ?? 0;
                 RaisePropertyChanged(nameof(ApplicationVersion));
             }
         }
@@ -788,7 +789,7 @@ namespace CreateKnxProd
 
         public string MediumType
         {
-            get => _hardware2Program.MediumTypes[0];
+            get => _hardware2Program?.MediumTypes[0];
             set
             {
                 _hardware2Program.MediumTypes[0] = value;
