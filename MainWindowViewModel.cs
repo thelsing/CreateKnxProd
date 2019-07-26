@@ -460,10 +460,10 @@ namespace CreateKnxProd
 
                 appStatic.Parameters = new ApplicationProgramStatic_TParameters();
                 appStatic.AddressTable = new ApplicationProgramStatic_TAddressTable();
-                appStatic.AddressTable.MaxEntries = 255;
+                appStatic.AddressTable.MaxEntries = ushort.MaxValue;
 
                 appStatic.AssociationTable = new ApplicationProgramStatic_TAssociationTable();
-                appStatic.AssociationTable.MaxEntries = 255;
+                appStatic.AssociationTable.MaxEntries = ushort.MaxValue;
                 appStatic.ComObjectTable = new ApplicationProgramStatic_TComObjectTable();
                 appStatic.Options = new ApplicationProgramStatic_TOptions();
 
