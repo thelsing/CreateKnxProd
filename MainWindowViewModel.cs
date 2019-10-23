@@ -209,6 +209,12 @@ namespace CreateKnxProd
                 _hardware.IsIPEnabled = true;
                 _hardware.BusCurrent = null;
             }
+            else if (_hardware2Program.MediumTypes[0] == "MT-2")
+            {
+                _applicationProgram.MaskVersion = "MV-2705";
+                _hardware.IsIPEnabled = false;
+                _hardware.BusCurrent = null;
+            }
             else
             {
                 _applicationProgram.MaskVersion = "MV-07B0";
@@ -477,6 +483,7 @@ namespace CreateKnxProd
                 OrderNumber = "0";
 
                 _hardware2Program.MediumTypes.Add("MT-5");
+                _hardware2Program.MediumTypes.Add("MT-2");
 
                 _catalogSection.Name = Ressources.Devices;
                 _catalogSection.Number = "1";
