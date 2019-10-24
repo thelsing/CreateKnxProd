@@ -211,7 +211,7 @@ namespace CreateKnxProd
             }
             else if (_hardware2Program.MediumTypes[0] == "MT-2")
             {
-                _applicationProgram.MaskVersion = "MV-2705";
+                _applicationProgram.MaskVersion = "MV-27B0";
                 _hardware.IsIPEnabled = false;
                 _hardware.BusCurrent = null;
             }
