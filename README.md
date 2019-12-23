@@ -9,4 +9,4 @@ You can also change UICulture and Culture from 'de' to 'en' there.
 
 If ETS doesn't import the generated file, try removing underscores from product name, hardware name etc. Maybe version numbers have to be at least 10 too. 
 
-A knx-stack for multiple platforms acn be found [here](https://github.com/thelsing/knx). 
+A knx-stack for multiple platforms can be found [here](https://github.com/thelsing/knx). 
