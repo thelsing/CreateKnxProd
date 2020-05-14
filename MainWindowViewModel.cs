@@ -70,7 +70,7 @@ namespace CreateKnxProd
                 if (!File.Exists("knx_master.xml"))
                 {
                     var client = new WebClient();
-                    client.DownloadFile("https://update.knx.org/data/XML/project-11/knx_master.xml", "knx_master.xml");
+                    client.DownloadFile("https://update.knx.org/data/XML/project-20/knx_master.xml", "knx_master.xml");
                 }
             }
             catch (Exception ex)
@@ -243,7 +243,7 @@ namespace CreateKnxProd
             ldProc1.MergeId = 2;
 
 
-            var ldCtrlCreate = new LoadProcedure_TLdCtrlRelSegment();
+            var ldCtrlCreate = new LdCtrlRelSegment_T();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
@@ -254,7 +254,7 @@ namespace CreateKnxProd
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
 
-            var ldCtrlWrite = new LoadProcedure_TLdCtrlWriteRelMem();
+            var ldCtrlWrite = new LdCtrlWriteRelMem_T();
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
@@ -278,7 +278,7 @@ namespace CreateKnxProd
             foreach (var item in Parameters)
             {
                 appStatic.Parameters.Parameter.Add(item);
-                item.Memory = new Parameter_TMemory() { Offset = offset, BitOffset = 0 };
+                item.Memory = new MemoryParameter_T() { Offset = offset, BitOffset = 0 };
                 offset += item.Type.SizeInByte;
                 size += item.Type.SizeInByte;
 
@@ -293,7 +293,7 @@ namespace CreateKnxProd
             var ldProc1 = new LoadProcedures_TLoadProcedure();
             ldProc1.MergeId = 2;
 
-            var ldCtrlCreate = new LoadProcedure_TLdCtrlRelSegment();
+            var ldCtrlCreate = new LdCtrlRelSegment_T();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
@@ -303,7 +303,7 @@ namespace CreateKnxProd
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
 
-            var ldCtrlWrite = new LoadProcedure_TLdCtrlWriteRelMem();
+            var ldCtrlWrite = new LdCtrlWriteRelMem_T();
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
@@ -329,7 +329,7 @@ namespace CreateKnxProd
             appDynamic.ChannelIndependentBlock?.Clear();
             appDynamic.Channel?.Clear();
 
-            var commonChannel = new ApplicationProgramDynamic_TChannelIndependentBlock();
+            var commonChannel = new ChannelIndependentBlock_T();
             _parameterBlock = new ComObjectParameterBlock_T();
             _parameterBlock.Name = "ParameterPage";
             _parameterBlock.Text = Ressources.CommonParameters;
@@ -443,7 +443,7 @@ namespace CreateKnxProd
                 _applicationProgram.DefaultLanguage = lang;
                 _applicationProgram.DynamicTableManagement = false;
                 _applicationProgram.Linkable = false;
-                _applicationProgram.MinEtsVersion = ApplicationProgram_TMinEtsVersion.Item4Period0;
+                _applicationProgram.MinEtsVersion = "4.0";
 
                 var appStatic = new ApplicationProgramStatic_T();
                 _applicationProgram.Static = appStatic;
@@ -780,7 +780,7 @@ namespace CreateKnxProd
             get => _applicationProgram?.Static?.ParameterTypes;
         }
 
-        public ObservableCollection<Parameter_T> Parameters { get; private set; } = new ObservableCollection<Parameter_T>();
+        public ObservableCollection<ApplicationProgramStatic_TParametersParameter> Parameters { get; private set; } = new ObservableCollection<ApplicationProgramStatic_TParametersParameter>();
 
         public ObservableCollection<ComObject_T> ComObjects
         {
