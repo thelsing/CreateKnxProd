@@ -57,8 +57,8 @@ namespace Signing
             }
         }
 
-        private object _instance;
-        private Type _type;
+        private readonly object _instance;
+        private readonly Type _type;
     }
 
     class HardwareSigner
@@ -66,7 +66,8 @@ namespace Signing
         public HardwareSigner(
              FileInfo hardwareFile,
              IDictionary<string, string> applProgIdMappings,
-             IDictionary<string, string> applProgHashes)
+             IDictionary<string, string> applProgHashes,
+             bool patchIds)
         {
             Assembly asm1 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
             Assembly asm2 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.Xml.ObjectModel.dll");
@@ -74,16 +75,8 @@ namespace Signing
             Type RegistrationKeyEnum = asm2.GetType("Knx.Ets.Xml.ObjectModel.RegistrationKey");
             object registrationKey = Enum.Parse(RegistrationKeyEnum, "knxconv");
 
-            /*
-            public HardwareSigner(
-                FileInfo hardwareFile,
-                IDictionary< string, string> applProgIdMappings,
-                IDictionary<string, string> applProgHashes,
-                bool patchIds,
-                RegistrationKey registrationKey)
-            */
-            // patchId = false, registrationKey= Knx.Ets.Xml.ObjectModel.RegistrationKey.knxconv (is an enum)
-            _instance = Activator.CreateInstance(asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner"), hardwareFile, applProgIdMappings, applProgHashes, false, registrationKey);
+            // registrationKey= Knx.Ets.Xml.ObjectModel.RegistrationKey.knxconv (is an enum)
+            _instance = Activator.CreateInstance(asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner"), hardwareFile, applProgIdMappings, applProgHashes, patchIds, registrationKey);
             _type = asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner");
         }
 
@@ -92,8 +85,16 @@ namespace Signing
             _type.GetMethod("SignFile", BindingFlags.Instance | BindingFlags.Public).Invoke(_instance, null);
         }
 
-        private object _instance;
-        private Type _type;
+        private readonly object _instance;
+        private readonly Type _type;
+
+        public IDictionary<string, string> OldNewIdMappings 
+        {
+            get
+            {
+                return (IDictionary<string, string>) _type.GetProperty("OldNewIdMappings", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance);
+            }
+        }
     }
 
     class XmlSigning
@@ -107,14 +108,28 @@ namespace Signing
 
             Type ds = asm.GetType("Knx.Ets.XmlSigning.XmlSigning");
 
-            /*
-            static void SignDirectory(
-                string path,
-                bool useCasingOfBaggagesXml = false,
-                string[] excludeFileEndings = null)
-            */
             ds.GetMethod("SignDirectory", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { path, useCasingOfBaggagesXml, excludeFileEndings });
         }
+    }
+
+    class CatalogIdPatcher
+    {
+        public CatalogIdPatcher(
+            FileInfo catalogFile,
+            IDictionary<string, string> hardware2ProgramIdMapping)
+        {
+            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+            _instance = Activator.CreateInstance(asm.GetType("Knx.Ets.XmlSigning.CatalogIdPatcher"), catalogFile, hardware2ProgramIdMapping);
+            _type = asm.GetType("Knx.Ets.XmlSigning.CatalogIdPatcher");
+        }
+
+        public void Patch()
+        {
+            _type.GetMethod("Patch", BindingFlags.Instance | BindingFlags.Public).Invoke(_instance, null);
+        }
+
+        private readonly object _instance;
+        private readonly Type _type;
     }
 }
 
@@ -733,15 +748,16 @@ namespace CreateKnxProd
                     serializer.Serialize(xmlWriter, document);
                 }
 
-                // Sign ApplicationProgram XML file
+                // Sign ApplicationProgram XML file and patch RefIds in ApplicationProgram XML file
                 IDictionary<string, string> applProgIdMappings = new Dictionary<string, string>();
                 IDictionary<string, string> applProgHashes = new Dictionary<string, string>();
                 IDictionary<string, string> mapBaggageIdToFileIntegrity = new Dictionary<string, string>(50);
 
                 FileInfo applProgFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, applicationProgramFilename));
                 FileInfo hwFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Hardware.xml"));
+                FileInfo catalogFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Catalog.xml"));
 
-                Signing.ApplicationProgramHasher aph = new Signing.ApplicationProgramHasher(applProgFileInfo, mapBaggageIdToFileIntegrity, false);
+                Signing.ApplicationProgramHasher aph = new Signing.ApplicationProgramHasher(applProgFileInfo, mapBaggageIdToFileIntegrity, true);
                 aph.HashFile();
 
                 string oldApplProgId = aph.OldApplProgId;
@@ -757,9 +773,14 @@ namespace CreateKnxProd
                 if (!applProgHashes.ContainsKey(newApplProgId))
                     applProgHashes.Add(newApplProgId, genHashString);
 
-                // Sign Hardware.xml
-                Signing.HardwareSigner hws = new Signing.HardwareSigner(hwFileInfo, applProgIdMappings, applProgHashes);
+                // Sign Hardware.xml and patch RefIds in Hardware.xml
+                Signing.HardwareSigner hws = new Signing.HardwareSigner(hwFileInfo, applProgIdMappings, applProgHashes, true);
                 hws.SignFile();
+                IDictionary<string, string> hardware2ProgramIdMapping = hws.OldNewIdMappings;
+
+                // Patch RefIds in Catalog.xml
+                Signing.CatalogIdPatcher cip = new Signing.CatalogIdPatcher(catalogFileInfo, hardware2ProgramIdMapping);
+                cip.Patch();
 
                 // Signing directory
                 Signing.XmlSigning.SignDirectory(Path.Combine(tempDirectory, mfid));
