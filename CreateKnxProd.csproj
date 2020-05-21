@@ -101,6 +101,10 @@
     <Compile Include="Model\Parameter_t.cs" />
     <Compile Include="Model\Xml.Project.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Signing\ApplicationProgramHasher.cs" />
+    <Compile Include="Signing\CatalogIdPatcher.cs" />
+    <Compile Include="Signing\HardwareSigner.cs" />
+    <Compile Include="Signing\XmlSigning.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
