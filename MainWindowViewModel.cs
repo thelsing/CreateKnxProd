@@ -1,5 +1,4 @@
-﻿using CreateKnxProd.Extensions;
-using CreateKnxProd.Model;
+﻿using CreateKnxProd.Model;
 using CreateKnxProd.Properties;
 using System;
 using System.Collections.Generic;
@@ -11,10 +10,113 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml;
 using System.Xml.Serialization;
+using System.IO.Compression;
+
+namespace Signing
+{
+    class ApplicationProgramHasher
+    {
+        public ApplicationProgramHasher(
+                   FileInfo applProgFile,
+                   IDictionary<string, string> mapBaggageIdToFileIntegrity,
+                   bool patchIds = true)
+        {
+            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+            _instance = Activator.CreateInstance(asm.GetType("Knx.Ets.XmlSigning.ApplicationProgramHasher"), applProgFile, mapBaggageIdToFileIntegrity, patchIds);
+            _type = asm.GetType("Knx.Ets.XmlSigning.ApplicationProgramHasher");
+        }
+
+        public void HashFile()
+        {
+            _type.GetMethod("HashFile", BindingFlags.Instance | BindingFlags.Public).Invoke(_instance, null);
+        }
+
+        public string OldApplProgId
+        {
+            get
+            {
+                return _type.GetProperty("OldApplProgId", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance).ToString();
+            }
+        }
+
+        public string NewApplProgId
+        {
+            get
+            {
+                return _type.GetProperty("NewApplProgId", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance).ToString();
+            }
+        }
+
+        public string GeneratedHashString
+        {
+            get
+            {
+                return _type.GetProperty("GeneratedHashString", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance).ToString();
+            }
+        }
+
+        private object _instance;
+        private Type _type;
+    }
+
+    class HardwareSigner
+    {
+        public HardwareSigner(
+             FileInfo hardwareFile,
+             IDictionary<string, string> applProgIdMappings,
+             IDictionary<string, string> applProgHashes)
+        {
+            Assembly asm1 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+            Assembly asm2 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.Xml.ObjectModel.dll");
+
+            Type RegistrationKeyEnum = asm2.GetType("Knx.Ets.Xml.ObjectModel.RegistrationKey");
+            object registrationKey = Enum.Parse(RegistrationKeyEnum, "knxconv");
+
+            /*
+            public HardwareSigner(
+                FileInfo hardwareFile,
+                IDictionary< string, string> applProgIdMappings,
+                IDictionary<string, string> applProgHashes,
+                bool patchIds,
+                RegistrationKey registrationKey)
+            */
+            // patchId = false, registrationKey= Knx.Ets.Xml.ObjectModel.RegistrationKey.knxconv (is an enum)
+            _instance = Activator.CreateInstance(asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner"), hardwareFile, applProgIdMappings, applProgHashes, false, registrationKey);
+            _type = asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner");
+        }
+
+        public void SignFile()
+        {
+            _type.GetMethod("SignFile", BindingFlags.Instance | BindingFlags.Public).Invoke(_instance, null);
+        }
+
+        private object _instance;
+        private Type _type;
+    }
+
+    class XmlSigning
+    {
+        public static void SignDirectory(
+            string path,
+            bool useCasingOfBaggagesXml = false,
+            string[] excludeFileEndings = null)
+        {
+            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+
+            Type ds = asm.GetType("Knx.Ets.XmlSigning.XmlSigning");
+
+            /*
+            static void SignDirectory(
+                string path,
+                bool useCasingOfBaggagesXml = false,
+                string[] excludeFileEndings = null)
+            */
+            ds.GetMethod("SignDirectory", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { path, useCasingOfBaggagesXml, excludeFileEndings });
+        }
+    }
+}
 
 namespace CreateKnxProd
 {
@@ -589,29 +691,84 @@ namespace CreateKnxProd
                 if (outputFile == null)
                     return;
 
-                var asmPath = Path.Combine(Properties.Settings.Default.ETSPath, "Knx.Ets.Converter.ConverterEngine.dll");
-                var asm = Assembly.LoadFrom(asmPath);
-                var eng = asm.GetType("Knx.Ets.Converter.ConverterEngine.ConverterEngine");
-                var bas = asm.GetType("Knx.Ets.Converter.ConverterEngine.ConvertBase");
+                string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                Directory.CreateDirectory(tempDirectory);
 
-                //ConvertBase.Uninitialize();
-                InvokeMethod(bas, "Uninitialize", null);
+                File.Copy("knx_master.xml", Path.Combine(tempDirectory, "knx_master.xml"));
 
-                //var dset = ConverterEngine.BuildUpRawDocumentSet( files );
-                var dset = InvokeMethod(eng, "BuildUpRawDocumentSet", new object[] { files });
+                string mfid = _model.ManufacturerData.First().RefId;
+                Directory.CreateDirectory(Path.Combine(tempDirectory, mfid));
 
-                //ConverterEngine.CheckOutputFileName(outputFile, ".knxprod");
-                InvokeMethod(eng, "CheckOutputFileName", new object[] { outputFile, ".knxprod" });
+                KNX document = new KNX();
+                ManufacturerData_TManufacturer manufacturerData = new ManufacturerData_TManufacturer();
 
-                //ConvertBase.CleanUnregistered = false;
-                //SetProperty(bas, "CleanUnregistered", false);
+                document.CreatedBy = _model.CreatedBy;
+                document.ToolVersion = _model.ToolVersion;
+                document.ManufacturerData.Add(manufacturerData);
+                document.ManufacturerData.First().RefId = _model.ManufacturerData.First().RefId;
 
-                //dset = ConverterEngine.ReOrganizeDocumentSet(dset);
-                dset = InvokeMethod(eng, "ReOrganizeDocumentSet", new object[] { dset });
+                manufacturerData.Catalog.Add(_model.ManufacturerData.First().Catalog.First());
 
-                //ConverterEngine.PersistDocumentSetAsXmlOutput(dset, outputFile, null, string.Empty, true, _toolName, _toolVersion);
-                InvokeMethod(eng, "PersistDocumentSetAsXmlOutput", new object[] { dset, outputFile, null,
-                            "", true, _toolName, _toolVersion });
+                XmlSerializer serializer = new XmlSerializer(typeof(KNX));
+
+                using (var xmlWriter = new StreamWriter(Path.Combine(tempDirectory, mfid, "Catalog.xml"), false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, document);
+                }
+
+                manufacturerData.Catalog.Clear();
+                manufacturerData.ApplicationPrograms.Add(_model.ManufacturerData.First().ApplicationPrograms.First());
+                string applicationProgramFilename = _model.ManufacturerData.First().ApplicationPrograms.First().Id + ".xml";
+
+                using (var xmlWriter = new StreamWriter(Path.Combine(tempDirectory, mfid, applicationProgramFilename), false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, document);
+                }
+
+                manufacturerData.ApplicationPrograms.Clear();
+                manufacturerData.Hardware.Add(_model.ManufacturerData.First().Hardware.First());
+
+                using (var xmlWriter = new StreamWriter(Path.Combine(tempDirectory, mfid, "Hardware.xml"), false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, document);
+                }
+
+                // Sign ApplicationProgram XML file
+                IDictionary<string, string> applProgIdMappings = new Dictionary<string, string>();
+                IDictionary<string, string> applProgHashes = new Dictionary<string, string>();
+                IDictionary<string, string> mapBaggageIdToFileIntegrity = new Dictionary<string, string>(50);
+
+                FileInfo applProgFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, applicationProgramFilename));
+                FileInfo hwFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Hardware.xml"));
+
+                Signing.ApplicationProgramHasher aph = new Signing.ApplicationProgramHasher(applProgFileInfo, mapBaggageIdToFileIntegrity, false);
+                aph.HashFile();
+
+                string oldApplProgId = aph.OldApplProgId;
+                string newApplProgId = aph.NewApplProgId;
+                string genHashString = aph.GeneratedHashString;
+
+                Console.WriteLine("OldApplProgId: " + oldApplProgId);
+                Console.WriteLine("NewApplProgId: " + newApplProgId);
+                Console.WriteLine("GeneratedHashString: " + genHashString);
+                Console.WriteLine("XML filename: " + applicationProgramFilename);
+
+                applProgIdMappings.Add(oldApplProgId, newApplProgId);
+                if (!applProgHashes.ContainsKey(newApplProgId))
+                    applProgHashes.Add(newApplProgId, genHashString);
+
+                // Sign Hardware.xml
+                Signing.HardwareSigner hws = new Signing.HardwareSigner(hwFileInfo, applProgIdMappings, applProgHashes);
+                hws.SignFile();
+
+                // Signing directory
+                Signing.XmlSigning.SignDirectory(Path.Combine(tempDirectory, mfid));
+
+                // Create ZIP file (aka knxprod) archive
+                ZipFile.CreateFromDirectory(tempDirectory, outputFile);
+
+                // Remove temporary working directory recursively
+                Directory.Delete(tempDirectory, true);
 
                 _dialogService.ShowMessage(Ressources.ExportSuccess);
             }
