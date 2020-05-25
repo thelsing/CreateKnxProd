@@ -75,6 +75,7 @@
                     <ComboBox Margin="3" SelectedValuePath="Tag" SelectedValue="{Binding MediumType, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8" Width="200">
                         <ComboBoxItem Content="{lex:Loc IP}" Tag="MT-5"/>
                         <ComboBoxItem Content="{lex:Loc TP}" Tag="MT-0"/>
+                        <ComboBoxItem Content="{lex:Loc RF}" Tag="MT-2"/>
                     </ComboBox>
                     <TextBlock Margin="3" Text="{lex:Loc ReplacedVersion}" Grid.Column="1" Grid.Row="9"/>
                     <TextBox Margin="3" Grid.Column="2" Grid.Row="9"  Text="{Binding ReplacedVersions}" />

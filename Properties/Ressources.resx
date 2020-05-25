@@ -255,6 +255,9 @@
   <data name="Parametertype_Enumeration" xml:space="preserve">
     <value>Enumeration</value>
   </data>
+  <data name="RF" xml:space="preserve">
+    <value>RF</value>
+  </data>
   <data name="Parametertype_Float" xml:space="preserve">
     <value>Float</value>
   </data>
