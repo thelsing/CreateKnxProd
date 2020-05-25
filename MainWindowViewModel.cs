@@ -1,5 +1,6 @@
 ﻿using CreateKnxProd.Model;
 using CreateKnxProd.Properties;
+using CreateKnxProd.Signing;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,110 +14,6 @@ using System.Threading;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using System.IO.Compression;
-
-namespace Signing
-{
-    class ApplicationProgramHasher
-    {
-        public ApplicationProgramHasher(
-                   FileInfo applProgFile,
-                   IDictionary<string, string> mapBaggageIdToFileIntegrity,
-                   bool patchIds = true)
-        {
-            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
-            _instance = Activator.CreateInstance(asm.GetType("Knx.Ets.XmlSigning.ApplicationProgramHasher"), applProgFile, mapBaggageIdToFileIntegrity, patchIds);
-            _type = asm.GetType("Knx.Ets.XmlSigning.ApplicationProgramHasher");
-        }
-
-        public void HashFile()
-        {
-            _type.GetMethod("HashFile", BindingFlags.Instance | BindingFlags.Public).Invoke(_instance, null);
-        }
-
-        public string OldApplProgId
-        {
-            get
-            {
-                return _type.GetProperty("OldApplProgId", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance).ToString();
-            }
-        }
-
-        public string NewApplProgId
-        {
-            get
-            {
-                return _type.GetProperty("NewApplProgId", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance).ToString();
-            }
-        }
-
-        public string GeneratedHashString
-        {
-            get
-            {
-                return _type.GetProperty("GeneratedHashString", BindingFlags.Public | BindingFlags.Instance).GetValue(_instance).ToString();
-            }
-        }
-
-        private object _instance;
-        private Type _type;
-    }
-
-    class HardwareSigner
-    {
-        public HardwareSigner(
-             FileInfo hardwareFile,
-             IDictionary<string, string> applProgIdMappings,
-             IDictionary<string, string> applProgHashes)
-        {
-            Assembly asm1 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
-            Assembly asm2 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.Xml.ObjectModel.dll");
-
-            Type RegistrationKeyEnum = asm2.GetType("Knx.Ets.Xml.ObjectModel.RegistrationKey");
-            object registrationKey = Enum.Parse(RegistrationKeyEnum, "knxconv");
-
-            /*
-            public HardwareSigner(
-                FileInfo hardwareFile,
-                IDictionary< string, string> applProgIdMappings,
-                IDictionary<string, string> applProgHashes,
-                bool patchIds,
-                RegistrationKey registrationKey)
-            */
-            // patchId = false, registrationKey= Knx.Ets.Xml.ObjectModel.RegistrationKey.knxconv (is an enum)
-            _instance = Activator.CreateInstance(asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner"), hardwareFile, applProgIdMappings, applProgHashes, false, registrationKey);
-            _type = asm1.GetType("Knx.Ets.XmlSigning.HardwareSigner");
-        }
-
-        public void SignFile()
-        {
-            _type.GetMethod("SignFile", BindingFlags.Instance | BindingFlags.Public).Invoke(_instance, null);
-        }
-
-        private object _instance;
-        private Type _type;
-    }
-
-    class XmlSigning
-    {
-        public static void SignDirectory(
-            string path,
-            bool useCasingOfBaggagesXml = false,
-            string[] excludeFileEndings = null)
-        {
-            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
-
-            Type ds = asm.GetType("Knx.Ets.XmlSigning.XmlSigning");
-
-            /*
-            static void SignDirectory(
-                string path,
-                bool useCasingOfBaggagesXml = false,
-                string[] excludeFileEndings = null)
-            */
-            ds.GetMethod("SignDirectory", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { path, useCasingOfBaggagesXml, excludeFileEndings });
-        }
-    }
-}
 
 namespace CreateKnxProd
 {
@@ -733,36 +630,44 @@ namespace CreateKnxProd
                     serializer.Serialize(xmlWriter, document);
                 }
 
-                // Sign ApplicationProgram XML file
+                // Sign ApplicationProgram XML file and patch RefIds in ApplicationProgram XML file
                 IDictionary<string, string> applProgIdMappings = new Dictionary<string, string>();
                 IDictionary<string, string> applProgHashes = new Dictionary<string, string>();
                 IDictionary<string, string> mapBaggageIdToFileIntegrity = new Dictionary<string, string>(50);
 
                 FileInfo applProgFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, applicationProgramFilename));
                 FileInfo hwFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Hardware.xml"));
+                FileInfo catalogFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Catalog.xml"));
 
-                Signing.ApplicationProgramHasher aph = new Signing.ApplicationProgramHasher(applProgFileInfo, mapBaggageIdToFileIntegrity, false);
+                ApplicationProgramHasher aph = new ApplicationProgramHasher(applProgFileInfo, mapBaggageIdToFileIntegrity, true);
                 aph.HashFile();
 
                 string oldApplProgId = aph.OldApplProgId;
                 string newApplProgId = aph.NewApplProgId;
                 string genHashString = aph.GeneratedHashString;
 
+                /*
                 Console.WriteLine("OldApplProgId: " + oldApplProgId);
                 Console.WriteLine("NewApplProgId: " + newApplProgId);
                 Console.WriteLine("GeneratedHashString: " + genHashString);
                 Console.WriteLine("XML filename: " + applicationProgramFilename);
+                */
 
                 applProgIdMappings.Add(oldApplProgId, newApplProgId);
                 if (!applProgHashes.ContainsKey(newApplProgId))
                     applProgHashes.Add(newApplProgId, genHashString);
 
-                // Sign Hardware.xml
-                Signing.HardwareSigner hws = new Signing.HardwareSigner(hwFileInfo, applProgIdMappings, applProgHashes);
+                // Sign Hardware.xml and patch RefIds in Hardware.xml
+                HardwareSigner hws = new HardwareSigner(hwFileInfo, applProgIdMappings, applProgHashes, true);
                 hws.SignFile();
+                IDictionary<string, string> hardware2ProgramIdMapping = hws.OldNewIdMappings;
+
+                // Patch RefIds in Catalog.xml
+                CatalogIdPatcher cip = new CatalogIdPatcher(catalogFileInfo, hardware2ProgramIdMapping);
+                cip.Patch();
 
                 // Signing directory
-                Signing.XmlSigning.SignDirectory(Path.Combine(tempDirectory, mfid));
+                XmlSigning.SignDirectory(Path.Combine(tempDirectory, mfid));
 
                 // Create ZIP file (aka knxprod) archive
                 ZipFile.CreateFromDirectory(tempDirectory, outputFile);
