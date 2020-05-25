@@ -252,4 +252,16 @@
   <data name="ReplacedVersion" xml:space="preserve">
     <value>ReplacedVersion</value>
   </data>
+  <data name="Parametertype_Enumeration" xml:space="preserve">
+    <value>Enumeration</value>
+  </data>
+  <data name="Parametertype_Float" xml:space="preserve">
+    <value>Float</value>
+  </data>
+  <data name="Parametertype_Integer" xml:space="preserve">
+    <value>Integer</value>
+  </data>
+  <data name="Parametertype_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>

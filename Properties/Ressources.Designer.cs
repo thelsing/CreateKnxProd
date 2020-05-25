@@ -19,7 +19,7 @@ namespace CreateKnxProd.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Ressources {
@@ -282,6 +282,42 @@ namespace CreateKnxProd.Properties {
         public static string Parameters {
             get {
                 return ResourceManager.GetString("Parameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enumeration.
+        /// </summary>
+        public static string Parametertype_Enumeration {
+            get {
+                return ResourceManager.GetString("Parametertype_Enumeration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Float.
+        /// </summary>
+        public static string Parametertype_Float {
+            get {
+                return ResourceManager.GetString("Parametertype_Float", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integer.
+        /// </summary>
+        public static string Parametertype_Integer {
+            get {
+                return ResourceManager.GetString("Parametertype_Integer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string Parametertype_Text {
+            get {
+                return ResourceManager.GetString("Parametertype_Text", resourceCulture);
             }
         }
         

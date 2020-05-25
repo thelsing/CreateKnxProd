@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -28,10 +29,17 @@ namespace CreateKnxProd.Converter
                     FieldInfo fi = value.GetType().GetField(value.ToString());
                     if (fi != null)
                     {
-                        var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                        var result = ((attributes.Length > 0) && (!String.IsNullOrEmpty(attributes[0].Description))) ? attributes[0].Description : value.ToString();
-                        //TODO: lookup ressource for localisation
-                        return result;
+                        var attributes = (DisplayAttribute[])fi.GetCustomAttributes(typeof(DisplayAttribute), false);
+                        if (attributes.Length == 0)
+                            return "";
+
+                        var type = attributes[0].ResourceType;
+                        var name = attributes[0].Name;
+                        if(type == null)
+                            return name;
+
+                        var propertyInfo = type.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
+                        return propertyInfo.GetValue(null);
                     }
                 }
 
