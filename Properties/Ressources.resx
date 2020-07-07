@@ -252,4 +252,16 @@
   <data name="ReplacedVersion" xml:space="preserve">
     <value>ReplacedVersion</value>
   </data>
+  <data name="RF" xml:space="preserve">
+    <value>RF</value>
+  </data>
+  <data name="IsSecureEnabled" xml:space="preserve">
+    <value>Enable data security</value>
+  </data>
+  <data name="MaxSecurityGroupKeyTableEntries" xml:space="preserve">
+    <value>Max SecurityGroupKeyTable Entries</value>
+  </data>
+  <data name="MaxSecurityIndividualAddressEntries" xml:space="preserve">
+    <value>Max SecurityIndividualAddress Entries</value>
+  </data>
 </root>
