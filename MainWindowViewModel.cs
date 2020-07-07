@@ -168,6 +168,9 @@ namespace CreateKnxProd
                 if (_openFile == null)
                     SaveAs(param);
 
+                if (string.IsNullOrWhiteSpace(_applicationProgram.ReplacesVersions))
+                    _applicationProgram.ReplacesVersions = null;
+
                 _product.RegistrationInfo = new RegistrationInfo_T() { RegistrationStatus = RegistrationStatus_T.Registered };
                 _hardware2Program.RegistrationInfo = new RegistrationInfo_T()
                 {
@@ -449,6 +452,8 @@ namespace CreateKnxProd
                 _applicationProgram.DynamicTableManagement = false;
                 _applicationProgram.Linkable = false;
                 _applicationProgram.MinEtsVersion = "5.0";
+                _applicationProgram.ReplacesVersions = null;
+                _applicationProgram.IsSecureEnabled = false;
                 _applicationProgram.MaxSecurityIndividualAddressEntries = 32;
                 _applicationProgram.MaxSecurityGroupKeyTableEntries = 50;
 
@@ -707,7 +712,7 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(Parameters));
             RaisePropertyChanged(nameof(ComObjects));
             RaisePropertyChanged(nameof(MediumType));
-            RaisePropertyChanged(nameof(ReplacedVersions));
+            RaisePropertyChanged(nameof(ReplacesVersions));
             RaisePropertyChanged(nameof(IsSecureEnabled));
             RaisePropertyChanged(nameof(MaxSecurityIndividualAddressEntries));
             RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
@@ -821,7 +826,7 @@ namespace CreateKnxProd
             }
         }
 
-        public string ReplacedVersions
+        public string ReplacesVersions
         {
             get
             {
@@ -845,7 +850,7 @@ namespace CreateKnxProd
                 //    _applicationProgram.ReplacesVersions = null;
                 //}
 
-                RaisePropertyChanged(nameof(ReplacedVersions));
+                RaisePropertyChanged(nameof(ReplacesVersions));
             }
         }
 
