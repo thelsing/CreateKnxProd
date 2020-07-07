@@ -707,6 +707,8 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(MediumType));
             RaisePropertyChanged(nameof(ReplacedVersions));
             RaisePropertyChanged(nameof(IsSecureEnabled));
+            RaisePropertyChanged(nameof(MaxSecurityIndividualAddressEntries));
+            RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
         }
 
         #region Properties
@@ -859,6 +861,40 @@ namespace CreateKnxProd
                 _applicationProgram.IsSecureEnabled = value;
 
                 RaisePropertyChanged(nameof(IsSecureEnabled));
+            }
+        }
+
+        public ushort MaxSecurityIndividualAddressEntries
+        {
+            get
+            {
+                if (_applicationProgram == null)
+                    return 0;
+
+                return _applicationProgram.MaxSecurityIndividualAddressEntries;
+            }
+            set
+            {
+                _applicationProgram.MaxSecurityIndividualAddressEntries = value;
+
+                RaisePropertyChanged(nameof(MaxSecurityIndividualAddressEntries));
+            }
+        }
+
+        public ushort MaxSecurityGroupKeyTableEntries
+        {
+            get
+            {
+                if (_applicationProgram == null)
+                    return 0;
+
+                return _applicationProgram.MaxSecurityGroupKeyTableEntries;
+            }
+            set
+            {
+                _applicationProgram.MaxSecurityIndividualAddressEntries = value;
+
+                RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
             }
         }
 
