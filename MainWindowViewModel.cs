@@ -596,6 +596,13 @@ namespace CreateKnxProd
                 if (cancel)
                     return;
 
+                // Remove all data secure related attributes
+                if (_model.ManufacturerData.First().ApplicationPrograms.First().IsSecureEnabled == false)
+                {
+                    _model.ManufacturerData.First().ApplicationPrograms.First().MaxSecurityIndividualAddressEntries = 0;
+                    _model.ManufacturerData.First().ApplicationPrograms.First().MaxSecurityGroupKeyTableEntries = 0;
+                }
+
                 var files = new string[] { _openFile };
 
                 var outputFile = _dialogService.ChooseSaveFile(".knxprod", "KNXProd|*.knxprod");
