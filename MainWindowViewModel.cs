@@ -448,7 +448,7 @@ namespace CreateKnxProd
                 _applicationProgram.DefaultLanguage = lang;
                 _applicationProgram.DynamicTableManagement = false;
                 _applicationProgram.Linkable = false;
-                _applicationProgram.MinEtsVersion = "4.0";
+                _applicationProgram.MinEtsVersion = "5.0";
 
                 var appStatic = new ApplicationProgramStatic_T();
                 _applicationProgram.Static = appStatic;
