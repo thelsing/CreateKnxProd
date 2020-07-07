@@ -79,6 +79,8 @@
                     </ComboBox>
                     <TextBlock Margin="3" Text="{lex:Loc ReplacedVersion}" Grid.Column="1" Grid.Row="9"/>
                     <TextBox Margin="3" Grid.Column="2" Grid.Row="9"  Text="{Binding ReplacedVersions}" />
+                    <TextBlock Margin="3" Text="{lex:Loc IsSecureEnabled}" Grid.Column="1" Grid.Row="10"/>
+                    <CheckBox Margin="3" Grid.Column="2" Grid.Row="10" IsChecked="{Binding IsSecureEnabled}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc ParameterTypes}">

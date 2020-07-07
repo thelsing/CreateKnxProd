@@ -255,4 +255,7 @@
   <data name="RF" xml:space="preserve">
     <value>RF</value>
   </data>
+  <data name="IsSecureEnabled" xml:space="preserve">
+    <value>Enable data security</value>
+  </data>
 </root>

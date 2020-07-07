@@ -706,6 +706,7 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(ComObjects));
             RaisePropertyChanged(nameof(MediumType));
             RaisePropertyChanged(nameof(ReplacedVersions));
+            RaisePropertyChanged(nameof(IsSecureEnabled));
         }
 
         #region Properties
@@ -841,6 +842,23 @@ namespace CreateKnxProd
                 //}
 
                 RaisePropertyChanged(nameof(ReplacedVersions));
+            }
+        }
+
+        public bool IsSecureEnabled
+        {
+            get
+            {
+                if (_applicationProgram == null)
+                    return false;
+
+                return _applicationProgram.IsSecureEnabled;
+            }
+            set
+            {
+                _applicationProgram.IsSecureEnabled = value;
+
+                RaisePropertyChanged(nameof(IsSecureEnabled));
             }
         }
 
