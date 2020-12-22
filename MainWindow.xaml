@@ -14,6 +14,7 @@
         Title="{lex:Loc WindowTitle}" Height="450" Width="800">
     <Window.Resources>
         <lc:EnableTBoolTypeConverter x:Key="EnableBoolConverter"/>
+        <lc:ObjectVisibilityConverter x:Key="ObjectVisibilityConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -94,38 +95,42 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.Resources>
                                     <DataTemplate DataType="{x:Type model:ParameterType_TTypeText}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{lex:Loc CharacterCount}" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding SizeInByte, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
+
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_TTypeFloat}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{lex:Loc Minimum}" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <TextBlock Text="{lex:Loc Maximum}" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
+
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_TTypeNumber}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{lex:Loc Minimum}" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding minInclusive, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <TextBlock Text="{lex:Loc Maximum}" Margin="5"/>
-                                            <TextBox Width="50" Margin="5" Text="{Binding maxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
+
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:ParameterType_TTypeRestriction}">
-                                        <DataGrid ItemsSource="{Binding Enumeration}" Margin="5" AutoGenerateColumns="False" 
-                                                  dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="{lex:Loc Value}" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
-                                                <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+
                                     </DataTemplate>
                                 </StackPanel.Resources>
-                                <ContentPresenter Content="{Binding Item}"/>
+                                <!--<ContentPresenter Content="{Binding Item}">-->
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding TypeText, Converter={StaticResource ObjectVisibilityConverter}}">
+                                    <TextBlock Text="{lex:Loc CharacterCount}" Margin="5"/>
+                                    <TextBox Width="50" Margin="5" Text="{Binding TypeText.SizeInByte, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding TypeFloat, Converter={StaticResource ObjectVisibilityConverter}}">
+                                    <TextBlock Text="{lex:Loc Minimum}" Margin="5"/>
+                                    <TextBox Width="50" Margin="5" Text="{Binding TypeFloat.MinInclusive, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Text="{lex:Loc Maximum}" Margin="5"/>
+                                    <TextBox Width="50" Margin="5" Text="{Binding TypeFloat.MaxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding TypeNumber, Converter={StaticResource ObjectVisibilityConverter}}">
+                                    <TextBlock Text="{lex:Loc Minimum}" Margin="5"/>
+                                    <TextBox Width="50" Margin="5" Text="{Binding TypeNumber.MinInclusive, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Text="{lex:Loc Maximum}" Margin="5"/>
+                                    <TextBox Width="50" Margin="5" Text="{Binding TypeNumber.MaxInclusive, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <DataGrid ItemsSource="{Binding TypeRestriction.Enumeration}" Margin="5" AutoGenerateColumns="False" 
+                                                  dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" Visibility="{Binding TypeRestriction, Converter={StaticResource ObjectVisibilityConverter}}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{lex:Loc Value}" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+                                        <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                             
                         </DataTemplate>

@@ -84,7 +84,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\EnableTBoolTypeConverter.cs" />
-    <Compile Include="Converter\EnumDescriptionTypeConverter.cs" />
+    <Compile Include="Converter\EnumDescriptionTypeConverter - Copy.cs" />
+    <Compile Include="Converter\ObjectVisibilityConverter.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Model\ComObjectRefRef_t.cs" />
     <Compile Include="Model\ComObjectRef_t.cs" />
