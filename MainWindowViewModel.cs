@@ -514,15 +514,15 @@ namespace CreateKnxProd
             _codeSegment.Id = string.Format("{0}_RS-{1:00}-{2:00000}", _applicationProgram.Id, _codeSegment.LoadStateMachine,
                 _codeSegment.Offset);
 
-            _hardware.Id = string.Format("{0}_H-{1}-{2}", _manufacturerData.RefId, _hardware.SerialNumber,
+            _hardware.Id = string.Format("{0}_H-{1}-{2}", _manufacturerData.RefId, _hardware.SerialNumber.Replace("-", ".2D"),
                                         _hardware.VersionNumber);
-            _product.Id = string.Format("{0}_P-{1}", _hardware.Id, _product.OrderNumber);
+            _product.Id = string.Format("{0}_P-{1}", _hardware.Id, _product.OrderNumber.Replace("-", ".2D"));
             _hardware2Program.Id = string.Format("{0}_HP-{1:X04}-{2:X02}-0000", _hardware.Id,
                         _applicationProgram.ApplicationNumber, _applicationProgram.ApplicationVersion);
 
             _catalogSection.Id = string.Format("{0}_CS-{1}", _manufacturerData.RefId, _catalogSection.Number);
 
-            _catalogItem.Id = string.Format("{0}_CI-{1}-{2}", _hardware2Program.Id, _product.OrderNumber, _catalogItem.Number);
+            _catalogItem.Id = string.Format("{0}_CI-{1}-{2}", _hardware2Program.Id, _product.OrderNumber.Replace("-", ".2D"), _catalogItem.Number);
             _catalogItem.ProductRefId = _product.Id;
             _catalogItem.Hardware2ProgramRefId = _hardware2Program.Id;
 
