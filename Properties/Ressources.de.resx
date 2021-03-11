@@ -240,4 +240,16 @@
   <data name="ReplacedVersion" xml:space="preserve">
     <value>Ersetzt Versionen</value>
   </data>
+  <data name="Parametertype_Enumeration" xml:space="preserve">
+    <value>Aufzählung</value>
+  </data>
+  <data name="Parametertype_Float" xml:space="preserve">
+    <value>Fließkommazahl</value>
+  </data>
+  <data name="Parametertype_Integer" xml:space="preserve">
+    <value>Ganze Zahl</value>
+  </data>
+  <data name="Parametertype_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>

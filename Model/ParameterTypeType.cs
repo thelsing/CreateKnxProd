@@ -3,6 +3,7 @@ using CreateKnxProd.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,13 @@ namespace CreateKnxProd.Model
     public enum ParameterTypeType
     {
         [Description("Number")]
+        [Display(Name = "Parametertype_Integer", ResourceType = typeof(Ressources))]
         Number,
-        [Description("Fließkommazahl")]
+        [Display(Name = "Parametertype_Float", ResourceType = typeof(Ressources))]
         Float,
-        [Description("Aufzählung")]
+        [Display(Name = "Parametertype_Enumeration", ResourceType = typeof(Ressources))]
         Restriction,
-        [Description("Text")]
+        [Display(Name = "Parametertype_Text", ResourceType = typeof(Ressources))]
         Text
     }
 
