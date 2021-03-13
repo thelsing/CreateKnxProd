@@ -267,4 +267,10 @@
   <data name="Parametertype_Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="BusCurrent" xml:space="preserve">
+    <value>Bus Current</value>
+  </data>
+  <data name="IsRailMounted" xml:space="preserve">
+    <value>Is Rail Mounted</value>
+  </data>
 </root>
