@@ -220,7 +220,6 @@ namespace CreateKnxProd
             {
                 _applicationProgram.MaskVersion = "MV-07B0";
                 _hardware.IsIPEnabled = false;
-                _hardware.BusCurrent = 10;
             }
         }
 
@@ -478,6 +477,7 @@ namespace CreateKnxProd
                 _hardware.HasIndividualAddress = true;
                 _hardware.HasApplicationProgram = true;
                 _hardware.IsIPEnabled = true;
+                _hardware.BusCurrent = 10;
 
                 _product.IsRailMounted = false;
                 _product.DefaultLanguage = lang;
@@ -644,6 +644,8 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(ComObjects));
             RaisePropertyChanged(nameof(MediumType));
             RaisePropertyChanged(nameof(ReplacedVersions));
+            RaisePropertyChanged(nameof(IsRailMounted));
+            RaisePropertyChanged(nameof(BusCurrent));
         }
 
         #region Properties
@@ -779,6 +781,32 @@ namespace CreateKnxProd
                 //}
 
                 RaisePropertyChanged(nameof(ReplacedVersions));
+            }
+        }
+
+        public bool? IsRailMounted
+        {
+            get
+            {
+                return _product?.IsRailMounted;
+            }
+            set
+            {
+                _product.IsRailMounted = value ?? false;
+                RaisePropertyChanged(nameof(IsRailMounted));
+            }
+        }
+
+        public float? BusCurrent
+        {
+            get
+            {
+                return _hardware?.BusCurrent;
+            }
+            set
+            {
+                _hardware.BusCurrent = value ?? 10;
+                RaisePropertyChanged(nameof(BusCurrent));
             }
         }
 

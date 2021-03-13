@@ -97,6 +97,15 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bus Current.
+        /// </summary>
+        public static string BusCurrent {
+            get {
+                return ResourceManager.GetString("BusCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to C.
         /// </summary>
         public static string CFlag {
@@ -201,6 +210,15 @@ namespace CreateKnxProd.Properties {
         public static string IP {
             get {
                 return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Rail Mounted.
+        /// </summary>
+        public static string IsRailMounted {
+            get {
+                return ResourceManager.GetString("IsRailMounted", resourceCulture);
             }
         }
         
