@@ -48,8 +48,6 @@ namespace CreateKnxProd
         private ApplicationProgramRef_T _appProgRef;
         private ApplicationProgramStatic_TCodeRelativeSegment _codeSegment;
 
-        private ComObjectParameterBlock_T _parameterBlock;
-
         public MainWindowViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
@@ -77,6 +75,14 @@ namespace CreateKnxProd
             {
                 _dialogService.ShowMessage(ex.ToString());
             }
+        }
+
+        private void CreateDefaultParameterBlock()
+        {
+            var parameterBlock = new ComObjectParameterBlock_T();
+            parameterBlock.Name = "ParameterPage";
+            parameterBlock.Text = Ressources.CommonParameters;
+            ParameterBlock.Add(parameterBlock);
         }
 
         private void Open(object param)
@@ -121,12 +127,21 @@ namespace CreateKnxProd
                 _appProgRef = _hardware2Program.ApplicationProgramRef.First();
                 _codeSegment = _applicationProgram.Static.Code.RelativeSegment.First();
 
-                var parameterList = _applicationProgram.Static.Parameters.Parameter;
-
-                foreach (var item in parameterList)
+                Parameters.Clear();
+                foreach (var item in _applicationProgram.Static.Parameters.Parameter)
                 {
                     item.AllTypes = ParameterTypes;
                     item.Type = ParameterTypes.First(t => t.Id == item.ParameterType);
+                    item.AllBlocks = ParameterBlock;
+                    item.Block = ParameterBlock.FirstOrDefault(t => t.ParameterRefRef.FirstOrDefault(o => _applicationProgram.Static.ParameterRefs.FirstOrDefault(p => o.RefId == p.Id)?.RefId == item.Id) != null);
+                    if (item.Block == null)
+                    {
+                        if (ParameterBlock.Count == 0)
+                        {
+                            CreateDefaultParameterBlock();
+                        }
+                        item.Block = ParameterBlock.First();
+                    }
                     Parameters.Add(item);
                 }
 
@@ -332,26 +347,30 @@ namespace CreateKnxProd
 
             var appStatic = _applicationProgram.Static;
             appDynamic.Choose?.Clear();
-            appDynamic.ChannelIndependentBlock?.Clear();
             appDynamic.Channel?.Clear();
 
-            var commonChannel = new ApplicationProgramDynamic_TChannelIndependentBlock();
-            _parameterBlock = new ComObjectParameterBlock_T();
-            _parameterBlock.Name = "ParameterPage";
-            _parameterBlock.Text = Ressources.CommonParameters;
-
-            foreach (var paramRef in appStatic.ParameterRefs)
+            if (ParameterBlock.Count == 0)
             {
-                _parameterBlock.ParameterRefRef.Add(new ParameterRefRef_T() { ParameterRef = paramRef });
+                CreateDefaultParameterBlock();
             }
-
-            foreach (var comObjRef in appStatic.ComObjectRefs)
+            int i = 1;
+            foreach (var parameterBlock in ParameterBlock)
             {
-                _parameterBlock.ComObjectRefRef.Add(new ComObjectRefRef_T() { ComObjectRef = comObjRef });
-            }
+                parameterBlock.ParameterRefRef.Clear();
+                foreach (var paramRef in appStatic.ParameterRefs)
+                {
+                    if ((i == 1 && paramRef.Parameter.Block == null) || paramRef.Parameter.Block == parameterBlock)
+                        parameterBlock.ParameterRefRef.Add(new ParameterRefRef_T() { ParameterRef = paramRef });
+                }
 
-            commonChannel.ParameterBlock.Add(_parameterBlock);
-            appDynamic.ChannelIndependentBlock.Add(commonChannel);
+                parameterBlock.ComObjectRefRef.Clear();
+                if (i == 1)     // Not supported yet, ComObjs are affected to the first ParameterBlock
+                    foreach (var comObjRef in appStatic.ComObjectRefs)
+                    {
+                        parameterBlock.ComObjectRefRef.Add(new ComObjectRefRef_T() { ComObjectRef = comObjRef });
+                    }
+                ++i;
+            }
         }
 
         private bool AskSaveCancel()
@@ -379,7 +398,6 @@ namespace CreateKnxProd
             _hardware2Program = null;
             _appProgRef = null;
             _codeSegment = null;
-            _parameterBlock = null;
             Parameters.Clear();
             RaiseChanged();
         }
@@ -465,6 +483,9 @@ namespace CreateKnxProd
                 _codeSegment.Size = 0;
 
                 appStatic.Parameters = new ApplicationProgramStatic_TParameters();
+                _applicationProgram.Dynamic = new ApplicationProgramDynamic_T();
+                _applicationProgram.Dynamic.ChannelIndependentBlock.Add(new ApplicationProgramDynamic_TChannelIndependentBlock());
+                CreateDefaultParameterBlock();
                 appStatic.AddressTable = new ApplicationProgramStatic_TAddressTable();
                 appStatic.AddressTable.MaxEntries = ushort.MaxValue;
 
@@ -571,12 +592,16 @@ namespace CreateKnxProd
                 comObjRef.RefId = comObjRef.ComObject.Id;
             }
 
-            _parameterBlock.Id = string.Format("{0}_PB-1", _applicationProgram.Id);
-            foreach (var item in _parameterBlock.ParameterRefRef)
-                item.RefId = item.ParameterRef.Id;
+            i = 1;
+            foreach (var parameterBlock in _applicationProgram.Dynamic.ChannelIndependentBlock.First().ParameterBlock)
+            {
+                parameterBlock.Id = string.Format("{0}_PB-{1}", _applicationProgram.Id, i++);
+                foreach (var item in parameterBlock.ParameterRefRef)
+                    item.RefId = item.ParameterRef.Id;
 
-            foreach (var item in _parameterBlock.ComObjectRefRef)
-                item.RefId = item.ComObjectRef.Id;
+                foreach (var item in parameterBlock.ComObjectRefRef)
+                    item.RefId = item.ComObjectRef.Id;
+            }
         }
 
         private void Export(object param)
@@ -639,6 +664,7 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(ApplicationName));
             RaisePropertyChanged(nameof(ApplicationNumber));
             RaisePropertyChanged(nameof(ApplicationVersion));
+            RaisePropertyChanged(nameof(ParameterBlock));
             RaisePropertyChanged(nameof(ParameterTypes));
             RaisePropertyChanged(nameof(Parameters));
             RaisePropertyChanged(nameof(ComObjects));
@@ -780,6 +806,11 @@ namespace CreateKnxProd
 
                 RaisePropertyChanged(nameof(ReplacedVersions));
             }
+        }
+
+        public ObservableCollection<ComObjectParameterBlock_T> ParameterBlock
+        {
+            get => _applicationProgram?.Dynamic?.ChannelIndependentBlock?.First()?.ParameterBlock;
         }
 
         public ObservableCollection<ParameterType_T> ParameterTypes

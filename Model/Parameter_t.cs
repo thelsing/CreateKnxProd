@@ -12,6 +12,12 @@ namespace CreateKnxProd.Model
     public partial class Parameter_T : INotifyPropertyChanged
     {
         [XmlIgnore]
+        public ComObjectParameterBlock_T Block { get; set; }
+
+        [XmlIgnore]
+        public ObservableCollection<ComObjectParameterBlock_T> AllBlocks { get; set; }
+
+        [XmlIgnore]
         public ParameterType_T Type { get; set; }
 
         [XmlIgnore]

@@ -82,6 +82,15 @@
                     <TextBox Margin="3" Grid.Column="2" Grid.Row="9"  Text="{Binding ReplacedVersions}" />
                 </Grid>
             </TabItem>
+            <TabItem Header="{lex:Loc ParameterBlock}">
+                <DataGrid ItemsSource="{Binding ParameterBlock }" AutoGenerateColumns="False"
+                          CanUserDeleteRows="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{lex:Loc Name}" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="{lex:Loc Text}" Binding="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
             <TabItem Header="{lex:Loc ParameterTypes}">
                 <DataGrid ItemsSource="{Binding ParameterTypes }" AutoGenerateColumns="False"
                           CanUserDeleteRows="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
@@ -141,6 +150,19 @@
                 <DataGrid ItemsSource="{Binding Parameters }" AutoGenerateColumns="False"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
                     <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="{lex:Loc Block}"  SelectedItemBinding="{Binding Block, UpdateSourceTrigger=PropertyChanged}"
+                                                DisplayMemberPath="Name">
+                            <DataGridComboBoxColumn.ElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ParameterBlock, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                </Style>
+                            </DataGridComboBoxColumn.ElementStyle>
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ParameterBlock, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
                         <DataGridTextColumn Header="{lex:Loc Name}" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                         <DataGridComboBoxColumn Header="{lex:Loc Type}"  SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
                                                 DisplayMemberPath="Name">

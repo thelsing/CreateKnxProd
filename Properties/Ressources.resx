@@ -267,4 +267,10 @@
   <data name="Parametertype_Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="ParameterBlock" xml:space="preserve">
+    <value>Parameter Blocks</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
 </root>
