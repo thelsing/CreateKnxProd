@@ -47,8 +47,6 @@ namespace CreateKnxProd
         private ApplicationProgramRef_T _appProgRef;
         private ApplicationProgramStatic_TCodeRelativeSegment _codeSegment;
 
-        private ComObjectParameterBlock_T _parameterBlock;
-
         public MainWindowViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
@@ -76,6 +74,14 @@ namespace CreateKnxProd
             {
                 _dialogService.ShowMessage(ex.ToString());
             }
+        }
+
+        private void CreateDefaultParameterBlock()
+        {
+            var parameterBlock = new ComObjectParameterBlock_T();
+            parameterBlock.Name = "ParameterPage";
+            parameterBlock.Text = Ressources.CommonParameters;
+            ParameterBlock.Add(parameterBlock);
         }
 
         private void Open(object param)
@@ -120,12 +126,21 @@ namespace CreateKnxProd
                 _appProgRef = _hardware2Program.ApplicationProgramRef.First();
                 _codeSegment = _applicationProgram.Static.Code.RelativeSegment.First();
 
-                var parameterList = _applicationProgram.Static.Parameters.Parameter;
-
-                foreach (var item in parameterList)
+                Parameters.Clear();
+                foreach (var item in _applicationProgram.Static.Parameters.Parameter)
                 {
                     item.AllTypes = ParameterTypes;
                     item.Type = ParameterTypes.First(t => t.Id == item.ParameterType);
+                    item.AllBlocks = ParameterBlock;
+                    item.Block = ParameterBlock.FirstOrDefault(t => t.ParameterRefRef.FirstOrDefault(o => _applicationProgram.Static.ParameterRefs.FirstOrDefault(p => o.RefId == p.Id)?.RefId == item.Id) != null);
+                    if (item.Block == null)
+                    {
+                        if (ParameterBlock.Count == 0)
+                        {
+                            CreateDefaultParameterBlock();
+                        }
+                        item.Block = ParameterBlock.First();
+                    }
                     Parameters.Add(item);
                 }
 
@@ -250,14 +265,21 @@ namespace CreateKnxProd
             var ldProc1 = new LoadProcedures_TLoadProcedure();
             ldProc1.MergeId = 2;
 
-
             var ldCtrlCreate = new LdCtrlRelSegment_T();
             ldCtrlCreate.LsmIdx = 4;
-            ldCtrlCreate.Mode = 0;
+            ldCtrlCreate.Mode = 1;
             ldCtrlCreate.Fill = 0;
             ldCtrlCreate.AppliesTo = LdCtrlProcType_T.Full;
             ldCtrlCreate.Size = _codeSegment.Size;
             ldProc1.LdCtrlRelSegment.Add(ldCtrlCreate);
+
+            var ldCtrlUpdate = new LdCtrlRelSegment_T();
+            ldCtrlUpdate.LsmIdx = 4;
+            ldCtrlUpdate.Mode = 0;
+            ldCtrlUpdate.Fill = 0;
+            ldCtrlUpdate.AppliesTo = LdCtrlProcType_T.Par;
+            ldCtrlUpdate.Size = _codeSegment.Size;
+            ldProc1.LdCtrlRelSegment.Add(ldCtrlUpdate);
 
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
@@ -266,13 +288,23 @@ namespace CreateKnxProd
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
+            ldCtrlWrite.AppliesTo = LdCtrlProcType_T.FullCommaPar;
             ldCtrlWrite.Size = _codeSegment.Size;
             ldProc2.LdCtrlWriteRelMem.Add(ldCtrlWrite);
+
+            var ldProc3 = new LoadProcedures_TLoadProcedure();
+            ldProc3.MergeId = 7;
+
+            var ldCtrlImageProp = new LdCtrlLoadImageProp_T();
+            ldCtrlImageProp.ObjIdx = 4;
+            ldCtrlImageProp.PropId = 27;
+            ldProc3.LdCtrlLoadImageProp.Add(ldCtrlImageProp);
 
             var appStatic = _applicationProgram.Static;
             appStatic.LoadProcedures.Clear();
             appStatic.LoadProcedures.Add(ldProc1);
             appStatic.LoadProcedures.Add(ldProc2);
+            appStatic.LoadProcedures.Add(ldProc3);
         }
 
         private void HandleParameters()
@@ -295,36 +327,6 @@ namespace CreateKnxProd
             _codeSegment.Size = size;
         }
 
-
-        private void RegenerateLoadProcedure()
-        {
-            var ldProc1 = new LoadProcedures_TLoadProcedure();
-            ldProc1.MergeId = 2;
-
-            var ldCtrlCreate = new LdCtrlRelSegment_T();
-            ldCtrlCreate.LsmIdx = 4;
-            ldCtrlCreate.Mode = 0;
-            ldCtrlCreate.Fill = 0;
-            ldCtrlCreate.Size = 0;
-            ldProc1.LdCtrlRelSegment.Add(ldCtrlCreate);
-
-            var ldProc2 = new LoadProcedures_TLoadProcedure();
-            ldProc2.MergeId = 4;
-
-            var ldCtrlWrite = new LdCtrlWriteRelMem_T();
-            ldCtrlWrite.ObjIdx = 4;
-            ldCtrlWrite.Offset = 0;
-            ldCtrlWrite.Verify = true;
-            ldCtrlWrite.Size = 0;
-            ldProc2.LdCtrlWriteRelMem.Add(ldCtrlWrite);
-
-            var appStatic = _applicationProgram.Static;
-
-            appStatic.LoadProcedures.Clear();
-            appStatic.LoadProcedures.Add(ldProc1);
-            appStatic.LoadProcedures.Add(ldProc2);
-        }
-
         private void RegenerateDynamic()
         {
             if (_applicationProgram.Dynamic == null)
@@ -334,26 +336,30 @@ namespace CreateKnxProd
 
             var appStatic = _applicationProgram.Static;
             appDynamic.Choose?.Clear();
-            appDynamic.ChannelIndependentBlock?.Clear();
             appDynamic.Channel?.Clear();
 
-            var commonChannel = new ChannelIndependentBlock_T();
-            _parameterBlock = new ComObjectParameterBlock_T();
-            _parameterBlock.Name = "ParameterPage";
-            _parameterBlock.Text = Ressources.CommonParameters;
-
-            foreach (var paramRef in appStatic.ParameterRefs)
+            if (ParameterBlock.Count == 0)
             {
-                _parameterBlock.ParameterRefRef.Add(new ParameterRefRef_T() { ParameterRef = paramRef });
+                CreateDefaultParameterBlock();
             }
-
-            foreach (var comObjRef in appStatic.ComObjectRefs)
+            int i = 1;
+            foreach (var parameterBlock in ParameterBlock)
             {
-                _parameterBlock.ComObjectRefRef.Add(new ComObjectRefRef_T() { ComObjectRef = comObjRef });
-            }
+                parameterBlock.ParameterRefRef.Clear();
+                foreach (var paramRef in appStatic.ParameterRefs)
+                {
+                    if ((i == 1 && paramRef.Parameter.Block == null) || paramRef.Parameter.Block == parameterBlock)
+                        parameterBlock.ParameterRefRef.Add(new ParameterRefRef_T() { ParameterRef = paramRef });
+                }
 
-            commonChannel.ParameterBlock.Add(_parameterBlock);
-            appDynamic.ChannelIndependentBlock.Add(commonChannel);
+                parameterBlock.ComObjectRefRef.Clear();
+                if (i == 1)     // Not supported yet, ComObjs are affected to the first ParameterBlock
+                    foreach (var comObjRef in appStatic.ComObjectRefs)
+                    {
+                        parameterBlock.ComObjectRefRef.Add(new ComObjectRefRef_T() { ComObjectRef = comObjRef });
+                    }
+                ++i;
+            }
         }
 
         private bool AskSaveCancel()
@@ -381,7 +387,6 @@ namespace CreateKnxProd
             _hardware2Program = null;
             _appProgRef = null;
             _codeSegment = null;
-            _parameterBlock = null;
             Parameters.Clear();
             RaiseChanged();
         }
@@ -471,6 +476,9 @@ namespace CreateKnxProd
                 _codeSegment.Size = 0;
 
                 appStatic.Parameters = new ApplicationProgramStatic_TParameters();
+                _applicationProgram.Dynamic = new ApplicationProgramDynamic_T();
+                _applicationProgram.Dynamic.ChannelIndependentBlock.Add(new ChannelIndependentBlock_T());
+                CreateDefaultParameterBlock();
                 appStatic.AddressTable = new ApplicationProgramStatic_TAddressTable();
                 appStatic.AddressTable.MaxEntries = ushort.MaxValue;
 
@@ -484,6 +492,7 @@ namespace CreateKnxProd
                 _hardware.HasIndividualAddress = true;
                 _hardware.HasApplicationProgram = true;
                 _hardware.IsIPEnabled = true;
+                _hardware.BusCurrent = 10;
 
                 _product.IsRailMounted = false;
                 _product.DefaultLanguage = lang;
@@ -577,12 +586,16 @@ namespace CreateKnxProd
                 comObjRef.RefId = comObjRef.ComObject.Id;
             }
 
-            _parameterBlock.Id = string.Format("{0}_PB-1", _applicationProgram.Id);
-            foreach (var item in _parameterBlock.ParameterRefRef)
-                item.RefId = item.ParameterRef.Id;
+            i = 1;
+            foreach (var parameterBlock in _applicationProgram.Dynamic.ChannelIndependentBlock.First().ParameterBlock)
+            {
+                parameterBlock.Id = string.Format("{0}_PB-{1}", _applicationProgram.Id, i++);
+                foreach (var item in parameterBlock.ParameterRefRef)
+                    item.RefId = item.ParameterRef.Id;
 
-            foreach (var item in _parameterBlock.ComObjectRefRef)
-                item.RefId = item.ComObjectRef.Id;
+                foreach (var item in parameterBlock.ComObjectRefRef)
+                    item.RefId = item.ComObjectRef.Id;
+            }
         }
 
         private void Export(object param)
@@ -715,6 +728,7 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(ApplicationName));
             RaisePropertyChanged(nameof(ApplicationNumber));
             RaisePropertyChanged(nameof(ApplicationVersion));
+            RaisePropertyChanged(nameof(ParameterBlock));
             RaisePropertyChanged(nameof(ParameterTypes));
             RaisePropertyChanged(nameof(Parameters));
             RaisePropertyChanged(nameof(ComObjects));
@@ -723,6 +737,8 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(IsSecureEnabled));
             RaisePropertyChanged(nameof(MaxSecurityIndividualAddressEntries));
             RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
+            RaisePropertyChanged(nameof(IsRailMounted));
+            RaisePropertyChanged(nameof(BusCurrent));
         }
 
         #region Properties
@@ -909,6 +925,37 @@ namespace CreateKnxProd
                 _applicationProgram.MaxSecurityIndividualAddressEntries = value;
 
                 RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
+            }
+        }
+
+        public ObservableCollection<ComObjectParameterBlock_T> ParameterBlock
+        {
+            get => _applicationProgram?.Dynamic?.ChannelIndependentBlock?.First()?.ParameterBlock;
+        }
+
+        public bool? IsRailMounted
+        {
+            get
+            {
+                return _product?.IsRailMounted;
+            }
+            set
+            {
+                _product.IsRailMounted = value ?? false;
+                RaisePropertyChanged(nameof(IsRailMounted));
+            }
+        }
+
+        public float? BusCurrent
+        {
+            get
+            {
+                return _hardware?.BusCurrent;
+            }
+            set
+            {
+                _hardware.BusCurrent = value ?? 10;
+                RaisePropertyChanged(nameof(BusCurrent));
             }
         }
 

@@ -279,4 +279,16 @@
   <data name="Parametertype_Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="ParameterBlock" xml:space="preserve">
+    <value>Parameter Blocks</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="BusCurrent" xml:space="preserve">
+    <value>Bus Current</value>
+  </data>
+  <data name="IsRailMounted" xml:space="preserve">
+    <value>Is Rail Mounted</value>
+  </data>
 </root>
