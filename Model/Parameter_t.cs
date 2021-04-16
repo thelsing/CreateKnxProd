@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace CreateKnxProd.Model
 {
-    public partial class Parameter_T : INotifyPropertyChanged
+    public partial class ApplicationProgramStatic_TParametersParameter : INotifyPropertyChanged
     {
         [XmlIgnore]
         public ParameterType_T Type { get; set; }

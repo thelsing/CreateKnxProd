@@ -11,6 +11,6 @@ namespace CreateKnxProd.Model
     public partial class ParameterRef_T : INotifyPropertyChanged
     {
         [XmlIgnore]
-        public Parameter_T Parameter { get; set; }
+        public ApplicationProgramStatic_TParametersParameter Parameter { get; set; }
     }
 }

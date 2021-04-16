@@ -54,6 +54,9 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Margin="3" Text="{lex:Loc Name}" Grid.Column="1" Grid.Row="0"/>
@@ -78,8 +81,14 @@
                         <ComboBoxItem Content="{lex:Loc TP}" Tag="MT-0"/>
                         <ComboBoxItem Content="{lex:Loc RF}" Tag="MT-2"/>
                     </ComboBox>
-                    <TextBlock Margin="3" Text="{lex:Loc ReplacedVersion}" Grid.Column="1" Grid.Row="9"/>
-                    <TextBox Margin="3" Grid.Column="2" Grid.Row="9"  Text="{Binding ReplacedVersions}" />
+                    <TextBlock Margin="3" Text="{lex:Loc ReplacesVersions}" Grid.Column="1" Grid.Row="9"/>
+                    <TextBox Margin="3" Grid.Column="2" Grid.Row="9"  Text="{Binding ReplacesVersions, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Margin="3" Text="{lex:Loc IsSecureEnabled}" Grid.Column="1" Grid.Row="10"/>
+                    <CheckBox Margin="3" Grid.Column="2" Grid.Row="10" IsChecked="{Binding IsSecureEnabled}"/>
+                    <TextBlock Margin="3" Text="{lex:Loc MaxSecurityIndividualAddressEntries}" Grid.Column="1" Grid.Row="11"/>
+                    <TextBox Margin="3" Text="{Binding MaxSecurityIndividualAddressEntries, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="11" Width="200"/>
+                    <TextBlock Margin="3" Text="{lex:Loc MaxSecurityGroupKeyTableEntries}" Grid.Column="1" Grid.Row="12"/>
+                    <TextBox Margin="3" Text="{Binding MaxSecurityGroupKeyTableEntries, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="12" Width="200"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc ParameterTypes}">

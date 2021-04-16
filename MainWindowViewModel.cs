@@ -1,6 +1,6 @@
-﻿using CreateKnxProd.Extensions;
-using CreateKnxProd.Model;
+﻿using CreateKnxProd.Model;
 using CreateKnxProd.Properties;
+using CreateKnxProd.Signing;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +11,9 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml;
 using System.Xml.Serialization;
+using System.IO.Compression;
 
 namespace CreateKnxProd
 {
@@ -70,7 +69,7 @@ namespace CreateKnxProd
                 if (!File.Exists("knx_master.xml"))
                 {
                     var client = new WebClient();
-                    client.DownloadFile("https://update.knx.org/data/XML/project-11/knx_master.xml", "knx_master.xml");
+                    client.DownloadFile("https://update.knx.org/data/XML/project-20/knx_master.xml", "knx_master.xml");
                 }
             }
             catch (Exception ex)
@@ -169,6 +168,9 @@ namespace CreateKnxProd
                 if (_openFile == null)
                     SaveAs(param);
 
+                if (string.IsNullOrWhiteSpace(_applicationProgram.ReplacesVersions))
+                    _applicationProgram.ReplacesVersions = null;
+
                 _product.RegistrationInfo = new RegistrationInfo_T() { RegistrationStatus = RegistrationStatus_T.Registered };
                 _hardware2Program.RegistrationInfo = new RegistrationInfo_T()
                 {
@@ -249,7 +251,7 @@ namespace CreateKnxProd
             ldProc1.MergeId = 2;
 
 
-            var ldCtrlCreate = new LoadProcedure_TLdCtrlRelSegment();
+            var ldCtrlCreate = new LdCtrlRelSegment_T();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
@@ -260,7 +262,7 @@ namespace CreateKnxProd
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
 
-            var ldCtrlWrite = new LoadProcedure_TLdCtrlWriteRelMem();
+            var ldCtrlWrite = new LdCtrlWriteRelMem_T();
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
@@ -284,7 +286,7 @@ namespace CreateKnxProd
             foreach (var item in Parameters)
             {
                 appStatic.Parameters.Parameter.Add(item);
-                item.Memory = new Parameter_TMemory() { Offset = offset, BitOffset = 0 };
+                item.Memory = new MemoryParameter_T() { Offset = offset, BitOffset = 0 };
                 offset += item.Type.SizeInByte;
                 size += item.Type.SizeInByte;
 
@@ -299,7 +301,7 @@ namespace CreateKnxProd
             var ldProc1 = new LoadProcedures_TLoadProcedure();
             ldProc1.MergeId = 2;
 
-            var ldCtrlCreate = new LoadProcedure_TLdCtrlRelSegment();
+            var ldCtrlCreate = new LdCtrlRelSegment_T();
             ldCtrlCreate.LsmIdx = 4;
             ldCtrlCreate.Mode = 0;
             ldCtrlCreate.Fill = 0;
@@ -309,7 +311,7 @@ namespace CreateKnxProd
             var ldProc2 = new LoadProcedures_TLoadProcedure();
             ldProc2.MergeId = 4;
 
-            var ldCtrlWrite = new LoadProcedure_TLdCtrlWriteRelMem();
+            var ldCtrlWrite = new LdCtrlWriteRelMem_T();
             ldCtrlWrite.ObjIdx = 4;
             ldCtrlWrite.Offset = 0;
             ldCtrlWrite.Verify = true;
@@ -335,7 +337,7 @@ namespace CreateKnxProd
             appDynamic.ChannelIndependentBlock?.Clear();
             appDynamic.Channel?.Clear();
 
-            var commonChannel = new ApplicationProgramDynamic_TChannelIndependentBlock();
+            var commonChannel = new ChannelIndependentBlock_T();
             _parameterBlock = new ComObjectParameterBlock_T();
             _parameterBlock.Name = "ParameterPage";
             _parameterBlock.Text = Ressources.CommonParameters;
@@ -449,7 +451,11 @@ namespace CreateKnxProd
                 _applicationProgram.DefaultLanguage = lang;
                 _applicationProgram.DynamicTableManagement = false;
                 _applicationProgram.Linkable = false;
-                _applicationProgram.MinEtsVersion = ApplicationProgram_TMinEtsVersion.Item4Period0;
+                _applicationProgram.MinEtsVersion = "5.0";
+                _applicationProgram.ReplacesVersions = null;
+                _applicationProgram.IsSecureEnabled = false;
+                _applicationProgram.MaxSecurityIndividualAddressEntries = 32;
+                _applicationProgram.MaxSecurityGroupKeyTableEntries = 50;
 
                 var appStatic = new ApplicationProgramStatic_T();
                 _applicationProgram.Static = appStatic;
@@ -590,35 +596,105 @@ namespace CreateKnxProd
                 if (cancel)
                     return;
 
+                // Remove all data secure related attributes
+                if (_model.ManufacturerData.First().ApplicationPrograms.First().IsSecureEnabled == false)
+                {
+                    _model.ManufacturerData.First().ApplicationPrograms.First().MaxSecurityIndividualAddressEntries = 0;
+                    _model.ManufacturerData.First().ApplicationPrograms.First().MaxSecurityGroupKeyTableEntries = 0;
+                }
+
                 var files = new string[] { _openFile };
 
                 var outputFile = _dialogService.ChooseSaveFile(".knxprod", "KNXProd|*.knxprod");
                 if (outputFile == null)
                     return;
 
-                var asmPath = Path.Combine(Properties.Settings.Default.ETSPath, "Knx.Ets.Converter.ConverterEngine.dll");
-                var asm = Assembly.LoadFrom(asmPath);
-                var eng = asm.GetType("Knx.Ets.Converter.ConverterEngine.ConverterEngine");
-                var bas = asm.GetType("Knx.Ets.Converter.ConverterEngine.ConvertBase");
+                string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                Directory.CreateDirectory(tempDirectory);
 
-                //ConvertBase.Uninitialize();
-                InvokeMethod(bas, "Uninitialize", null);
+                File.Copy("knx_master.xml", Path.Combine(tempDirectory, "knx_master.xml"));
 
-                //var dset = ConverterEngine.BuildUpRawDocumentSet( files );
-                var dset = InvokeMethod(eng, "BuildUpRawDocumentSet", new object[] { files });
+                string mfid = _model.ManufacturerData.First().RefId;
+                Directory.CreateDirectory(Path.Combine(tempDirectory, mfid));
 
-                //ConverterEngine.CheckOutputFileName(outputFile, ".knxprod");
-                InvokeMethod(eng, "CheckOutputFileName", new object[] { outputFile, ".knxprod" });
+                KNX document = new KNX();
+                ManufacturerData_TManufacturer manufacturerData = new ManufacturerData_TManufacturer();
 
-                //ConvertBase.CleanUnregistered = false;
-                //SetProperty(bas, "CleanUnregistered", false);
+                document.CreatedBy = _model.CreatedBy;
+                document.ToolVersion = _model.ToolVersion;
+                document.ManufacturerData.Add(manufacturerData);
+                document.ManufacturerData.First().RefId = _model.ManufacturerData.First().RefId;
 
-                //dset = ConverterEngine.ReOrganizeDocumentSet(dset);
-                dset = InvokeMethod(eng, "ReOrganizeDocumentSet", new object[] { dset });
+                manufacturerData.Catalog.Add(_model.ManufacturerData.First().Catalog.First());
 
-                //ConverterEngine.PersistDocumentSetAsXmlOutput(dset, outputFile, null, string.Empty, true, _toolName, _toolVersion);
-                InvokeMethod(eng, "PersistDocumentSetAsXmlOutput", new object[] { dset, outputFile, null,
-                            "", true, _toolName, _toolVersion });
+                XmlSerializer serializer = new XmlSerializer(typeof(KNX));
+
+                using (var xmlWriter = new StreamWriter(Path.Combine(tempDirectory, mfid, "Catalog.xml"), false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, document);
+                }
+
+                manufacturerData.Catalog.Clear();
+                manufacturerData.ApplicationPrograms.Add(_model.ManufacturerData.First().ApplicationPrograms.First());
+                string applicationProgramFilename = _model.ManufacturerData.First().ApplicationPrograms.First().Id + ".xml";
+
+                using (var xmlWriter = new StreamWriter(Path.Combine(tempDirectory, mfid, applicationProgramFilename), false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, document);
+                }
+
+                manufacturerData.ApplicationPrograms.Clear();
+                manufacturerData.Hardware.Add(_model.ManufacturerData.First().Hardware.First());
+
+                using (var xmlWriter = new StreamWriter(Path.Combine(tempDirectory, mfid, "Hardware.xml"), false, Encoding.UTF8))
+                {
+                    serializer.Serialize(xmlWriter, document);
+                }
+
+                // Sign ApplicationProgram XML file and patch RefIds in ApplicationProgram XML file
+                IDictionary<string, string> applProgIdMappings = new Dictionary<string, string>();
+                IDictionary<string, string> applProgHashes = new Dictionary<string, string>();
+                IDictionary<string, string> mapBaggageIdToFileIntegrity = new Dictionary<string, string>(50);
+
+                FileInfo applProgFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, applicationProgramFilename));
+                FileInfo hwFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Hardware.xml"));
+                FileInfo catalogFileInfo = new FileInfo(Path.Combine(tempDirectory, mfid, "Catalog.xml"));
+
+                ApplicationProgramHasher aph = new ApplicationProgramHasher(applProgFileInfo, mapBaggageIdToFileIntegrity, true);
+                aph.HashFile();
+
+                string oldApplProgId = aph.OldApplProgId;
+                string newApplProgId = aph.NewApplProgId;
+                string genHashString = aph.GeneratedHashString;
+
+                /*
+                Console.WriteLine("OldApplProgId: " + oldApplProgId);
+                Console.WriteLine("NewApplProgId: " + newApplProgId);
+                Console.WriteLine("GeneratedHashString: " + genHashString);
+                Console.WriteLine("XML filename: " + applicationProgramFilename);
+                */
+
+                applProgIdMappings.Add(oldApplProgId, newApplProgId);
+                if (!applProgHashes.ContainsKey(newApplProgId))
+                    applProgHashes.Add(newApplProgId, genHashString);
+
+                // Sign Hardware.xml and patch RefIds in Hardware.xml
+                HardwareSigner hws = new HardwareSigner(hwFileInfo, applProgIdMappings, applProgHashes, true);
+                hws.SignFile();
+                IDictionary<string, string> hardware2ProgramIdMapping = hws.OldNewIdMappings;
+
+                // Patch RefIds in Catalog.xml
+                CatalogIdPatcher cip = new CatalogIdPatcher(catalogFileInfo, hardware2ProgramIdMapping);
+                cip.Patch();
+
+                // Signing directory
+                XmlSigning.SignDirectory(Path.Combine(tempDirectory, mfid));
+
+                // Create ZIP file (aka knxprod) archive
+                ZipFile.CreateFromDirectory(tempDirectory, outputFile);
+
+                // Remove temporary working directory recursively
+                Directory.Delete(tempDirectory, true);
 
                 _dialogService.ShowMessage(Ressources.ExportSuccess);
             }
@@ -643,7 +719,10 @@ namespace CreateKnxProd
             RaisePropertyChanged(nameof(Parameters));
             RaisePropertyChanged(nameof(ComObjects));
             RaisePropertyChanged(nameof(MediumType));
-            RaisePropertyChanged(nameof(ReplacedVersions));
+            RaisePropertyChanged(nameof(ReplacesVersions));
+            RaisePropertyChanged(nameof(IsSecureEnabled));
+            RaisePropertyChanged(nameof(MaxSecurityIndividualAddressEntries));
+            RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
         }
 
         #region Properties
@@ -754,7 +833,7 @@ namespace CreateKnxProd
             }
         }
 
-        public string ReplacedVersions
+        public string ReplacesVersions
         {
             get
             {
@@ -778,7 +857,58 @@ namespace CreateKnxProd
                 //    _applicationProgram.ReplacesVersions = null;
                 //}
 
-                RaisePropertyChanged(nameof(ReplacedVersions));
+                RaisePropertyChanged(nameof(ReplacesVersions));
+            }
+        }
+
+        public bool IsSecureEnabled
+        {
+            get
+            {
+                if (_applicationProgram == null)
+                    return false;
+
+                return _applicationProgram.IsSecureEnabled;
+            }
+            set
+            {
+                _applicationProgram.IsSecureEnabled = value;
+
+                RaisePropertyChanged(nameof(IsSecureEnabled));
+            }
+        }
+
+        public ushort MaxSecurityIndividualAddressEntries
+        {
+            get
+            {
+                if (_applicationProgram == null)
+                    return 0;
+
+                return _applicationProgram.MaxSecurityIndividualAddressEntries;
+            }
+            set
+            {
+                _applicationProgram.MaxSecurityIndividualAddressEntries = value;
+
+                RaisePropertyChanged(nameof(MaxSecurityIndividualAddressEntries));
+            }
+        }
+
+        public ushort MaxSecurityGroupKeyTableEntries
+        {
+            get
+            {
+                if (_applicationProgram == null)
+                    return 0;
+
+                return _applicationProgram.MaxSecurityGroupKeyTableEntries;
+            }
+            set
+            {
+                _applicationProgram.MaxSecurityIndividualAddressEntries = value;
+
+                RaisePropertyChanged(nameof(MaxSecurityGroupKeyTableEntries));
             }
         }
 
@@ -787,7 +917,7 @@ namespace CreateKnxProd
             get => _applicationProgram?.Static?.ParameterTypes;
         }
 
-        public ObservableCollection<Parameter_T> Parameters { get; private set; } = new ObservableCollection<Parameter_T>();
+        public ObservableCollection<ApplicationProgramStatic_TParametersParameter> Parameters { get; private set; } = new ObservableCollection<ApplicationProgramStatic_TParametersParameter>();
 
         public ObservableCollection<ComObject_T> ComObjects
         {
