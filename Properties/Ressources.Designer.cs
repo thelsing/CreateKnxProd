@@ -97,6 +97,23 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Block.
+        /// </summary>
+        public static string Block {
+            get {
+                return ResourceManager.GetString("Block", resourceCulture);
+            }
+        }
+        
+        ///   Looks up a localized string similar to Bus Current.
+        /// </summary>
+        public static string BusCurrent {
+            get {
+                return ResourceManager.GetString("BusCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to C.
         /// </summary>
         public static string CFlag {
@@ -205,6 +222,15 @@ namespace CreateKnxProd.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Rail Mounted.
+        /// </summary>
+        public static string IsRailMounted {
+            get {
+                return ResourceManager.GetString("IsRailMounted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum.
         /// </summary>
         public static string Maximum {
@@ -273,6 +299,15 @@ namespace CreateKnxProd.Properties {
         public static string OrderNumber {
             get {
                 return ResourceManager.GetString("OrderNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Blocks.
+        /// </summary>
+        public static string ParameterBlock {
+            get {
+                return ResourceManager.GetString("ParameterBlock", resourceCulture);
             }
         }
         
