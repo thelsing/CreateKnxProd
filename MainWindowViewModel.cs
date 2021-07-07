@@ -702,6 +702,10 @@ namespace CreateKnxProd
 
                 // Signing directory
                 XmlSigning.SignDirectory(Path.Combine(tempDirectory, mfid));
+                
+                //Check if ZIP already exists and delete
+                if (File.Exists(outputFile))
+                    File.Delete(outputFile);
 
                 // Create ZIP file (aka knxprod) archive
                 ZipFile.CreateFromDirectory(tempDirectory, outputFile);
