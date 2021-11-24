@@ -11,7 +11,7 @@ namespace CreateKnxProd.Signing
             bool useCasingOfBaggagesXml = false,
             string[] excludeFileEndings = null)
         {
-            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+            Assembly asm = Assembly.LoadFrom(ETSPathHelper.Combine("Knx.Ets.XmlSigning.dll"));
 
             Type ds = asm.GetType("Knx.Ets.XmlSigning.XmlSigning");
 

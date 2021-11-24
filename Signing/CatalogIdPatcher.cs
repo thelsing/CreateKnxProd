@@ -11,7 +11,7 @@ namespace CreateKnxProd.Signing
             FileInfo catalogFile,
             IDictionary<string, string> hardware2ProgramIdMapping)
         {
-            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+            Assembly asm = Assembly.LoadFrom(ETSPathHelper.Combine("Knx.Ets.XmlSigning.dll"));
             _instance = Activator.CreateInstance(asm.GetType("Knx.Ets.XmlSigning.CatalogIdPatcher"), catalogFile, hardware2ProgramIdMapping);
             _type = asm.GetType("Knx.Ets.XmlSigning.CatalogIdPatcher");
         }

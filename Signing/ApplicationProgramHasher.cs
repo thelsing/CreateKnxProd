@@ -12,7 +12,7 @@ namespace CreateKnxProd.Signing
                    IDictionary<string, string> mapBaggageIdToFileIntegrity,
                    bool patchIds = true)
         {
-            Assembly asm = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
+            Assembly asm = Assembly.LoadFrom(ETSPathHelper.Combine("Knx.Ets.XmlSigning.dll"));
             _instance = Activator.CreateInstance(asm.GetType("Knx.Ets.XmlSigning.ApplicationProgramHasher"), applProgFile, mapBaggageIdToFileIntegrity, patchIds);
             _type = asm.GetType("Knx.Ets.XmlSigning.ApplicationProgramHasher");
         }

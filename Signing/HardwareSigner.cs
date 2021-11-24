@@ -13,8 +13,8 @@ namespace CreateKnxProd.Signing
              IDictionary<string, string> applProgHashes,
              bool patchIds)
         {
-            Assembly asm1 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.XmlSigning.dll");
-            Assembly asm2 = Assembly.LoadFrom("C:\\Program Files (x86)\\ETS5\\Knx.Ets.Xml.ObjectModel.dll");
+            Assembly asm1 = Assembly.LoadFrom(ETSPathHelper.Combine("Knx.Ets.XmlSigning.dll"));
+            Assembly asm2 = Assembly.LoadFrom(ETSPathHelper.Combine("Knx.Ets.Xml.ObjectModel.dll"));
 
             Type RegistrationKeyEnum = asm2.GetType("Knx.Ets.Xml.ObjectModel.RegistrationKey");
             object registrationKey = Enum.Parse(RegistrationKeyEnum, "knxconv");
