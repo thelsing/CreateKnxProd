@@ -47,6 +47,14 @@ namespace CreateKnxProd
         private ApplicationProgramRef_T _appProgRef;
         private ApplicationProgramStatic_TCodeRelativeSegment _codeSegment;
 
+        /// <summary>
+        /// For DesignTime
+        /// </summary>
+        public MainWindowViewModel() : this(new DialogService())
+        {
+
+        }
+
         public MainWindowViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
