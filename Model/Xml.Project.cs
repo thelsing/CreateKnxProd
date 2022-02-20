@@ -20820,7 +20820,7 @@ namespace CreateKnxProd.Model
         {
             get
             {
-                return string.IsNullOrEmpty(this.ReplacesVersions);
+                return !string.IsNullOrEmpty(this.ReplacesVersions);
             }
         }
         
