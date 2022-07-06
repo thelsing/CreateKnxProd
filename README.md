@@ -1,5 +1,7 @@
 # CreateKnxProd [![Build Status](https://dev.azure.com/thesing/CreateKnxProd/_apis/build/status/thelsing.CreateKnxProd?branchName=master)](https://dev.azure.com/thesing/CreateKnxProd/_build/latest?definitionId=1&branchName=master)
 
+This project is discontinued because with https://github.com/OpenKNX/Kaenx-Creator there is a better solution available.
+
 Simple Gui to create simple knxprod file for ETS. 
 
 Configuration:
